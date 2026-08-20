@@ -211,8 +211,10 @@ export default function Navbar() {
         </div>
       )}
       <style>{`
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
           .show-mobile-btn { display: flex !important; }
+          .hide-mobile { display: none !important; }
+          .hide-mobile-cta { display: none !important; }
         }
       `}</style>
     </nav>

@@ -178,7 +178,7 @@ export default function HomePage() {
               Thermal Lexum develops high-conductivity thermal interface compounds for gamers, overclockers, and workstation professionals who demand zero thermal throttling.
             </p>
 
-            <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+            <div className="btn-group">
               <Link href="/products" className="btn-primary" style={{ padding: "16px 36px", fontSize: "13px" }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -440,7 +440,7 @@ export default function HomePage() {
                   ))}
                 </div>
 
-                <div style={{ display: "flex", gap: "16px" }}>
+                <div className="btn-group">
                   <Link href="/warranty/register" className="btn-primary">
                     Register Warranty Now
                   </Link>
