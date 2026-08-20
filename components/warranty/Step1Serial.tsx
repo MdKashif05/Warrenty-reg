@@ -14,7 +14,7 @@ export default function Step1Serial({ state, updateState }: Props) {
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!serial.trim()) { setError("Please enter your serial number."); return; }
+    if (!serial.trim()) { setError("Please enter your Order ID or Serial Number."); return; }
     setLoading(true);
     setError("");
 
@@ -33,7 +33,7 @@ export default function Step1Serial({ state, updateState }: Props) {
           verifiedProduct: data.data,
         });
       } else {
-        setError(data.error || "Serial number not found. Please check and try again.");
+        setError(data.error || "Please enter a valid Order ID or Serial Number.");
       }
     } catch {
       setError("Connection error. Please try again.");
@@ -47,20 +47,20 @@ export default function Step1Serial({ state, updateState }: Props) {
       {/* Form */}
       <div className="brand-card" style={{ padding: "40px", background: "#ffffff", border: "1px solid #e2e8f0" }}>
         <div style={{ marginBottom: "32px" }}>
-          <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#0f172a", marginBottom: "8px" }}>Enter Serial Number</h2>
+          <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#0f172a", marginBottom: "8px" }}>Enter Order ID / Serial Number</h2>
           <p style={{ fontSize: "14px", color: "#475569", lineHeight: "1.7" }}>
-            The serial number is printed on your product packaging. It typically appears as: <span style={{ fontFamily: "JetBrains Mono, monospace", color: "#0284c7", fontWeight: "700" }}>TLX-XXXX-XXXX</span>
+            Enter your Order ID from Amazon/retailer or the Serial Number on your packaging. Example: <span style={{ fontFamily: "JetBrains Mono, monospace", color: "#0284c7", fontWeight: "700" }}>ORD-2026-1001</span> or <span style={{ fontFamily: "JetBrains Mono, monospace", color: "#0284c7", fontWeight: "700" }}>TLX-XXXX-XXXX</span>
           </p>
         </div>
 
         <form onSubmit={handleVerify} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
           <div className="form-group">
-            <label className="form-label" htmlFor="serial-number-input">Product Serial Number *</label>
+            <label className="form-label" htmlFor="serial-number-input">Order ID / Serial Number *</label>
             <input
               id="serial-number-input"
               type="text"
               className="input-field"
-              placeholder="e.g. TLX-XXXX-XXXX"
+              placeholder="e.g. ORD-1001-2026 or TLX-XXXX-XXXX"
               value={serial}
               onChange={(e) => {
                 setSerial(e.target.value.toUpperCase());
@@ -113,11 +113,11 @@ export default function Step1Serial({ state, updateState }: Props) {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ animation: "spin 1s linear infinite" }}>
                   <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/>
                 </svg>
-                Verifying Serial...
+                Processing...
               </>
             ) : (
               <>
-                Verify Serial Number
+                Continue Registration
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
@@ -135,13 +135,13 @@ export default function Step1Serial({ state, updateState }: Props) {
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0284c7" strokeWidth="2" style={{ flexShrink: 0, marginTop: "2px" }}>
               <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3m.08 4h.01"/>
             </svg>
-            <h3 style={{ fontSize: "16px", fontWeight: "800", color: "#0f172a" }}>Where to find your Serial Number?</h3>
+            <h3 style={{ fontSize: "16px", fontWeight: "800", color: "#0f172a" }}>Where to find your Order ID / Serial?</h3>
           </div>
           <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
             {[
-              "On the product packaging box label",
-              "On the back panel of the packaging",
-              "On the protective sleeve or wrapper",
+              "Amazon / Ecommerce Order Confirmation Invoice",
+              "Retail Purchase Receipt or Order ID",
+              "Serial Number label on product packaging",
             ].map((tip) => (
               <li key={tip} style={{ display: "flex", gap: "10px", alignItems: "flex-start" }}>
                 <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#0284c7", flexShrink: 0, marginTop: "6px" }} />
@@ -156,14 +156,14 @@ export default function Step1Serial({ state, updateState }: Props) {
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0284c7" strokeWidth="2" style={{ flexShrink: 0 }}>
               <path d="M12 2l2.09 3.95L18 6.5l-2.64 3.31.53 4.19-3.89-1.85L8.11 14l.53-4.19L6 6.5l3.91-.55z"/>
             </svg>
-            <h3 style={{ fontSize: "16px", fontWeight: "800", color: "#0f172a" }}>Serial Number Format</h3>
+            <h3 style={{ fontSize: "16px", fontWeight: "800", color: "#0f172a" }}>Acceptable Formats</h3>
           </div>
           <div
             style={{
               fontFamily: "JetBrains Mono, monospace",
-              fontSize: "18px",
+              fontSize: "16px",
               color: "#0284c7",
-              letterSpacing: "3px",
+              letterSpacing: "2px",
               textAlign: "center",
               padding: "16px",
               background: "rgba(2, 132, 199, 0.08)",
@@ -172,10 +172,10 @@ export default function Step1Serial({ state, updateState }: Props) {
               fontWeight: "700"
             }}
           >
-            TLX-XXXX-XXXX
+            ORD-XXXX-XXXX / TLX-XXXX-XXXX
           </div>
           <p style={{ fontSize: "12px", color: "#64748b", marginTop: "12px", textAlign: "center" }}>
-            Serial numbers are case-insensitive
+            Order IDs and Serial Numbers are case-insensitive
           </p>
         </div>
 

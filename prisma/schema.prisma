@@ -43,6 +43,13 @@ enum ClaimStatus {
   RESOLVED
 }
 
+enum B2bStatus {
+  NEW
+  IN_REVIEW
+  QUOTATION_SENT
+  CLOSED
+}
+
 enum AdminRole {
   SUPER_ADMIN
   ADMIN
@@ -192,6 +199,25 @@ model ContactMessage {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("contact_messages")
+}
+
+model B2bEnquiry {
+  id              String    @id @default(cuid())
+  companyName     String    @map("company_name")
+  contactPerson   String    @map("contact_person")
+  businessEmail   String    @map("business_email")
+  phone           String
+  gstin           String?
+  productRequired String    @map("product_required")
+  quantity        Int       @default(10)
+  deliveryCity    String    @map("delivery_city")
+  deliveryState   String    @map("delivery_state")
+  message         String?
+  status          B2bStatus @default(NEW)
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  @@map("b2b_enquiries")
 }
 
 model FaqItem {

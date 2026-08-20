@@ -4,6 +4,7 @@ import Link from "next/link";
 
 const footerLinks = {
   COMPANY: [
+    { label: "B2B Direct Purchase (30% OFF)", href: "/b2b" },
     { label: "About Us", href: "/about" },
     { label: "Founder's Message", href: "/founder" },
     { label: "Contact", href: "/contact" },
