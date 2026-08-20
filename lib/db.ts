@@ -1,10 +1,13 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@/lib/generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 
 const globalForPrisma = global as unknown as { prisma?: PrismaClient };
 
 function createClient(): PrismaClient {
   try {
-    return new PrismaClient();
+    const connectionString = process.env.DATABASE_URL || "postgres://postgres:postgres@localhost:5432/thermal_lexum";
+    const adapter = new PrismaPg({ connectionString });
+    return new PrismaClient({ adapter });
   } catch {
     return {} as PrismaClient;
   }
