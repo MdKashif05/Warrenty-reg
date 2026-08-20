@@ -86,11 +86,8 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Desktop Nav */}
-        <div
-          className="hide-mobile"
-          style={{ display: "flex", alignItems: "center", gap: "6px" }}
-        >
+        {/* Desktop Nav Links (Hidden on mobile/tablet < 1024px) */}
+        <div className="hidden lg:flex items-center gap-1.5">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -116,35 +113,32 @@ export default function Navbar() {
           })}
         </div>
 
-        {/* CTA */}
-        <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+        {/* Desktop CTA & Mobile Toggle */}
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <Link
             href="/warranty/lookup"
-            className="hide-mobile btn-ghost"
+            className="hidden lg:inline-flex btn-ghost"
             style={{ fontSize: "13px" }}
           >
             Warranty Lookup
           </Link>
-          <Link href="/warranty/register" className="btn-primary hide-mobile-cta" style={{ padding: "10px 22px", fontSize: "12px" }}>
+
+          <Link
+            href="/warranty/register"
+            className="hidden sm:inline-flex btn-primary"
+            style={{ padding: "10px 20px", fontSize: "12px" }}
+          >
             Register Warranty
           </Link>
-          {/* Mobile menu button */}
+
+          {/* Mobile menu button (Visible ONLY on mobile/tablet < 1024px) */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            style={{
-              display: "none",
-              background: "#f8fafc",
-              border: "1px solid #cbd5e1",
-              color: "#0f172a",
-              padding: "8px 10px",
-              borderRadius: "8px",
-              cursor: "pointer",
-            }}
-            className="show-mobile-btn"
+            className="flex lg:hidden items-center justify-center bg-slate-100 border border-slate-300 text-slate-900 p-2 rounded-lg cursor-pointer"
             aria-label="Toggle menu"
             aria-expanded={mobileOpen}
           >
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg width="20" height="20" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2">
               {mobileOpen ? (
                 <path d="M4 4l10 10M14 4L4 14"/>
               ) : (
@@ -155,16 +149,17 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Drawer Menu */}
       {mobileOpen && (
         <div
+          className="lg:hidden"
           style={{
             background: "#ffffff",
             borderTop: "1px solid #e2e8f0",
             padding: "16px 24px",
             display: "flex",
             flexDirection: "column",
-            gap: "4px",
+            gap: "6px",
             boxShadow: "0 10px 25px rgba(0,0,0,0.1)"
           }}
         >
@@ -184,8 +179,8 @@ export default function Navbar() {
               style={{
                 display: "block",
                 padding: "12px 0",
-                borderBottom: "1px solid #e2e8f0",
-                fontSize: "14px",
+                borderBottom: "1px solid #f1f5f9",
+                fontSize: "15px",
                 color: pathname === link.href ? "#0284c7" : "#0f172a",
                 textDecoration: "none",
                 fontWeight: pathname === link.href ? "700" : "500"
@@ -200,7 +195,7 @@ export default function Navbar() {
             style={{
               display: "block",
               padding: "12px 0",
-              fontSize: "14px",
+              fontSize: "15px",
               color: "#0284c7",
               textDecoration: "none",
               fontWeight: "700"
@@ -210,13 +205,6 @@ export default function Navbar() {
           </Link>
         </div>
       )}
-      <style>{`
-        @media (max-width: 1024px) {
-          .show-mobile-btn { display: flex !important; }
-          .hide-mobile { display: none !important; }
-          .hide-mobile-cta { display: none !important; }
-        }
-      `}</style>
     </nav>
   );
 }

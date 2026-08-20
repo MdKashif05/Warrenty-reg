@@ -178,7 +178,7 @@ export default function HomePage() {
               Thermal Lexum develops high-conductivity thermal interface compounds for gamers, overclockers, and workstation professionals who demand zero thermal throttling.
             </p>
 
-            <div className="btn-group">
+            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
               <Link href="/products" className="btn-primary" style={{ padding: "16px 36px", fontSize: "13px" }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -192,16 +192,7 @@ export default function HomePage() {
 
             {/* Stats row */}
             <div
-              className="stats-grid"
-              style={{
-                maxWidth: "680px",
-                marginTop: "72px",
-                background: "#e2e8f0",
-                borderRadius: "16px",
-                overflow: "hidden",
-                border: "1px solid #cbd5e1",
-                boxShadow: "0 10px 30px rgba(0,0,0,0.05)"
-              }}
+              className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-slate-300 rounded-2xl overflow-hidden border border-slate-300 shadow-sm max-w-[680px] mt-12 w-full"
             >
               {stats.map((stat) => (
                 <div
@@ -225,7 +216,7 @@ export default function HomePage() {
 
           {/* Hero Visual Graphic */}
           <div
-            className="hide-mobile"
+            className="hidden lg:block"
             style={{
               position: "absolute",
               right: "5%",
@@ -252,15 +243,14 @@ export default function HomePage() {
         <section style={{ padding: "80px 24px", background: "#f8fafc", borderBottom: "1px solid #e2e8f0" }}>
           <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
             <div
-              className="brand-card founder-card-grid"
+              className="brand-card grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 md:gap-10 items-center p-6 sm:p-10"
               style={{
-                padding: "40px",
                 background: "#ffffff",
                 border: "1px solid #cbd5e1",
                 boxShadow: "0 15px 35px rgba(0,0,0,0.04)"
               }}
             >
-              <div style={{ position: "relative", width: "200px", height: "220px", borderRadius: "16px", overflow: "hidden", border: "3px solid #0284c7" }}>
+              <div style={{ position: "relative", width: "200px", height: "220px", borderRadius: "16px", overflow: "hidden", border: "3px solid #0284c7", margin: "0 auto" }}>
                 <Image
                   src="/founder.png"
                   alt="Javed Shaikh - Founder & CEO"
@@ -277,7 +267,7 @@ export default function HomePage() {
                 <p style={{ fontSize: "15px", color: "#475569", lineHeight: "1.7", marginBottom: "20px" }}>
                   Read the founder's message by <strong>Javed Shaikh</strong> on liquid metal to liquid courage, thermal paste to trusted performance, and our commitment to zero compromise.
                 </p>
-                <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+                <div style={{ display: "flex", gap: "16px", alignItems: "center", flexWrap: "wrap" }}>
                   <Link href="/founder" className="btn-primary" style={{ padding: "12px 24px", fontSize: "12px" }}>
                     Read Message
                   </Link>
@@ -301,7 +291,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="responsive-grid-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
               {products.map((product) => (
                 <Link
                   key={product.id}
@@ -392,31 +382,28 @@ export default function HomePage() {
         >
           <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
             <div
-              className="responsive-grid-2"
-              style={{
-                alignItems: "center",
-              }}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center"
             >
               <div>
                 <div className="section-label" style={{ marginBottom: "16px" }}>DIGITAL WARRANTY PORTAL</div>
-                <h2 style={{ fontSize: "clamp(32px, 4vw, 48px)", fontWeight: "800", letterSpacing: "-1.5px", color: "#0f172a", marginBottom: "20px" }}>
+                <h2 style={{ fontSize: "clamp(32px, 4.5vw, 52px)", fontWeight: "800", letterSpacing: "-1.5px", color: "#0f172a", marginBottom: "20px" }}>
                   100% Authenticity.<br />Guaranteed Coverage.
                 </h2>
                 <p style={{ fontSize: "16px", color: "#475569", lineHeight: "1.7", marginBottom: "40px" }}>
-                  Every genuine Thermal Lexum product carries a unique encrypted serial code. Verify your product authenticity and activate your 5-year replacement warranty in seconds.
+                  Every genuine Thermal Lexum product carries a unique anti-counterfeit serial code. Verify your product authenticity and register for 5-year replacement warranty in seconds.
                 </p>
 
-                <div style={{ display: "flex", flexDirection: "column", gap: "18px", marginBottom: "40px" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginBottom: "48px" }}>
                   {[
-                    { step: "01", title: "Scan Serial Number", desc: "Locate the anti-counterfeit serial code on your package" },
-                    { step: "02", title: "Instant Cryptographic Verification", desc: "Our database verifies origin & batch manufacturing log" },
-                    { step: "03", title: "Claim Digital Warranty", desc: "Get your digital certificate emailed instantly" },
+                    { step: "01", title: "Scan Serial Number", desc: "Locate the anti-counterfeit serial code on your product box label or purchase invoice." },
+                    { step: "02", title: "Instant Cryptographic Verification", desc: "Our database verifies origin & batch manufacturing parameters in real time." },
+                    { step: "03", title: "Claim Digital Warranty", desc: "Get your digital certificate emailed instantly with 5 years guarantee." }
                   ].map((item) => (
-                    <div key={item.step} style={{ display: "flex", gap: "18px", alignItems: "flex-start" }}>
+                    <div key={item.step} style={{ display: "flex", gap: "16px", alignItems: "flex-start" }}>
                       <div
                         style={{
-                          width: "40px",
-                          height: "40px",
+                          width: "36px",
+                          height: "36px",
                           borderRadius: "10px",
                           background: "rgba(2, 132, 199, 0.1)",
                           border: "1px solid rgba(2, 132, 199, 0.25)",
@@ -440,7 +427,7 @@ export default function HomePage() {
                   ))}
                 </div>
 
-                <div className="btn-group">
+                <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
                   <Link href="/warranty/register" className="btn-primary">
                     Register Warranty Now
                   </Link>

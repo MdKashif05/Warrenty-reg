@@ -161,7 +161,7 @@ export default function B2bPage() {
         {/* B2B Overview & Form Section */}
         <section style={{ padding: "80px 24px", background: "#ffffff" }}>
           <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-            <div className="contact-grid">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
               {/* Left Column: Eligibility & B2B Benefits */}
               <div>
                 <div className="section-label" style={{ marginBottom: "16px" }}>B2B ELIGIBILITY & CRITERIA</div>
