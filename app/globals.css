@@ -41,8 +41,11 @@
   box-sizing: border-box;
 }
 
-html {
+html, body {
   scroll-behavior: smooth;
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+  width: 100%;
 }
 
 body {
@@ -51,7 +54,6 @@ body {
   color: #0f172a;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }
 
 /* Typography */
@@ -539,6 +541,12 @@ h1, h2, h3, h4, h5, h6 {
   .admin-content-area {
     margin-left: 0 !important;
     padding: 20px 16px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .hide-mobile-cta {
+    display: none !important;
   }
 }
 

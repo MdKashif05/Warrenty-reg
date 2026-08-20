@@ -124,7 +124,7 @@ export default function Navbar() {
           >
             Warranty Lookup
           </Link>
-          <Link href="/warranty/register" className="btn-primary" style={{ padding: "10px 22px", fontSize: "12px" }}>
+          <Link href="/warranty/register" className="btn-primary hide-mobile-cta" style={{ padding: "10px 22px", fontSize: "12px" }}>
             Register Warranty
           </Link>
           {/* Mobile menu button */}
@@ -161,8 +161,20 @@ export default function Navbar() {
             background: "#ffffff",
             borderTop: "1px solid #e2e8f0",
             padding: "16px 24px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "4px",
+            boxShadow: "0 10px 25px rgba(0,0,0,0.1)"
           }}
         >
+          <Link
+            href="/warranty/register"
+            onClick={() => setMobileOpen(false)}
+            className="btn-primary"
+            style={{ width: "100%", justifyContent: "center", marginBottom: "12px", padding: "12px" }}
+          >
+            Register Warranty
+          </Link>
           {navLinks.map((link) => (
             <Link
               key={link.href}
