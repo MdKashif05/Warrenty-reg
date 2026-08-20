@@ -63,7 +63,7 @@ export default function AboutPage() {
         {/* Mission */}
         <section style={{ padding: "100px 24px", background: "#ffffff" }}>
           <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "64px", alignItems: "center" }}>
+            <div className="responsive-grid-2" style={{ alignItems: "center" }}>
               <div>
                 <div className="section-label" style={{ marginBottom: "16px" }}>OUR MISSION</div>
                 <h2 style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: "800", letterSpacing: "-1.5px", color: "#0f172a", marginBottom: "24px" }}>
@@ -83,7 +83,7 @@ export default function AboutPage() {
               </div>
 
               {/* Stats Box */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+              <div className="responsive-form-grid-2">
                 {[
                   { num: "14.2 W/mK", label: "Peak Conductivity" },
                   { num: "100%", label: "Authenticity Verified" },
@@ -126,13 +126,9 @@ export default function AboutPage() {
         >
           <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
             <div
-              className="brand-card"
+              className="brand-card founder-card-grid"
               style={{
                 padding: "48px",
-                display: "grid",
-                gridTemplateColumns: "300px 1fr",
-                gap: "48px",
-                alignItems: "center",
                 background: "#ffffff",
                 border: "1px solid #cbd5e1",
                 boxShadow: "0 15px 35px rgba(0,0,0,0.05)"
@@ -177,7 +173,7 @@ export default function AboutPage() {
               </h2>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "24px" }}>
+            <div className="responsive-grid-2">
               {values.map((val) => (
                 <div key={val.title} className="brand-card" style={{ padding: "36px" }}>
                   <div style={{ fontSize: "36px", marginBottom: "16px" }}>{val.icon}</div>

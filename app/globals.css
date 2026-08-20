@@ -106,33 +106,12 @@ h1, h2, h3, h4, h5, h6 {
   100% { background-position: 0% 50%; }
 }
 
-@keyframes scan-line {
-  0% { transform: translateY(-100%); opacity: 0; }
-  20% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { transform: translateY(100vh); opacity: 0; }
-}
-
 .animate-fade-in { animation: fadeIn 0.6s ease-out forwards; }
 .animate-fade-in-left { animation: fadeInLeft 0.6s ease-out forwards; }
 
 /* Brand utilities */
 .text-gradient {
   background: linear-gradient(135deg, #0284c7 0%, #2563eb 50%, #4f46e5 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.text-gradient-silver {
-  background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.text-gradient-gold {
-  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -155,30 +134,12 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 10px 30px rgba(2, 132, 199, 0.15), 0 0 50px rgba(2, 132, 199, 0.08);
 }
 
-.glow-purple {
-  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.15);
-}
-
-.border-cyan {
-  border-color: var(--brand-cyan) !important;
-}
-
 /* Grid pattern */
 .bg-grid {
   background-image: 
     linear-gradient(rgba(2, 132, 199, 0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(2, 132, 199, 0.05) 1px, transparent 1px);
   background-size: 50px 50px;
-}
-
-/* Noise texture */
-.bg-noise::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
-  pointer-events: none;
-  opacity: 0.2;
 }
 
 /* Premium Thermal bar */
@@ -346,8 +307,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .badge-active { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
 .badge-pending { background: #fef3c7; color: #b45309; border: 1px solid #fcd34d; }
-.badge-expired { background: #f1f5f9; color: #64748b; border: 1px solid #cbd5e1; }
-.badge-rejected { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
 
 /* Navbar */
 .navbar {
@@ -377,18 +336,17 @@ h1, h2, h3, h4, h5, h6 {
   overflow: hidden;
 }
 
-/* Skeleton loading */
-.skeleton {
-  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-  border-radius: 6px;
+/* Data Table */
+.data-table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* Data Table */
 .data-table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 600px;
 }
 
 .data-table th {
@@ -434,9 +392,166 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 4px;
 }
 
-/* Responsive */
+/* Admin Sidebar */
+.admin-sidebar {
+  width: 240px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.admin-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+/* Custom Responsive Grid Utilities */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+}
+
+.founder-card-grid {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.responsive-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.responsive-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+
+.responsive-form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.responsive-form-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+.responsive-form-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.review-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 32px;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 64px;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1024px) {
+  .responsive-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .review-grid {
+    grid-template-columns: 1fr;
+  }
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
 @media (max-width: 768px) {
   .hide-mobile { display: none !important; }
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .founder-card-grid {
+    grid-template-columns: 1fr !important;
+    text-align: center;
+    gap: 24px !important;
+  }
+  .founder-card-grid > div:first-child {
+    margin: 0 auto;
+  }
+  .responsive-grid-3,
+  .responsive-grid-2,
+  .review-grid,
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .responsive-form-grid-2,
+  .responsive-form-grid-3 {
+    grid-template-columns: 1fr !important;
+  }
+  .responsive-form-grid-4 {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .page-hero {
+    padding-top: 100px !important;
+    padding-bottom: 40px !important;
+  }
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+  .admin-sidebar {
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    border-right: none !important;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .admin-sidebar nav {
+    display: flex;
+    overflow-x: auto;
+    padding: 8px 16px !important;
+    gap: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .admin-nav-item {
+    white-space: nowrap;
+    border-radius: 8px;
+    padding: 8px 14px !important;
+  }
+  .admin-content-area {
+    margin-left: 0 !important;
+    padding: 20px 16px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .brand-card {
+    padding: 24px 18px !important;
+  }
+  .responsive-form-grid-4 {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

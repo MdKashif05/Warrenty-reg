@@ -48,7 +48,7 @@ export default function ContactPage() {
 
         <section style={{ padding: "80px 24px", background: "#ffffff" }}>
           <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1.5fr", gap: "64px" }}>
+            <div className="contact-grid">
               {/* Contact info */}
               <div>
                 <h2 style={{ fontSize: "24px", fontWeight: "800", color: "#0f172a", marginBottom: "32px" }}>Contact Information</h2>
@@ -109,7 +109,7 @@ export default function ContactPage() {
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                    <div className="responsive-form-grid-2">
                       <div className="form-group">
                         <label className="form-label" htmlFor="contact-name">Full Name *</label>
                         <input
@@ -135,7 +135,7 @@ export default function ContactPage() {
                         />
                       </div>
                     </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                    <div className="responsive-form-grid-2">
                       <div className="form-group">
                         <label className="form-label" htmlFor="contact-phone">Phone Number</label>
                         <input

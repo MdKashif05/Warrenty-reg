@@ -191,10 +191,8 @@ export default function HomePage() {
 
             {/* Stats row */}
             <div
+              className="stats-grid"
               style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(4, 1fr)",
-                gap: "1px",
                 maxWidth: "680px",
                 marginTop: "72px",
                 background: "#e2e8f0",
@@ -253,13 +251,9 @@ export default function HomePage() {
         <section style={{ padding: "80px 24px", background: "#f8fafc", borderBottom: "1px solid #e2e8f0" }}>
           <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
             <div
-              className="brand-card"
+              className="brand-card founder-card-grid"
               style={{
                 padding: "40px",
-                display: "grid",
-                gridTemplateColumns: "220px 1fr",
-                gap: "40px",
-                alignItems: "center",
                 background: "#ffffff",
                 border: "1px solid #cbd5e1",
                 boxShadow: "0 15px 35px rgba(0,0,0,0.04)"
@@ -306,7 +300,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "28px" }}>
+            <div className="responsive-grid-3">
               {products.map((product) => (
                 <Link
                   key={product.id}
@@ -397,10 +391,8 @@ export default function HomePage() {
         >
           <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
             <div
+              className="responsive-grid-2"
               style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "64px",
                 alignItems: "center",
               }}
             >

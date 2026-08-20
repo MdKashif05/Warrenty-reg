@@ -61,10 +61,8 @@ export default function FounderPage() {
         <section style={{ padding: "100px 24px", background: "#ffffff" }}>
           <div style={{ maxWidth: "1160px", margin: "0 auto" }}>
             <div
+              className="contact-grid"
               style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1.5fr",
-                gap: "64px",
                 alignItems: "start"
               }}
             >

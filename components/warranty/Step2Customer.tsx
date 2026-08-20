@@ -80,7 +80,7 @@ export default function Step2Customer({ state, updateState }: Props) {
         <p style={{ fontSize: "14px", color: "#475569", marginBottom: "32px" }}>Enter your personal information to register the warranty.</p>
 
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+          <div className="responsive-form-grid-2">
             {[
               { id: "firstName", label: "First Name", placeholder: "First name", required: true },
               { id: "lastName", label: "Last Name", placeholder: "Last name", required: true },
@@ -100,7 +100,7 @@ export default function Step2Customer({ state, updateState }: Props) {
             ))}
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+          <div className="responsive-form-grid-2">
             <div className="form-group">
               <label className="form-label" htmlFor="email">Email Address *</label>
               <input id="email" type="email" className="input-field" placeholder="your@email.com" value={form.email} onChange={(e) => { setForm({ ...form, email: e.target.value }); setErrors({ ...errors, email: "" }); }} />
@@ -113,7 +113,7 @@ export default function Step2Customer({ state, updateState }: Props) {
             </div>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "16px" }}>
+          <div className="responsive-form-grid-3">
             <div className="form-group">
               <label className="form-label" htmlFor="city">City *</label>
               <input id="city" type="text" className="input-field" placeholder="City" value={form.city} onChange={(e) => { setForm({ ...form, city: e.target.value }); setErrors({ ...errors, city: "" }); }} />

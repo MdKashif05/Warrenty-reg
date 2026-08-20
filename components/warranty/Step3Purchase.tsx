@@ -64,7 +64,7 @@ export default function Step3Purchase({ state, updateState }: Props) {
           {/* Purchase Type */}
           <div className="form-group">
             <label className="form-label">Purchase Type *</label>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "8px", marginTop: "4px" }}>
+            <div className="responsive-form-grid-4" style={{ marginTop: "4px" }}>
               {purchaseTypes.map((pt) => (
                 <button
                   key={pt.id}
@@ -90,7 +90,7 @@ export default function Step3Purchase({ state, updateState }: Props) {
             </div>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+          <div className="responsive-form-grid-2">
             <div className="form-group">
               <label className="form-label" htmlFor="purchaseDate">Date of Purchase *</label>
               <input

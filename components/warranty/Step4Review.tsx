@@ -69,7 +69,7 @@ export default function Step4Review({ state, updateState }: Props) {
   );
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 380px", gap: "32px", alignItems: "start" }}>
+    <div className="review-grid" style={{ alignItems: "start" }}>
       <div>
         <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#0f172a", marginBottom: "8px" }}>Review Registration</h2>
         <p style={{ fontSize: "14px", color: "#475569", marginBottom: "32px" }}>Please verify all details before submitting. You cannot edit this information after submission.</p>

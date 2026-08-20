@@ -43,7 +43,7 @@ export default function Step1Serial({ state, updateState }: Props) {
   };
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "48px", alignItems: "start" }}>
+    <div className="responsive-grid-2" style={{ alignItems: "start" }}>
       {/* Form */}
       <div className="brand-card" style={{ padding: "40px", background: "#ffffff", border: "1px solid #e2e8f0" }}>
         <div style={{ marginBottom: "32px" }}>
