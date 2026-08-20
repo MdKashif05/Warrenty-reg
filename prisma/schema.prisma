@@ -1,0 +1,222 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ProductCategory {
+  THERMAL_PASTE
+  LIQUID_METAL
+  THERMAL_PADS
+  OTHER
+}
+
+enum ProductStatus {
+  ACTIVE
+  INACTIVE
+  DISCONTINUED
+}
+
+enum PurchaseType {
+  ONLINE
+  RETAIL_STORE
+  DISTRIBUTOR
+  OTHER
+}
+
+enum WarrantyStatus {
+  PENDING
+  ACTIVE
+  EXPIRED
+  REJECTED
+  CLAIMED
+}
+
+enum ClaimStatus {
+  OPEN
+  IN_REVIEW
+  APPROVED
+  REJECTED
+  RESOLVED
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  ADMIN
+  SUPPORT
+}
+
+model Admin {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String    @map("password_hash")
+  name         String
+  role         AdminRole @default(ADMIN)
+  isActive     Boolean   @default(true) @map("is_active")
+  lastLoginAt  DateTime? @map("last_login_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  auditLogs AuditLog[]
+
+  @@map("admins")
+}
+
+model Product {
+  id               String          @id @default(cuid())
+  name             String
+  slug             String          @unique
+  category         ProductCategory
+  shortDescription String?         @map("short_description")
+  description      String?
+  imagePath        String?         @map("image_path")
+  warrantyMonths   Int             @default(12) @map("warranty_months")
+  status           ProductStatus   @default(ACTIVE)
+  sortOrder        Int             @default(0) @map("sort_order")
+  createdAt        DateTime        @default(now()) @map("created_at")
+  updatedAt        DateTime        @updatedAt @map("updated_at")
+
+  models        ProductModel[]
+  serialNumbers SerialNumber[]
+
+  @@map("products")
+}
+
+model ProductModel {
+  id        String   @id @default(cuid())
+  productId String   @map("product_id")
+  name      String
+  sku       String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  product       Product        @relation(fields: [productId], references: [id])
+  serialNumbers SerialNumber[]
+
+  @@map("product_models")
+}
+
+model SerialNumber {
+  id             String   @id @default(cuid())
+  productId      String   @map("product_id")
+  productModelId String?  @map("product_model_id")
+  serialNumber   String   @unique @map("serial_number")
+  batchCode      String?  @map("batch_code")
+  isRegistered   Boolean  @default(false) @map("is_registered")
+  isActive       Boolean  @default(true) @map("is_active")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  product      Product               @relation(fields: [productId], references: [id])
+  productModel ProductModel?         @relation(fields: [productModelId], references: [id])
+  registration WarrantyRegistration?
+
+  @@index([serialNumber])
+  @@map("serial_numbers")
+}
+
+model Customer {
+  id         String   @id @default(cuid())
+  firstName  String   @map("first_name")
+  lastName   String   @map("last_name")
+  email      String   @unique
+  phone      String?
+  city       String?
+  state      String?
+  country    String   @default("India")
+  postalCode String?  @map("postal_code")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  registrations WarrantyRegistration[]
+
+  @@map("customers")
+}
+
+model WarrantyRegistration {
+  id                String         @id @default(cuid())
+  registrationId    String         @unique @map("registration_id")
+  customerId        String         @map("customer_id")
+  serialNumberId    String         @unique @map("serial_number_id")
+  purchaseType      PurchaseType   @map("purchase_type")
+  purchaseDate      DateTime       @map("purchase_date")
+  purchasedFrom     String?        @map("purchased_from")
+  invoicePath       String?        @map("invoice_path")
+  warrantyStatus    WarrantyStatus @default(PENDING) @map("warranty_status")
+  warrantyStartDate DateTime?      @map("warranty_start_date")
+  warrantyEndDate   DateTime?      @map("warranty_end_date")
+  notes             String?
+  emailSent         Boolean        @default(false) @map("email_sent")
+  ipAddress         String?        @map("ip_address")
+  createdAt         DateTime       @default(now()) @map("created_at")
+  updatedAt         DateTime       @updatedAt @map("updated_at")
+
+  customer     Customer       @relation(fields: [customerId], references: [id])
+  serialNumber SerialNumber   @relation(fields: [serialNumberId], references: [id])
+  claims       WarrantyClaim[]
+
+  @@index([registrationId])
+  @@index([customerId])
+  @@map("warranty_registrations")
+}
+
+model WarrantyClaim {
+  id             String      @id @default(cuid())
+  registrationId String      @map("registration_id")
+  claimStatus    ClaimStatus @default(OPEN) @map("claim_status")
+  issueType      String      @map("issue_type")
+  description    String
+  resolution     String?
+  resolvedAt     DateTime?   @map("resolved_at")
+  createdAt      DateTime    @default(now()) @map("created_at")
+  updatedAt      DateTime    @updatedAt @map("updated_at")
+
+  registration WarrantyRegistration @relation(fields: [registrationId], references: [id])
+
+  @@map("warranty_claims")
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String
+  message   String
+  isRead    Boolean  @default(false) @map("is_read")
+  isReplied Boolean  @default(false) @map("is_replied")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("contact_messages")
+}
+
+model FaqItem {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String
+  category  String?
+  sortOrder Int      @default(0) @map("sort_order")
+  isActive  Boolean  @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("faq_items")
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  adminId    String?  @map("admin_id")
+  action     String
+  resource   String
+  resourceId String?  @map("resource_id")
+  details    Json?
+  ipAddress  String?  @map("ip_address")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  admin Admin? @relation(fields: [adminId], references: [id])
+
+  @@map("audit_logs")
+}
