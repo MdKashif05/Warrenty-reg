@@ -53,15 +53,30 @@ export default function Navbar() {
           style={{ textDecoration: "none", display: "flex", alignItems: "center" }}
           aria-label="Thermal Lexum - Home"
         >
-          {/* Large container to show the logo clearly — the PNG has whitespace so we need extra room */}
-          <Image
-            src="/logo.png"
-            alt="Thermal Lexum"
-            width={240}
-            height={80}
-            style={{ objectFit: "contain", maxHeight: "80px", width: "auto", display: "block" }}
-            priority
-          />
+          {/*
+            The PNG logo is a square with heavy whitespace padding.
+            We render it large (260×260) inside a small clipping window (200×60)
+            and use negative margins to shift into the center where the actual
+            THERMAL LEXUM text lives, making it clearly visible.
+          */}
+          <div style={{ width: "200px", height: "60px", overflow: "hidden", position: "relative", flexShrink: 0 }}>
+            <Image
+              src="/logo.png"
+              alt="Thermal Lexum"
+              width={280}
+              height={280}
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: "280px",
+                height: "280px",
+                objectFit: "contain",
+              }}
+              priority
+            />
+          </div>
         </Link>
 
         {/* Desktop Nav Links (Hidden on mobile/tablet < 1024px) */}
