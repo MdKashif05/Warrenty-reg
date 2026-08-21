@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -59,7 +60,7 @@ const stats = [
   { value: "50K+", label: "Systems Cooled" },
   { value: "35+", label: "Global Distributors" },
   { value: "99.4%", label: "Satisfaction Rate" },
-  { value: "5 Years", label: "Warranty Backed" },
+  { value: "12 Months", label: "Warranty Backed" },
 ];
 
 export default function HomePage() {
@@ -73,7 +74,7 @@ export default function HomePage() {
         {/* HERO SECTION */}
         <section
           style={{
-            minHeight: "100vh",
+            minHeight: "85vh",
             background: "radial-gradient(circle at 50% -10%, rgba(56, 189, 248, 0.14) 0%, rgba(37, 99, 235, 0.04) 50%, #ffffff 85%)",
             position: "relative",
             overflow: "hidden",
@@ -111,7 +112,7 @@ export default function HomePage() {
             style={{
               maxWidth: "1280px",
               margin: "0 auto",
-              padding: "140px 24px 90px",
+              padding: "130px 24px 70px",
               position: "relative",
               zIndex: 1,
               width: "100%",
@@ -127,7 +128,7 @@ export default function HomePage() {
                 border: "1px solid rgba(2, 132, 199, 0.25)",
                 borderRadius: "100px",
                 padding: "6px 18px",
-                marginBottom: "32px",
+                marginBottom: "28px",
                 backdropFilter: "blur(12px)"
               }}
             >
@@ -141,12 +142,12 @@ export default function HomePage() {
             <h1
               style={{
                 fontFamily: "Space Grotesk, sans-serif",
-                fontSize: "clamp(48px, 8vw, 92px)",
+                fontSize: "clamp(44px, 7.5vw, 88px)",
                 fontWeight: "900",
                 lineHeight: "1.02",
                 letterSpacing: "-3px",
                 color: "#0f172a",
-                marginBottom: "28px",
+                marginBottom: "24px",
                 maxWidth: "850px",
               }}
             >
@@ -168,11 +169,11 @@ export default function HomePage() {
 
             <p
               style={{
-                fontSize: "19px",
+                fontSize: "18px",
                 color: "#475569",
                 lineHeight: "1.7",
                 maxWidth: "580px",
-                marginBottom: "48px",
+                marginBottom: "40px",
               }}
             >
               Thermal Lexum develops high-conductivity thermal interface compounds for gamers, overclockers, and workstation professionals who demand zero thermal throttling.
@@ -186,7 +187,7 @@ export default function HomePage() {
                 Explore Products
               </Link>
               <Link href="/warranty/register" className="btn-secondary" style={{ padding: "16px 32px", fontSize: "13px" }}>
-                Register Warranty
+                Register Warranty (12 Months)
               </Link>
             </div>
 
@@ -237,6 +238,33 @@ export default function HomePage() {
           </div>
 
           <div className="thermal-bar" style={{ position: "absolute", bottom: 0, left: 0, right: 0 }} />
+        </section>
+
+        {/* OFFICIAL BRAND BANNER SHOWCASE */}
+        <section style={{ padding: "48px 24px", background: "#0f172a" }}>
+          <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+            <div
+              style={{
+                position: "relative",
+                width: "100%",
+                aspectRatio: "3.2 / 1",
+                minHeight: "180px",
+                borderRadius: "20px",
+                overflow: "hidden",
+                border: "1px solid #334155",
+                boxShadow: "0 20px 50px rgba(0, 0, 0, 0.4)"
+              }}
+            >
+              <Image
+                src="/banner.png"
+                alt="Thermal Lexum - Maximum Cooling Official Banner"
+                fill
+                priority
+                sizes="(max-width: 1280px) 100vw, 1280px"
+                style={{ objectFit: "cover", objectPosition: "center" }}
+              />
+            </div>
+          </div>
         </section>
 
         {/* FOUNDER SPOTLIGHT BANNER ON HOME PAGE */}
@@ -390,14 +418,14 @@ export default function HomePage() {
                   100% Authenticity.<br />Guaranteed Coverage.
                 </h2>
                 <p style={{ fontSize: "16px", color: "#475569", lineHeight: "1.7", marginBottom: "40px" }}>
-                  Every genuine Thermal Lexum product carries a unique anti-counterfeit serial code. Verify your product authenticity and register for 5-year replacement warranty in seconds.
+                  Every genuine Thermal Lexum product carries a unique anti-counterfeit serial code. Verify your product authenticity and register for 12-month replacement warranty in seconds.
                 </p>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginBottom: "48px" }}>
                   {[
-                    { step: "01", title: "Scan Serial Number", desc: "Locate the anti-counterfeit serial code on your product box label or purchase invoice." },
+                    { step: "01", title: "Scan Serial Number / Order ID", desc: "Locate the serial code on your box label or enter your retailer Order ID." },
                     { step: "02", title: "Instant Cryptographic Verification", desc: "Our database verifies origin & batch manufacturing parameters in real time." },
-                    { step: "03", title: "Claim Digital Warranty", desc: "Get your digital certificate emailed instantly with 5 years guarantee." }
+                    { step: "03", title: "Claim 12-Month Warranty", desc: "Get your digital certificate emailed instantly with 12 months guarantee." }
                   ].map((item) => (
                     <div key={item.step} style={{ display: "flex", gap: "16px", alignItems: "flex-start" }}>
                       <div
@@ -456,74 +484,53 @@ export default function HomePage() {
                       alignItems: "center",
                       justifyContent: "space-between",
                       marginBottom: "32px",
+                      borderBottom: "1px solid #f1f5f9",
+                      paddingBottom: "20px"
                     }}
                   >
                     <div>
-                      <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "16px", fontWeight: "900", letterSpacing: "3px", color: "#0f172a" }}>THERMAL LEXUM</div>
-                      <div style={{ fontFamily: "JetBrains Mono, monospace", fontSize: "10px", letterSpacing: "2px", color: "#0284c7", marginTop: "4px", fontWeight: "700" }}>OFFICIAL WARRANTY CERTIFICATE</div>
+                      <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "16px", fontWeight: "900", letterSpacing: "2px", color: "#0f172a" }}>
+                        THERMAL <span style={{ color: "#0284c7" }}>LEXUM</span>
+                      </div>
+                      <div style={{ fontFamily: "JetBrains Mono, monospace", fontSize: "9px", letterSpacing: "2px", color: "#0284c7", marginTop: "2px", fontWeight: "700" }}>
+                        OFFICIAL WARRANTY CERTIFICATE
+                      </div>
                     </div>
-                    <div style={{ width: "44px", height: "44px", borderRadius: "12px", background: "linear-gradient(135deg, #0284c7 0%, #2563eb 100%)", display: "flex", alignItems: "center", justifyContent: "center", color: "#ffffff" }}>
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ margin: "auto" }}>
-                        <path d="M9 12l2 2 4-4"/><path d="M12 2l2.09 3.95L18 6.5l-2.64 3.31.53 4.19-3.89-1.85L8.11 14l.53-4.19L6 6.5l3.91-.55z"/>
-                      </svg>
-                    </div>
+                    <span className="badge badge-active">12 MONTHS VALID</span>
                   </div>
 
-                  <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginBottom: "32px" }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "32px" }}>
                     {[
-                      { label: "Product", value: "Thermal Lexum LX-TIM Pro" },
-                      { label: "Serial No.", value: "TLX-9982-4109-X" },
-                      { label: "Verification Status", value: "AUTHENTIC & VERIFIED ●" },
-                      { label: "Warranty Period", value: "5 Years Coverage" },
-                    ].map((field) => (
-                      <div key={field.label} style={{ display: "flex", justifyContent: "space-between", paddingBottom: "12px", borderBottom: "1px solid #f1f5f9" }}>
-                        <span style={{ fontSize: "13px", color: "#64748b" }}>{field.label}</span>
-                        <span style={{ fontSize: "13px", color: field.label === "Verification Status" ? "#16a34a" : "#0f172a", fontWeight: "700" }}>{field.value}</span>
+                      { label: "Product", val: "Thermal Lexum LX-TIM Pro" },
+                      { label: "Warranty Period", val: "12 Months (1 Year)" },
+                      { label: "Coverage", val: "Full Replacement Guarantee" },
+                      { label: "Verification", val: "Cryptographic Hash Verified" },
+                    ].map((row) => (
+                      <div key={row.label} style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", borderBottom: "1px solid #f8fafc", paddingBottom: "8px" }}>
+                        <span style={{ color: "#64748b" }}>{row.label}</span>
+                        <span style={{ color: "#0f172a", fontWeight: "700", textAlign: "right" }}>{row.val}</span>
                       </div>
                     ))}
                   </div>
 
-                  <div style={{ background: "rgba(2, 132, 199, 0.06)", border: "1px solid rgba(2, 132, 199, 0.2)", borderRadius: "12px", padding: "18px", display: "flex", alignItems: "center", gap: "14px" }}>
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0284c7" strokeWidth="2">
-                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                    </svg>
-                    <div>
-                      <div style={{ fontSize: "13px", fontWeight: "700", color: "#0f172a" }}>Direct Factory Guarantee</div>
-                      <div style={{ fontSize: "11px", color: "#64748b" }}>Secured by Thermal Lexum Anti-Counterfeit Vault</div>
+                  <div
+                    style={{
+                      padding: "16px",
+                      background: "#f8fafc",
+                      borderRadius: "12px",
+                      border: "1px solid #e2e8f0",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between"
+                    }}
+                  >
+                    <div style={{ fontSize: "12px", color: "#64748b" }}>
+                      Instant PDF Certificate Download
                     </div>
+                    <span style={{ fontSize: "12px", color: "#0284c7", fontWeight: "700" }}>Available On Registration →</span>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA SECTION */}
-        <section
-          style={{
-            padding: "110px 24px",
-            background: "#ffffff",
-            textAlign: "center",
-            position: "relative",
-            overflow: "hidden",
-          }}
-        >
-          <div style={{ maxWidth: "680px", margin: "0 auto", position: "relative" }}>
-            <div className="section-label" style={{ marginBottom: "20px" }}>UNLEASH HARDWARE POTENTIAL</div>
-            <h2 style={{ fontSize: "clamp(34px, 5vw, 58px)", fontWeight: "800", letterSpacing: "-2px", color: "#0f172a", marginBottom: "20px" }}>
-              Join the Revolution.<br />
-              <span className="text-gradient">Cool Your Passion.</span>
-            </h2>
-            <p style={{ fontSize: "17px", color: "#475569", lineHeight: "1.7", marginBottom: "44px" }}>
-              Upgrade to Thermal Lexum interface materials today and keep your processors running cooler under extreme workloads.
-            </p>
-            <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
-              <Link href="/warranty/register" className="btn-primary" style={{ padding: "16px 40px" }}>
-                Register Your Product
-              </Link>
-              <Link href="/contact" className="btn-secondary" style={{ padding: "16px 40px" }}>
-                Contact Support
-              </Link>
             </div>
           </div>
         </section>

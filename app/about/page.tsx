@@ -87,8 +87,8 @@ export default function AboutPage() {
                 {[
                   { num: "14.2 W/mK", label: "Peak Conductivity" },
                   { num: "100%", label: "Authenticity Verified" },
-                  { num: "5 Years", label: "Product Durability" },
-                  { num: "24/7", label: "Warranty Support" },
+                  { num: "12 Months", label: "Warranty Backed" },
+                  { num: "24/7", label: "Customer Support" },
                 ].map((stat) => (
                   <div
                     key={stat.label}

@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const footerLinks = {
   COMPANY: [
@@ -79,17 +80,13 @@ export default function Footer() {
         >
           {/* Brand */}
           <div>
-            <div
-              style={{
-                fontFamily: "Space Grotesk, sans-serif",
-                fontSize: "22px",
-                fontWeight: "900",
-                letterSpacing: "3px",
-                color: "#0f172a",
-                marginBottom: "8px",
-              }}
-            >
-              THERMAL <span style={{ color: "#0284c7" }}>LEXUM</span>
+            <div style={{ position: "relative", height: "42px", width: "180px", marginBottom: "12px" }}>
+              <Image
+                src="/logo.png"
+                alt="Thermal Lexum"
+                fill
+                style={{ objectFit: "contain", objectPosition: "left center" }}
+              />
             </div>
             <div
               style={{

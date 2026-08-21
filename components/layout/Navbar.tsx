@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 const navLinks = [
@@ -49,40 +50,17 @@ export default function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          style={{ textDecoration: "none" }}
+          style={{ textDecoration: "none", display: "flex", alignItems: "center" }}
           aria-label="Thermal Lexum - Home"
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <div
-              style={{
-                width: "36px",
-                height: "36px",
-                borderRadius: "10px",
-                background: "linear-gradient(135deg, #0284c7 0%, #2563eb 100%)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                boxShadow: "0 4px 12px rgba(2, 132, 199, 0.3)"
-              }}
-            >
-              <svg width="20" height="20" viewBox="0 0 18 18" fill="none">
-                <path d="M9 2L15 6V12L9 16L3 12V6L9 2Z" fill="#ffffff" />
-                <path d="M9 5L12 7V11L9 13L6 11V7L9 5Z" fill="rgba(2,132,199,0.9)" />
-              </svg>
-            </div>
-            <div>
-              <div
-                style={{
-                  fontFamily: "Space Grotesk, sans-serif",
-                  fontSize: "17px",
-                  fontWeight: "900",
-                  letterSpacing: "2.5px",
-                  color: "#0f172a",
-                }}
-              >
-                THERMAL <span style={{ color: "#0284c7" }}>LEXUM</span>
-              </div>
-            </div>
+          <div style={{ position: "relative", height: "38px", width: "160px" }}>
+            <Image
+              src="/logo.png"
+              alt="Thermal Lexum"
+              fill
+              style={{ objectFit: "contain", objectPosition: "left center" }}
+              priority
+            />
           </div>
         </Link>
 
