@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const footerLinks = {
   COMPANY: [
-    { label: "B2B Direct Purchase (30% OFF)", href: "/b2b" },
+    { label: "B2B Bulk (30% OFF)", href: "/b2b" },
     { label: "About Us", href: "/about" },
     { label: "Founder's Message", href: "/founder" },
     { label: "Contact", href: "/contact" },
@@ -60,66 +60,56 @@ function SocialIcon({ type }: { type: string }): React.ReactNode {
 
 export default function Footer() {
   return (
-    <footer
-      style={{
-        background: "#f8fafc",
-        borderTop: "1px solid #e2e8f0",
-      }}
-      role="contentinfo"
-    >
+    <footer style={{ background: "#f8fafc", borderTop: "1px solid #e2e8f0" }} role="contentinfo">
       <div className="thermal-bar" />
-      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "72px 24px 40px" }}>
-        {/* Top section */}
+
+      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "48px 16px 32px" }}>
+
+        {/* ─── TOP: Brand + Links ─── */}
+        {/* Mobile: single column stack. Desktop: brand (2fr) + 3 link cols */}
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "2fr repeat(3, 1fr)",
-            gap: "48px",
-            marginBottom: "64px",
-          }}
+          className="footer-grid"
+          style={{ marginBottom: "40px" }}
         >
-          {/* Brand */}
-          <div>
-            <Image
-              src="/logo.png"
-              alt="Thermal Lexum"
-              width={260}
-              height={90}
-              style={{ objectFit: "contain", maxHeight: "90px", width: "auto", display: "block", marginBottom: "12px" }}
-            />
+          {/* Brand column */}
+          <div style={{ marginBottom: "8px" }}>
+            {/* Logo */}
+            <div style={{ position: "relative", width: "140px", height: "46px", overflow: "hidden", borderRadius: "4px", marginBottom: "12px" }}>
+              <Image
+                src="/logo.png"
+                alt="Thermal Lexum"
+                fill
+                sizes="140px"
+                style={{ objectFit: "cover", objectPosition: "center 48%" }}
+              />
+            </div>
+
             <div
               style={{
                 fontFamily: "JetBrains Mono, monospace",
                 fontSize: "10px",
                 letterSpacing: "3px",
                 color: "#0284c7",
-                marginBottom: "20px",
+                marginBottom: "16px",
                 fontWeight: "700"
               }}
             >
               COOL SYSTEMS. UNSTOPPABLE PERFORMANCE.
             </div>
-            <p
-              style={{
-                fontSize: "14px",
-                color: "#475569",
-                lineHeight: "1.7",
-                maxWidth: "300px",
-                marginBottom: "24px",
-              }}
-            >
+            <p style={{ fontSize: "14px", color: "#475569", lineHeight: "1.7", maxWidth: "300px", marginBottom: "20px" }}>
               High-performance thermal interface solutions engineered under Founder <strong>Javed Shaikh</strong> for gamers, overclockers, and workstation professionals.
             </p>
-            {/* Social Links */}
-            <div style={{ display: "flex", gap: "8px" }}>
+
+            {/* Social icons */}
+            <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
               {socialLinks.map((s) => (
                 <a
                   key={s.label}
                   href={s.href}
                   aria-label={s.label}
                   style={{
-                    width: "36px",
-                    height: "36px",
+                    width: "38px",
+                    height: "38px",
                     borderRadius: "8px",
                     background: "#ffffff",
                     border: "1px solid #cbd5e1",
@@ -127,18 +117,7 @@ export default function Footer() {
                     alignItems: "center",
                     justifyContent: "center",
                     color: "#475569",
-                    transition: "all 0.2s",
                     textDecoration: "none",
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.color = "#0284c7";
-                    (e.currentTarget as HTMLElement).style.borderColor = "#0284c7";
-                    (e.currentTarget as HTMLElement).style.background = "rgba(2, 132, 199, 0.08)";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.color = "#475569";
-                    (e.currentTarget as HTMLElement).style.borderColor = "#cbd5e1";
-                    (e.currentTarget as HTMLElement).style.background = "#ffffff";
                   }}
                 >
                   <SocialIcon type={s.icon} />
@@ -147,22 +126,23 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Links */}
+          {/* Link columns */}
           {Object.entries(footerLinks).map(([title, links]) => (
             <div key={title}>
               <div
                 style={{
                   fontFamily: "JetBrains Mono, monospace",
-                  fontSize: "11px",
+                  fontSize: "10px",
                   letterSpacing: "2px",
                   color: "#64748b",
-                  marginBottom: "20px",
-                  fontWeight: "700"
+                  marginBottom: "16px",
+                  fontWeight: "700",
+                  textTransform: "uppercase"
                 }}
               >
                 {title}
               </div>
-              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "12px" }}>
+              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
                 {links.map((link) => (
                   <li key={link.href}>
                     <Link
@@ -173,9 +153,8 @@ export default function Footer() {
                         fontSize: "14px",
                         fontWeight: "500",
                         transition: "color 0.2s",
+                        display: "inline-block",
                       }}
-                      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#0284c7"; }}
-                      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "#475569"; }}
                     >
                       {link.label}
                     </Link>
@@ -186,66 +165,89 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Contact bar */}
+        {/* ─── CONTACT BAR ─── */}
         <div
           style={{
-            padding: "24px 32px",
+            padding: "20px",
             background: "#ffffff",
-            border: "1px solid #cbd5e1",
+            border: "1px solid #e2e8f0",
             borderRadius: "12px",
             display: "flex",
-            gap: "48px",
+            gap: "20px",
             flexWrap: "wrap",
-            marginBottom: "40px",
-            boxShadow: "0 4px 15px rgba(0,0,0,0.03)"
+            marginBottom: "32px",
+            boxShadow: "0 2px 10px rgba(0,0,0,0.03)"
           }}
         >
-          <div>
-            <div style={{ fontSize: "10px", letterSpacing: "2px", color: "#0284c7", marginBottom: "4px", fontFamily: "JetBrains Mono, monospace", fontWeight: "700" }}>EMAIL SUPPORT</div>
-            <a href="mailto:info@thermallexum.com" style={{ fontSize: "14px", color: "#0f172a", textDecoration: "none", fontWeight: "700" }}>info@thermallexum.com</a>
-          </div>
-          <div>
-            <div style={{ fontSize: "10px", letterSpacing: "2px", color: "#0284c7", marginBottom: "4px", fontFamily: "JetBrains Mono, monospace", fontWeight: "700" }}>PHONE DIRECT</div>
-            <a href="tel:+918864817544" style={{ fontSize: "14px", color: "#0f172a", textDecoration: "none", fontWeight: "700" }}>+91 8864-817544</a>
-          </div>
-          <div>
-            <div style={{ fontSize: "10px", letterSpacing: "2px", color: "#0284c7", marginBottom: "4px", fontFamily: "JetBrains Mono, monospace", fontWeight: "700" }}>HQ LOCATION</div>
-            <span style={{ fontSize: "14px", color: "#475569", fontWeight: "600" }}>Bengaluru - 560042, India</span>
-          </div>
+          {[
+            { label: "EMAIL", value: "info@thermallexum.com", href: "mailto:info@thermallexum.com" },
+            { label: "PHONE", value: "+91 8864-817544", href: "tel:+918864817544" },
+            { label: "HQ", value: "Bengaluru - 560042, India", href: null },
+          ].map((item) => (
+            <div key={item.label} style={{ minWidth: "160px" }}>
+              <div style={{ fontSize: "9px", letterSpacing: "2px", color: "#0284c7", marginBottom: "4px", fontFamily: "JetBrains Mono, monospace", fontWeight: "700" }}>
+                {item.label}
+              </div>
+              {item.href ? (
+                <a href={item.href} style={{ fontSize: "13px", color: "#0f172a", textDecoration: "none", fontWeight: "700" }}>
+                  {item.value}
+                </a>
+              ) : (
+                <span style={{ fontSize: "13px", color: "#475569", fontWeight: "600" }}>{item.value}</span>
+              )}
+            </div>
+          ))}
         </div>
 
-        {/* Bottom */}
+        {/* ─── BOTTOM BAR ─── */}
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             flexWrap: "wrap",
-            gap: "16px",
-            paddingTop: "24px",
+            gap: "12px",
+            paddingTop: "20px",
             borderTop: "1px solid #e2e8f0",
           }}
         >
-          <p style={{ fontSize: "13px", color: "#64748b" }}>
-            © 2026 Thermal Lexum. All Rights Reserved. Founder Javed Shaikh.
+          <p style={{ fontSize: "12px", color: "#94a3b8" }}>
+            © 2026 Thermal Lexum. All Rights Reserved.
           </p>
-          <div style={{ display: "flex", gap: "24px" }}>
+          <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
             {[
-              { label: "Privacy Policy", href: "/privacy" },
-              { label: "Terms & Conditions", href: "/terms" },
+              { label: "Privacy", href: "/privacy" },
+              { label: "Terms", href: "/terms" },
               { label: "Warranty Terms", href: "/warranty-terms" },
             ].map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                style={{ fontSize: "13px", color: "#64748b", textDecoration: "none", fontWeight: "500" }}
-              >
+              <Link key={l.href} href={l.href} style={{ fontSize: "12px", color: "#94a3b8", textDecoration: "none" }}>
                 {l.label}
               </Link>
             ))}
           </div>
         </div>
       </div>
+
+      <style>{`
+        /* Footer grid: 1 col on mobile, 2 cols on sm, 4 cols on lg */
+        .footer-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+        @media (min-width: 640px) {
+          .footer-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+          }
+        }
+        @media (min-width: 1024px) {
+          .footer-grid {
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 48px;
+          }
+        }
+      `}</style>
     </footer>
   );
 }

@@ -19,68 +19,71 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Close mobile menu on route change
+  useEffect(() => { setMobileOpen(false); }, [pathname]);
+
   return (
     <nav
-      className={`navbar ${scrolled ? "scrolled" : ""}`}
       role="navigation"
       aria-label="Main navigation"
       style={{
-        background: scrolled ? "rgba(255, 255, 255, 0.98)" : "rgba(255, 255, 255, 0.85)",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1000,
+        background: scrolled ? "rgba(255,255,255,0.98)" : "rgba(255,255,255,0.92)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
         borderBottom: "1px solid #e2e8f0",
-        boxShadow: scrolled ? "0 4px 20px rgba(0, 0, 0, 0.05)" : "none"
+        boxShadow: scrolled ? "0 4px 20px rgba(0,0,0,0.06)" : "none",
+        transition: "all 0.3s ease",
+        maxWidth: "100vw",
       }}
     >
+      {/* Main bar */}
       <div
         style={{
           maxWidth: "1280px",
           margin: "0 auto",
-          padding: "0 24px",
-          height: "80px",
+          padding: "0 16px",
+          height: "68px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          gap: "12px",
         }}
       >
-        {/* Logo */}
-        <Link
-          href="/"
-          style={{ textDecoration: "none", display: "flex", alignItems: "center" }}
-          aria-label="Thermal Lexum - Home"
-        >
-          {/*
-            The PNG logo is a square with heavy whitespace padding.
-            We render it large (260×260) inside a small clipping window (200×60)
-            and use negative margins to shift into the center where the actual
-            THERMAL LEXUM text lives, making it clearly visible.
-          */}
-          <div style={{ width: "200px", height: "60px", overflow: "hidden", position: "relative", flexShrink: 0 }}>
+        {/* ─── LOGO ─── */}
+        <Link href="/" style={{ textDecoration: "none", flexShrink: 0, display: "flex", alignItems: "center" }} aria-label="Thermal Lexum - Home">
+          {/* objectFit:cover zooms into the center of the square PNG, showing THERMAL LEXUM clearly */}
+          <div style={{ position: "relative", width: "140px", height: "46px", overflow: "hidden", borderRadius: "4px" }}>
             <Image
               src="/logo.png"
               alt="Thermal Lexum"
-              width={280}
-              height={280}
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                width: "280px",
-                height: "280px",
-                objectFit: "contain",
-              }}
+              fill
+              sizes="140px"
+              style={{ objectFit: "cover", objectPosition: "center 48%" }}
               priority
             />
           </div>
         </Link>
 
-        {/* Desktop Nav Links (Hidden on mobile/tablet < 1024px) */}
-        <div className="hidden lg:flex items-center gap-1.5">
+        {/* ─── DESKTOP NAV LINKS (hidden on < 1024px) ─── */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "4px",
+            flex: 1,
+            justifyContent: "center",
+          }}
+          className="hidden lg:flex"
+        >
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -88,16 +91,16 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 style={{
-                  padding: "8px 18px",
+                  padding: "8px 16px",
                   borderRadius: "8px",
                   fontSize: "13px",
                   fontWeight: isActive ? "700" : "600",
-                  letterSpacing: "0.5px",
                   color: isActive ? "#0284c7" : "#475569",
                   textDecoration: "none",
-                  transition: "all 0.2s ease",
-                  background: isActive ? "rgba(2, 132, 199, 0.08)" : "transparent",
-                  border: isActive ? "1px solid rgba(2, 132, 199, 0.2)" : "1px solid transparent",
+                  transition: "all 0.2s",
+                  background: isActive ? "rgba(2,132,199,0.08)" : "transparent",
+                  border: isActive ? "1px solid rgba(2,132,199,0.2)" : "1px solid transparent",
+                  whiteSpace: "nowrap",
                 }}
               >
                 {link.label}
@@ -106,32 +109,44 @@ export default function Navbar() {
           })}
         </div>
 
-        {/* Desktop CTA & Mobile Toggle */}
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          <Link
-            href="/warranty/lookup"
-            className="hidden lg:inline-flex btn-ghost"
-            style={{ fontSize: "13px" }}
-          >
+        {/* ─── DESKTOP CTAs (hidden on < 1024px) ─── */}
+        <div className="hidden lg:flex" style={{ alignItems: "center", gap: "10px", flexShrink: 0 }}>
+          <Link href="/warranty/lookup" className="btn-ghost" style={{ fontSize: "13px" }}>
             Warranty Lookup
           </Link>
-
-          <Link
-            href="/warranty/register"
-            className="hidden sm:inline-flex btn-primary"
-            style={{ padding: "10px 20px", fontSize: "12px" }}
-          >
+          <Link href="/warranty/register" className="btn-primary" style={{ padding: "10px 20px", fontSize: "12px", whiteSpace: "nowrap" }}>
             Register Warranty
           </Link>
+        </div>
 
-          {/* Mobile menu button (Visible ONLY on mobile/tablet < 1024px) */}
+        {/* ─── MOBILE: Register Warranty + Hamburger ─── */}
+        <div className="flex lg:hidden" style={{ alignItems: "center", gap: "8px", flexShrink: 0 }}>
+          <Link
+            href="/warranty/register"
+            className="btn-primary"
+            style={{ padding: "9px 14px", fontSize: "11px", letterSpacing: "0.5px", whiteSpace: "nowrap" }}
+          >
+            Register
+          </Link>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="flex lg:hidden items-center justify-center bg-slate-100 border border-slate-300 text-slate-900 p-2 rounded-lg cursor-pointer"
             aria-label="Toggle menu"
             aria-expanded={mobileOpen}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "40px",
+              height: "40px",
+              background: mobileOpen ? "rgba(2,132,199,0.1)" : "#f1f5f9",
+              border: "1px solid #e2e8f0",
+              borderRadius: "8px",
+              cursor: "pointer",
+              color: mobileOpen ? "#0284c7" : "#0f172a",
+              flexShrink: 0,
+            }}
           >
-            <svg width="20" height="20" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2">
               {mobileOpen ? (
                 <path d="M4 4l10 10M14 4L4 14"/>
               ) : (
@@ -142,59 +157,67 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* ─── MOBILE DRAWER ─── */}
       {mobileOpen && (
         <div
-          className="lg:hidden"
           style={{
             background: "#ffffff",
             borderTop: "1px solid #e2e8f0",
-            padding: "16px 24px",
+            padding: "16px",
             display: "flex",
             flexDirection: "column",
-            gap: "6px",
-            boxShadow: "0 10px 25px rgba(0,0,0,0.1)"
+            gap: "4px",
+            boxShadow: "0 12px 32px rgba(0,0,0,0.1)",
           }}
         >
-          <Link
-            href="/warranty/register"
-            onClick={() => setMobileOpen(false)}
-            className="btn-primary"
-            style={{ width: "100%", justifyContent: "center", marginBottom: "12px", padding: "12px" }}
-          >
-            Register Warranty
-          </Link>
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setMobileOpen(false)}
-              style={{
-                display: "block",
-                padding: "12px 0",
-                borderBottom: "1px solid #f1f5f9",
-                fontSize: "15px",
-                color: pathname === link.href ? "#0284c7" : "#0f172a",
-                textDecoration: "none",
-                fontWeight: pathname === link.href ? "700" : "500"
-              }}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  padding: "13px 16px",
+                  borderRadius: "10px",
+                  fontSize: "15px",
+                  fontWeight: isActive ? "700" : "500",
+                  color: isActive ? "#0284c7" : "#0f172a",
+                  textDecoration: "none",
+                  background: isActive ? "rgba(2,132,199,0.06)" : "transparent",
+                  border: isActive ? "1px solid rgba(2,132,199,0.15)" : "1px solid transparent",
+                }}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
+
+          {/* Divider */}
+          <div style={{ height: "1px", background: "#f1f5f9", margin: "8px 0" }} />
+
           <Link
             href="/warranty/lookup"
-            onClick={() => setMobileOpen(false)}
             style={{
-              display: "block",
-              padding: "12px 0",
+              display: "flex",
+              alignItems: "center",
+              padding: "13px 16px",
+              borderRadius: "10px",
               fontSize: "15px",
+              fontWeight: "600",
               color: "#0284c7",
               textDecoration: "none",
-              fontWeight: "700"
             }}
           >
-            Warranty Lookup
+            🔍 Warranty Lookup
+          </Link>
+          <Link
+            href="/warranty/register"
+            className="btn-primary"
+            style={{ justifyContent: "center", padding: "14px", fontSize: "14px", marginTop: "4px" }}
+          >
+            Register Warranty
           </Link>
         </div>
       )}
