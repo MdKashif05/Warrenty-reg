@@ -80,14 +80,13 @@ export default function Footer() {
         >
           {/* Brand */}
           <div>
-            <div style={{ position: "relative", height: "42px", width: "180px", marginBottom: "12px" }}>
-              <Image
-                src="/logo.png"
-                alt="Thermal Lexum"
-                fill
-                style={{ objectFit: "contain", objectPosition: "left center" }}
-              />
-            </div>
+            <Image
+              src="/logo.png"
+              alt="Thermal Lexum"
+              width={260}
+              height={90}
+              style={{ objectFit: "contain", maxHeight: "90px", width: "auto", display: "block", marginBottom: "12px" }}
+            />
             <div
               style={{
                 fontFamily: "JetBrains Mono, monospace",
