@@ -58,26 +58,26 @@ export default function WarrantyRegisterPage() {
   return (
     <>
       <Navbar />
-      <main style={{ minHeight: "100vh", background: "var(--brand-black)", paddingTop: "72px" }}>
+      <main style={{ minHeight: "100vh", background: "var(--brand-black)", paddingTop: "80px" }}>
         {/* Header */}
         <div
           style={{
             background: "var(--brand-dark)",
             borderBottom: "1px solid var(--brand-border)",
-            padding: "40px 24px",
+            padding: "32px 16px",
           }}
         >
           <div style={{ maxWidth: "900px", margin: "0 auto" }}>
             <div className="section-label" style={{ marginBottom: "12px" }}>WARRANTY REGISTRATION</div>
-            <h1 style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: "800", letterSpacing: "-1.5px", color: "#0f172a", marginBottom: "32px" }}>
+            <h1 style={{ fontSize: "clamp(22px, 4vw, 44px)", fontWeight: "800", letterSpacing: "-1.5px", color: "#0f172a", marginBottom: "32px" }}>
               Register Your Product
             </h1>
 
             {/* Step indicator */}
-            <div style={{ display: "flex", alignItems: "center", gap: "0" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0", overflowX: "auto" }}>
               {steps.map((step, i) => (
-                <div key={step.num} style={{ display: "flex", alignItems: "center", flex: i < steps.length - 1 ? 1 : "none" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
+                <div key={step.num} style={{ display: "flex", alignItems: "center", flex: i < steps.length - 1 ? 1 : "none", minWidth: "fit-content" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
                     <div
                       className={`step-dot ${
                         state.step === step.num
@@ -95,12 +95,11 @@ export default function WarrantyRegisterPage() {
                     </div>
                     <span
                       style={{
-                        fontSize: "12px",
+                        fontSize: "11px",
                         fontWeight: "600",
                         color: state.step === step.num ? "var(--brand-cyan)" : state.step > step.num ? "var(--brand-gray)" : "var(--brand-gray-dim)",
-                        display: "none",
+                        whiteSpace: "nowrap",
                       }}
-                      className="step-label-desktop"
                     >
                       {step.label}
                     </span>
@@ -109,6 +108,7 @@ export default function WarrantyRegisterPage() {
                     <div
                       style={{
                         flex: 1,
+                        minWidth: "20px",
                         height: "1px",
                         background: state.step > step.num ? "var(--brand-cyan)" : "var(--brand-border)",
                         margin: "0 8px",
@@ -129,7 +129,7 @@ export default function WarrantyRegisterPage() {
         </div>
 
         {/* Step content */}
-        <div style={{ maxWidth: "900px", margin: "0 auto", padding: "48px 24px" }}>
+        <div style={{ maxWidth: "900px", margin: "0 auto", padding: "32px 16px" }}>
           {state.step === 1 && <Step1Serial state={state} updateState={updateState} />}
           {state.step === 2 && <Step2Customer state={state} updateState={updateState} />}
           {state.step === 3 && <Step3Purchase state={state} updateState={updateState} />}

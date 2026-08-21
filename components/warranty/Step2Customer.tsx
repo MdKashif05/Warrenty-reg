@@ -141,7 +141,7 @@ export default function Step2Customer({ state, updateState }: Props) {
             </select>
           </div>
 
-          <div style={{ display: "flex", gap: "12px", paddingTop: "8px" }}>
+          <div style={{ display: "flex", gap: "12px", paddingTop: "8px", flexWrap: "wrap" }} className="step-btn-row">
             <button type="button" className="btn-secondary" onClick={() => updateState({ step: 1 })}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
               Back

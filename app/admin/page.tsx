@@ -30,7 +30,7 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* Metric Cards */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "20px", marginBottom: "40px" }}>
+      <div className="responsive-form-grid-4" style={{ marginBottom: "40px" }}>
         {metrics.map((m) => (
           <div key={m.label} className="brand-card" style={{ padding: "24px", background: "#ffffff", border: "1px solid #e2e8f0" }}>
             <div style={{ fontSize: "11px", color: "#64748b", letterSpacing: "1px", textTransform: "uppercase", fontWeight: "700" }}>{m.label}</div>

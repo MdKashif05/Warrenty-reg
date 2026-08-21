@@ -207,7 +207,7 @@ export default function ProductDetailPage() {
 
             {/* Tab content */}
             {selectedTab === "overview" && (
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "48px" }}>
+              <div className="responsive-grid-2" style={{ gap: "32px" }}>
                 <div className="brand-card" style={{ padding: "36px", background: "#ffffff", border: "1px solid #e2e8f0" }}>
                   <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#0f172a", marginBottom: "20px" }}>
                     Engineering Highlights
@@ -277,7 +277,7 @@ export default function ProductDetailPage() {
                 <h2 style={{ fontSize: "22px", fontWeight: "800", color: "#0f172a", marginBottom: "20px" }}>
                   Recommended Use Cases
                 </h2>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                <div className="responsive-form-grid-2" style={{ gap: "16px" }}>
                   {product.applications.map((app, i) => (
                     <div key={i} style={{ padding: "16px 20px", background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: "10px", color: "#0f172a", fontSize: "15px", fontWeight: "600" }}>
                       ⚡ {app}

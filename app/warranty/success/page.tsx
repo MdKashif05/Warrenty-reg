@@ -87,7 +87,7 @@ function SuccessContent() {
               View Warranty Certificate
             </Link>
           )}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+          <div className="responsive-form-grid-2" style={{ gap: "12px" }}>
             <Link href="/warranty/lookup" className="btn-secondary" style={{ justifyContent: "center" }}>
               Check Warranty Status
             </Link>

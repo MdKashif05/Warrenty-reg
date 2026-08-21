@@ -71,7 +71,7 @@ export default function CertificatePage() {
               </h2>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px", background: "#f8fafc", padding: "28px", borderRadius: "12px", border: "1px solid #e2e8f0", marginBottom: "40px" }}>
+            <div className="responsive-form-grid-2" style={{ background: "#f8fafc", padding: "28px", borderRadius: "12px", border: "1px solid #e2e8f0", marginBottom: "40px" }}>
               <div>
                 <div style={{ fontSize: "12px", color: "#64748b", textTransform: "uppercase", fontWeight: "700" }}>Registered Customer</div>
                 <div style={{ fontSize: "16px", fontWeight: "700", color: "#0f172a", marginTop: "4px" }}>{data?.customerName || "Customer Record"}</div>

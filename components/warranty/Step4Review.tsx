@@ -102,7 +102,7 @@ export default function Step4Review({ state, updateState }: Props) {
           </div>
         )}
 
-        <div style={{ display: "flex", gap: "12px" }}>
+        <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }} className="step-btn-row">
           <button className="btn-secondary" onClick={() => updateState({ step: 3 })} disabled={submitting}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
             Back
