@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
@@ -19,110 +20,42 @@ export default function HomePage() {
       <Navbar />
       <main style={{ background: "#ffffff", paddingTop: "100px" }}>
         
-        {/* ─── 1. HERO BANNER (COPY EXACT STRUCTURE & LAYOUT FROM REFERENCE SITE) ─── */}
-        <section
-          style={{
-            background: "linear-gradient(135deg, #f0fcff 0%, #ffffff 60%, #eef6ff 100%)",
-            padding: "80px 20px 100px",
-            position: "relative",
-            borderBottom: "1px solid #e2e8f0",
-          }}
-        >
-          <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <span className="section-subtitle" style={{ marginBottom: "20px" }}>
-                  THERMAL LEXUM – HIGH PERFORMANCE COOLING
-                </span>
-                <h1
-                  style={{
-                    fontSize: "clamp(34px, 5.5vw, 62px)",
-                    fontWeight: "900",
-                    letterSpacing: "-1.5px",
-                    color: "#0f172a",
-                    lineHeight: "1.1",
-                    marginBottom: "24px",
-                  }}
-                >
-                  Unlock Ultimate <span style={{ color: "#0E4D92" }}>Thermal Performance</span> with Thermal Lexum
-                </h1>
-                <p
-                  style={{
-                    fontSize: "17px",
-                    color: "#475569",
-                    lineHeight: "1.7",
-                    marginBottom: "36px",
-                    maxWidth: "580px",
-                  }}
-                >
-                  Experience top-tier thermal conductivity, expert warranty support, and tailored cooling solutions. Trusted by over 50,000 PC builders, overclockers, and industrial engineers worldwide.
-                </p>
-
-                <div style={{ display: "flex", gap: "14px", flexWrap: "wrap", marginBottom: "40px" }}>
-                  <Link href="/products" className="btn-primary" style={{ fontSize: "15px", padding: "16px 32px" }}>
-                    Explore Products 📦
-                  </Link>
-                  <Link href="/warranty/register" className="btn-secondary" style={{ fontSize: "15px", padding: "16px 28px" }}>
-                    Register Warranty 🛡️
-                  </Link>
-                </div>
-
-                {/* Stats Row */}
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(110px, 1fr))", gap: "16px", background: "#ffffff", padding: "20px", borderRadius: "16px", border: "1px solid #e2e8f0", boxShadow: "0 8px 24px rgba(0,0,0,0.04)" }}>
-                  {[
-                    { value: "50,000+", label: "Units Delivered" },
-                    { value: "14.2 W/mK", label: "Max Conductivity" },
-                    { value: "3 Years", label: "Official Warranty" },
-                    { value: "4.9 ★", label: "Customer Rating" },
-                  ].map((st) => (
-                    <div key={st.label} style={{ textAlign: "center" }}>
-                      <div style={{ fontSize: "22px", fontWeight: "900", color: "#0E4D92", fontFamily: "Outfit, sans-serif" }}>{st.value}</div>
-                      <div style={{ fontSize: "11px", color: "#64748b", fontWeight: "700", marginTop: "2px" }}>{st.label}</div>
-                    </div>
-                  ))}
-                </div>
+        {/* ─── 1. HERO BANNER — uses real /public/banner.png ─── */}
+        <section style={{ position: "relative", borderBottom: "1px solid #1e3a5f" }}>
+          {/* Full-width banner image */}
+          <div style={{ position: "relative", width: "100%", height: "clamp(220px, 35vw, 480px)", overflow: "hidden" }}>
+            <Image
+              src="/banner.png"
+              alt="Thermal Lexum – Maximum Cooling"
+              fill
+              priority
+              style={{ objectFit: "cover", objectPosition: "center" }}
+            />
+            {/* Overlay gradient so text below blends smoothly */}
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.55) 100%)" }} />
+            {/* Centered CTA on banner */}
+            <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", padding: "32px 20px", gap: "14px" }}>
+              <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
+                <Link href="/products" className="btn-primary" style={{ fontSize: "15px", padding: "14px 28px", boxShadow: "0 6px 24px rgba(0,0,0,0.35)" }}>Shop Products 📦</Link>
+                <Link href="/warranty/register" className="btn-secondary" style={{ fontSize: "15px", padding: "14px 24px", background: "rgba(255,255,255,0.92)", color: "#0E4D92", fontWeight: "800" }}>Register Warranty 🛡️</Link>
               </div>
+            </div>
+          </div>
 
-              {/* Hero Banner Feature Card (Copied layout from reference site) */}
-              <div style={{ position: "relative" }}>
-                <div
-                  className="card-nesa"
-                  style={{
-                    background: "linear-gradient(135deg, #0E4D92 0%, #1a5ca4 100%)",
-                    color: "#ffffff",
-                    padding: "40px",
-                    borderRadius: "24px",
-                    boxShadow: "0 24px 60px rgba(14, 77, 146, 0.3)",
-                  }}
-                >
-                  <div style={{ fontSize: "12px", letterSpacing: "2px", fontWeight: "800", color: "#ffd166", textTransform: "uppercase", marginBottom: "12px" }}>
-                    OFFICIAL BRAND WARRANTY
-                  </div>
-                  <h3 style={{ fontSize: "28px", fontWeight: "900", color: "#ffffff", marginBottom: "16px" }}>
-                    Instant Warranty Registration & Support
-                  </h3>
-                  <p style={{ fontSize: "15px", color: "#e2e8f0", lineHeight: "1.7", marginBottom: "28px" }}>
-                    Bought from Amazon, Flipkart, or our official website? Register your order ID now to activate your 3-year replacement warranty card instantly.
-                  </p>
-
-                  <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginBottom: "32px" }}>
-                    {[
-                      "✅ Auto-calculate Warranty Expiry Date",
-                      "✅ Instant QR Warranty Certificate Download",
-                      "✅ Hassle-Free Online Claim Replacement Portal",
-                      "✅ 100% Genuine Thermal Lexum Quality Guarantee",
-                    ].map((item) => (
-                      <div key={item} style={{ fontSize: "14px", fontWeight: "600", color: "#ffffff" }}>
-                        {item}
-                      </div>
-                    ))}
-                  </div>
-
-                  <Link href="/warranty/register" className="btn-primary" style={{ background: "#ffffff", color: "#0E4D92", width: "100%", textAlign: "center", justifyContent: "center", fontSize: "15px", fontWeight: "800" }}>
-                    Register My Warranty Card →
-                  </Link>
+          {/* Stats strip below banner */}
+          <div style={{ background: "#0E4D92", padding: "18px 20px" }}>
+            <div style={{ maxWidth: "1280px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "12px" }}>
+              {[
+                { value: "50,000+", label: "Units Delivered" },
+                { value: "14.2 W/mK", label: "Max Conductivity" },
+                { value: "3 Years", label: "Official Warranty" },
+                { value: "4.9 ★", label: "Customer Rating" },
+              ].map((st) => (
+                <div key={st.label} style={{ textAlign: "center" }}>
+                  <div style={{ fontSize: "22px", fontWeight: "900", color: "#ffd166", fontFamily: "Outfit, sans-serif" }}>{st.value}</div>
+                  <div style={{ fontSize: "11px", color: "#bfdbfe", fontWeight: "700", marginTop: "2px", textTransform: "uppercase", letterSpacing: "0.5px" }}>{st.label}</div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
