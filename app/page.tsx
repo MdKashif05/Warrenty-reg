@@ -22,23 +22,25 @@ export default function HomePage() {
         
         {/* ─── 1. HERO BANNER — uses real /public/banner.png ─── */}
         <section style={{ position: "relative", borderBottom: "1px solid #1e3a5f" }}>
-          {/* Proportional responsive container */}
-          <div className="hero-banner-container">
+          {/* Full-width responsive banner image */}
+          <div style={{ position: "relative", width: "100%", height: "auto", overflow: "hidden" }}>
             <Image
               src="/banner.png"
               alt="Thermal Lexum – Maximum Cooling"
-              fill
+              width={9375}
+              height={1875}
               priority
-              className="hero-banner-image"
+              style={{ width: "100%", height: "auto", display: "block" }}
             />
-            {/* Overlay gradient so text below blends smoothly */}
-            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.55) 100%)", zIndex: 5 }} />
-            {/* Centered CTA on banner */}
-            <div className="hero-cta-container">
-              <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
-                <Link href="/products" className="btn-primary" style={{ fontSize: "14px", padding: "12px 24px", boxShadow: "0 6px 24px rgba(0,0,0,0.35)" }}>Shop Products 📦</Link>
-                <Link href="/warranty/register" className="btn-secondary" style={{ fontSize: "14px", padding: "12px 20px", background: "rgba(255,255,255,0.92)", color: "#0E4D92", fontWeight: "800" }}>Register Warranty 🛡️</Link>
-              </div>
+            {/* Desktop-only subtle overlay gradient */}
+            <div className="banner-overlay" style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,0,0,0.5) 100%)" }} />
+          </div>
+
+          {/* Responsive CTA buttons */}
+          <div className="banner-cta-section">
+            <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
+              <Link href="/products" className="btn-primary" style={{ fontSize: "15px", padding: "12px 26px", boxShadow: "0 6px 20px rgba(14,77,146,0.25)" }}>Shop Products 📦</Link>
+              <Link href="/warranty/register" className="btn-secondary" style={{ fontSize: "15px", padding: "12px 24px", background: "#f8fafc", color: "#0E4D92", fontWeight: "800", border: "1px solid #cbd5e1" }}>Register Warranty 🛡️</Link>
             </div>
           </div>
 
@@ -58,6 +60,35 @@ export default function HomePage() {
               ))}
             </div>
           </div>
+
+          <style>{`
+            .banner-cta-section {
+              padding: 24px 20px;
+              background: #ffffff;
+              border-bottom: 1px solid #e2e8f0;
+            }
+            @media (min-width: 769px) {
+              .banner-cta-section {
+                position: absolute;
+                bottom: 30px;
+                left: 0;
+                right: 0;
+                background: transparent !important;
+                border-bottom: none !important;
+                padding: 0 !important;
+                z-index: 10;
+              }
+              .banner-cta-section .btn-secondary {
+                background: rgba(255,255,255,0.9) !important;
+                border: none !important;
+              }
+            }
+            @media (max-width: 768px) {
+              .banner-overlay {
+                display: none !important;
+              }
+            }
+          `}</style>
         </section>
 
         {/* ─── 2. PRODUCTS CATALOG SHOWCASE ─── */}
