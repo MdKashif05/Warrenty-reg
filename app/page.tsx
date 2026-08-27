@@ -243,26 +243,26 @@ export default function HomePage() {
         </section>
 
         {/* OFFICIAL BRAND BANNER SHOWCASE */}
-        <section style={{ padding: "32px 16px", background: "#0f172a" }}>
+        <section style={{ padding: "24px 16px", background: "#0f172a" }}>
           <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
             <div
-              className="banner-wrapper"
               style={{
-                position: "relative",
                 width: "100%",
                 borderRadius: "16px",
                 overflow: "hidden",
                 border: "1px solid #334155",
-                boxShadow: "0 20px 50px rgba(0, 0, 0, 0.4)"
+                boxShadow: "0 20px 50px rgba(0, 0, 0, 0.4)",
+                background: "#0f172a",
               }}
             >
               <Image
                 src="/banner.png"
                 alt="Thermal Lexum - Maximum Cooling Official Banner"
-                fill
+                width={9375}
+                height={1875}
                 priority
                 sizes="(max-width: 1280px) 100vw, 1280px"
-                style={{ objectFit: "cover", objectPosition: "center" }}
+                style={{ width: "100%", height: "auto", display: "block" }}
               />
             </div>
           </div>
@@ -541,18 +541,6 @@ export default function HomePage() {
         </section>
       </main>
       <Footer />
-      <style>{`
-        .banner-wrapper {
-          aspect-ratio: 3.2 / 1;
-          min-height: 200px;
-        }
-        @media (max-width: 640px) {
-          .banner-wrapper {
-            aspect-ratio: 2 / 1 !important;
-            min-height: 150px !important;
-          }
-        }
-      `}</style>
     </>
   );
 }
