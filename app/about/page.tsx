@@ -1,205 +1,61 @@
-import type { Metadata } from "next";
+"use client";
+import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import Link from "next/link";
-import Image from "next/image";
-
-export const metadata: Metadata = {
-  title: "About Us | Thermal Lexum",
-  description: "Learn about Thermal Lexum — our mission, engineering values, leadership under Founder Javed Shaikh, and commitment to performance.",
-};
-
-const values = [
-  {
-    icon: "⚡",
-    title: "Performance First",
-    desc: "Every decision we make is centered around delivering maximum thermal dissipation and stability for high-draw hardware.",
-  },
-  {
-    icon: "🔬",
-    title: "Engineering Excellence",
-    desc: "Our thermal interface compounds are tested across thousands of heat cycles under intense overclocking scenarios.",
-  },
-  {
-    icon: "🛡️",
-    title: "Reliability & Longevity",
-    desc: "Formulated to prevent drying out, pumping out, or breakdown, ensuring years of consistent cooling performance.",
-  },
-  {
-    icon: "🌐",
-    title: "Global Standards",
-    desc: "Thermal Lexum products adhere to strict international quality, non-toxicity, and electrical isolation standards.",
-  },
-];
 
 export default function AboutPage() {
   return (
     <>
       <Navbar />
-      <main style={{ minHeight: "100vh", background: "#ffffff" }}>
-        {/* Hero */}
-        <section
-          className="page-hero bg-grid"
-          style={{
-            background: "radial-gradient(circle at 50% 0%, rgba(2, 132, 199, 0.08) 0%, #ffffff 80%)",
-            borderBottom: "1px solid #e2e8f0",
-            paddingTop: "140px",
-            paddingBottom: "80px"
-          }}
-        >
-          <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 24px" }}>
-            <div className="section-label" style={{ marginBottom: "16px" }}>ABOUT THERMAL LEXUM</div>
-            <h1 style={{ fontSize: "clamp(36px, 5vw, 64px)", fontWeight: "900", letterSpacing: "-2px", color: "#0f172a", marginBottom: "16px" }}>
-              Built for Those Who<br />
-              <span className="text-gradient">Demand Thermal Mastery.</span>
+      <main style={{ background: "#ffffff", paddingTop: "100px", minHeight: "100vh" }}>
+        <div style={{ background: "linear-gradient(135deg, #0E4D92 0%, #1a5ca4 100%)", color: "#ffffff", padding: "60px 20px" }}>
+          <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+            <span style={{ fontSize: "12px", letterSpacing: "2px", fontWeight: "800", color: "#ffd166", textTransform: "uppercase" }}>ABOUT NESA INSTITUTE</span>
+            <h1 style={{ fontSize: "clamp(32px, 5vw, 54px)", fontWeight: "900", color: "#ffffff", marginTop: "8px", marginBottom: "16px" }}>
+              Welcome to Nesa: Your English Speaking Hub for Confidence
             </h1>
-            <p style={{ fontSize: "16px", color: "#475569", maxWidth: "600px", lineHeight: "1.7" }}>
-              Thermal Lexum is a performance-focused thermal technology brand dedicated to engineering high-conductivity thermal interface solutions for modern computing.
+            <p style={{ fontSize: "17px", color: "#e2e8f0", maxWidth: "720px", lineHeight: "1.6" }}>
+              At Nesa, we create a friendly and immersive environment where you can enhance your speaking skills with ease.
             </p>
           </div>
-          <div className="thermal-bar" style={{ marginTop: "48px" }} />
-        </section>
+        </div>
 
-        {/* Mission */}
-        <section style={{ padding: "100px 24px", background: "#ffffff" }}>
-          <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-            <div className="responsive-grid-2" style={{ alignItems: "center" }}>
-              <div>
-                <div className="section-label" style={{ marginBottom: "16px" }}>OUR MISSION</div>
-                <h2 style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: "800", letterSpacing: "-1.5px", color: "#0f172a", marginBottom: "24px" }}>
-                  Thermal Science Engineered Without Shortcuts.
-                </h2>
-                <div style={{ display: "flex", flexDirection: "column", gap: "20px", fontSize: "15px", color: "#475569", lineHeight: "1.8" }}>
-                  <p>
-                    Thermal Lexum was founded on a simple principle: cooling is not optional — it is the heartbeat of hardware performance and lifespan.
-                  </p>
-                  <p>
-                    From enthusiasm-driven desktop rigs to workstation render nodes, poor heat transfer throttles power. We eliminate thermal bottlenecks through micro-particulate zinc and aluminum oxide matrix formulas.
-                  </p>
-                  <p>
-                    Trusted by builders, overclockers, and professionals worldwide, every Thermal Lexum product is backed by digital warranty verification and direct engineering support.
-                  </p>
-                </div>
-              </div>
-
-              {/* Stats Box */}
-              <div className="responsive-form-grid-2">
-                {[
-                  { num: "14.2 W/mK", label: "Peak Conductivity" },
-                  { num: "100%", label: "Authenticity Verified" },
-                  { num: "12 Months", label: "Warranty Backed" },
-                  { num: "24/7", label: "Customer Support" },
-                ].map((stat) => (
-                  <div
-                    key={stat.label}
-                    className="brand-card"
-                    style={{
-                      padding: "28px",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      border: "1px solid #e2e8f0",
-                      background: "#f8fafc"
-                    }}
-                  >
-                    <span style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "32px", fontWeight: "900", color: "#0284c7", marginBottom: "4px" }}>
-                      {stat.num}
-                    </span>
-                    <span style={{ fontSize: "13px", color: "#64748b", fontWeight: "600", letterSpacing: "0.5px" }}>
-                      {stat.label}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Founder Spotlight Section */}
-        <section
-          style={{
-            padding: "90px 24px",
-            background: "#f8fafc",
-            borderTop: "1px solid #e2e8f0",
-            borderBottom: "1px solid #e2e8f0"
-          }}
-        >
-          <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-            <div
-              className="brand-card founder-card-grid"
-              style={{
-                padding: "48px",
-                background: "#ffffff",
-                border: "1px solid #cbd5e1",
-                boxShadow: "0 15px 35px rgba(0,0,0,0.05)"
-              }}
-            >
-              <div style={{ position: "relative", width: "100%", height: "320px", borderRadius: "16px", overflow: "hidden", border: "3px solid #0284c7" }}>
-                <Image
-                  src="/founder.png"
-                  alt="Javed Shaikh - Founder of Thermal Lexum"
-                  fill
-                  style={{ objectFit: "cover", objectPosition: "center top" }}
-                />
-              </div>
-
-              <div>
-                <div className="section-label" style={{ marginBottom: "12px" }}>FOUNDER SPOTLIGHT</div>
-                <h3 style={{ fontSize: "30px", fontWeight: "800", color: "#0f172a", marginBottom: "16px" }}>
-                  "We don't sell products. We sell confidence."
-                </h3>
-                <p style={{ fontSize: "16px", color: "#475569", lineHeight: "1.8", marginBottom: "24px" }}>
-                  Founder <strong>Javed Shaikh</strong> established Thermal Lexum to deliver zero-compromise thermal solutions — liquid metal to liquid courage, thermal paste to trusted performance, thermal pads to pure innovation.
-                </p>
-                <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
-                  <Link href="/founder" className="btn-primary">
-                    Read Javed Shaikh's Message
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                  </Link>
-                  <span style={{ fontSize: "14px", color: "#0284c7", fontWeight: "700" }}>— Javed Shaikh, Founder & CEO</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Values */}
-        <section style={{ padding: "100px 24px", background: "#ffffff" }}>
-          <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-            <div style={{ textAlign: "center", marginBottom: "64px" }}>
-              <div className="section-label" style={{ marginBottom: "16px" }}>OUR CORE VALUES</div>
-              <h2 style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: "800", letterSpacing: "-1.5px", color: "#0f172a" }}>
-                The Principles Behind Every Compound
+        <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "80px 20px" }}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center marginBottom-60">
+            <div>
+              <h2 style={{ fontSize: "32px", fontWeight: "900", color: "#0f172a", marginBottom: "20px" }}>
+                Our Mission & Vision
               </h2>
+              <p style={{ fontSize: "16px", color: "#475569", lineHeight: "1.8", marginBottom: "20px" }}>
+                Welcome to Nesa, your ultimate destination for building English fluency and boosting your confidence! Our experienced instructors provide personalized guidance, engaging activities, and practical conversations to help you excel in English.
+              </p>
+              <p style={{ fontSize: "16px", color: "#475569", lineHeight: "1.8", marginBottom: "32px" }}>
+                Whether you're a beginner or advanced learner, Nesa is here to support you on your journey towards becoming a confident English speaker. Join us and unlock your linguistic potential today!
+              </p>
+
+              <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+                <Link href="/courses" className="btn-primary">
+                  Explore Programs
+                </Link>
+                <Link href="/contact" className="btn-secondary">
+                  Contact Admissions
+                </Link>
+              </div>
             </div>
 
-            <div className="responsive-grid-2">
-              {values.map((val) => (
-                <div key={val.title} className="brand-card" style={{ padding: "36px" }}>
-                  <div style={{ fontSize: "36px", marginBottom: "16px" }}>{val.icon}</div>
-                  <h3 style={{ fontSize: "20px", fontWeight: "700", color: "#0f172a", marginBottom: "12px" }}>{val.title}</h3>
-                  <p style={{ fontSize: "14px", color: "#475569", lineHeight: "1.7" }}>{val.desc}</p>
-                </div>
-              ))}
+            <div className="card-nesa" style={{ padding: "40px", background: "#f0fcff", border: "1px solid #cceeff" }}>
+              <h3 style={{ fontSize: "24px", fontWeight: "800", color: "#0E4D92", marginBottom: "16px" }}>
+                Why Learners Trust NESA
+              </h3>
+              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "14px", padding: 0, fontSize: "15px", color: "#334155" }}>
+                <li>✅ <strong>Certified Language Tutors:</strong> Dedicated experts skilled in conversational pedagogy.</li>
+                <li>✅ <strong>Time-Efficient Modules:</strong> Accelerated 30, 60, and 90-day learning tracks.</li>
+                <li>✅ <strong>Immersive Speaking Practice:</strong> Group discussions, debates, and role play sessions.</li>
+                <li>✅ <strong>Comprehensive Exam Preparation:</strong> Specialized IELTS and Business English modules.</li>
+              </ul>
             </div>
           </div>
-        </section>
-
-        {/* CTA */}
-        <section style={{ padding: "80px 24px", background: "#f8fafc", textAlign: "center", borderTop: "1px solid #e2e8f0" }}>
-          <div style={{ maxWidth: "540px", margin: "0 auto" }}>
-            <h2 style={{ fontSize: "36px", fontWeight: "800", letterSpacing: "-1.5px", color: "#0f172a", marginBottom: "16px" }}>
-              Join the Revolution. Cool Your Passion.
-            </h2>
-            <p style={{ fontSize: "15px", color: "#475569", marginBottom: "32px", lineHeight: "1.7" }}>
-              Join thousands of enthusiasts and professionals who rely on Thermal Lexum for peak system stability.
-            </p>
-            <div style={{ display: "flex", gap: "16px", justifyContent: "center" }}>
-              <Link href="/products" className="btn-primary">Explore Products</Link>
-              <Link href="/contact" className="btn-secondary">Contact Us</Link>
-            </div>
-          </div>
-        </section>
+        </div>
       </main>
       <Footer />
     </>

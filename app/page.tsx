@@ -1,544 +1,384 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import Navbar from "@/components/layout/Navbar";
+import { useState } from "react";
+import Navbar, { nesaCoursesList } from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
-function ThermalParticle({ x, y, size, delay }: { x: number; y: number; size: number; delay: number }) {
-  return (
-    <div
-      style={{
-        position: "absolute",
-        left: `${x}%`,
-        top: `${y}%`,
-        width: `${size}px`,
-        height: `${size}px`,
-        borderRadius: "50%",
-        background: "#0284c7",
-        boxShadow: "0 0 10px rgba(2, 132, 199, 0.4)",
-        opacity: 0,
-        animation: `fadeIn 2.5s ease-out ${delay}s infinite alternate`,
-        filter: "blur(0.5px)",
-      }}
-    />
-  );
-}
-
-const products = [
-  {
-    id: 1,
-    name: "LX-TIM Series",
-    category: "THERMAL PASTE",
-    label: "THERMAL_PASTE",
-    desc: "Ultra-high performance thermal compound engineered for extreme heat dissipation in high-TDP processors and graphics cards.",
-    specs: ["14.2 W/mK Thermal Conductivity", "Non-Electrically Conductive", "Zero Dry-Out Technology"],
-    color: "#0284c7",
-  },
-  {
-    id: 2,
-    name: "LX-LM Series",
-    category: "LIQUID METAL",
-    label: "LIQUID_METAL",
-    desc: "Next-generation liquid metal alloy thermal interface material for delidded CPUs, custom loops, and hardcore overclockers.",
-    specs: ["73 W/mK Thermal Transfer", "100% Gallium Alloy Matrix", "Maximum Heat Flow"],
-    color: "#2563eb",
-  },
-  {
-    id: 3,
-    name: "LX-PAD Series",
-    category: "THERMAL PADS",
-    label: "THERMAL PADS",
-    desc: "Premium phase-change thermal pads designed for uniform compression and heat bridge across VRAM and VRM components.",
-    specs: ["15.0 W/mK Conductivity", "Multi-Thickness Options", "High Compressibility"],
-    color: "#0d9488",
-  },
-];
-
-const stats = [
-  { value: "50K+", label: "Systems Cooled" },
-  { value: "35+", label: "Global Distributors" },
-  { value: "99.4%", label: "Satisfaction Rate" },
-  { value: "12 Months", label: "Warranty Backed" },
-];
-
 export default function HomePage() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
+  const [selectedCategory, setSelectedCategory] = useState("ALL");
 
   return (
     <>
       <Navbar />
-      <main style={{ background: "#ffffff" }}>
-        {/* HERO SECTION */}
+      <main style={{ background: "#ffffff", paddingTop: "100px" }}>
+        
+        {/* ─── 1. HERO SECTION ─── */}
         <section
           style={{
-            minHeight: "85vh",
-            background: "radial-gradient(circle at 50% -10%, rgba(56, 189, 248, 0.14) 0%, rgba(37, 99, 235, 0.04) 50%, #ffffff 85%)",
+            background: "linear-gradient(135deg, #f0fcff 0%, #ffffff 60%, #eef6ff 100%)",
+            padding: "80px 20px 100px",
             position: "relative",
-            overflow: "hidden",
-            display: "flex",
-            alignItems: "center",
+            borderBottom: "1px solid #e2e8f0",
           }}
-          className="bg-grid hero-container"
         >
-          {/* Ambient Light Orbs */}
-          <div
-            style={{
-              position: "absolute",
-              top: "15%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "100%",
-              maxWidth: "900px",
-              height: "450px",
-              background: "radial-gradient(ellipse, rgba(56, 189, 248, 0.18) 0%, rgba(37, 99, 235, 0.05) 50%, transparent 75%)",
-              pointerEvents: "none",
-              filter: "blur(40px)"
-            }}
-          />
-
-          {/* Thermal particles */}
-          {mounted && [
-            { x: 12, y: 25, size: 4, delay: 0 },
-            { x: 82, y: 18, size: 5, delay: 0.5 },
-            { x: 65, y: 68, size: 4, delay: 1 },
-            { x: 22, y: 55, size: 6, delay: 1.5 },
-            { x: 92, y: 48, size: 4, delay: 2 },
-          ].map((p, i) => <ThermalParticle key={i} {...p} />)}
-
-          <div
-            style={{
-              maxWidth: "1280px",
-              margin: "0 auto",
-              padding: "110px 16px 50px",
-              position: "relative",
-              zIndex: 1,
-              width: "100%",
-            }}
-          >
-            {/* Eyebrow */}
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                background: "rgba(2, 132, 199, 0.08)",
-                border: "1px solid rgba(2, 132, 199, 0.25)",
-                borderRadius: "100px",
-                padding: "6px 14px",
-                marginBottom: "20px",
-                backdropFilter: "blur(12px)",
-                maxWidth: "100%",
-              }}
-            >
-              <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#0284c7", boxShadow: "0 0 8px #0284c7", flexShrink: 0 }} />
-              <span style={{ fontFamily: "JetBrains Mono, monospace", fontSize: "10px", letterSpacing: "1.5px", color: "#0284c7", fontWeight: "700" }}>
-                EXTREME THERMAL DISSIPATION SCIENCE
-              </span>
-            </div>
-
-            {/* Main Headline */}
-            <h1
-              style={{
-                fontFamily: "Space Grotesk, sans-serif",
-                fontSize: "clamp(30px, 6.5vw, 84px)",
-                fontWeight: "900",
-                lineHeight: "1.08",
-                letterSpacing: "-1.5px",
-                color: "#0f172a",
-                marginBottom: "20px",
-                maxWidth: "850px",
-                wordBreak: "break-word",
-              }}
-            >
-              ENGINEERED FOR{" "}
-              <br />
-              <span
-                style={{
-                  background: "linear-gradient(135deg, #0284c7 0%, #2563eb 50%, #4f46e5 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text"
-                }}
-              >
-                UNSTOPPABLE
-              </span>
-              <br />
-              PERFORMANCE.
-            </h1>
-
-            <p
-              style={{
-                fontSize: "clamp(14px, 4vw, 18px)",
-                color: "#475569",
-                lineHeight: "1.6",
-                maxWidth: "580px",
-                marginBottom: "32px",
-              }}
-            >
-              Thermal Lexum develops high-conductivity thermal interface compounds for gamers, overclockers, and workstation professionals who demand zero thermal throttling.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-              <Link href="/products" className="btn-primary" style={{ padding: "14px 28px", fontSize: "13px" }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-                Explore Products
-              </Link>
-              <Link href="/warranty/register" className="btn-secondary" style={{ padding: "14px 24px", fontSize: "13px" }}>
-                Register Warranty (12 Months)
-              </Link>
-            </div>
-
-            {/* Stats row */}
-            <div
-              className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-slate-200 rounded-2xl overflow-hidden border border-slate-200 shadow-sm max-w-[680px] mt-10 w-full"
-            >
-              {stats.map((stat) => (
-                <div
-                  key={stat.label}
+          <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <span className="section-subtitle" style={{ marginBottom: "20px" }}>
+                  NESA – LET'S SPEAK IN ENGLISH
+                </span>
+                <h1
                   style={{
-                    background: "#ffffff",
-                    padding: "16px 12px",
-                    textAlign: "center"
+                    fontSize: "clamp(34px, 5.5vw, 62px)",
+                    fontWeight: "900",
+                    letterSpacing: "-1.5px",
+                    color: "#0f172a",
+                    lineHeight: "1.1",
+                    marginBottom: "24px",
                   }}
                 >
-                  <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "clamp(18px, 4vw, 24px)", fontWeight: "800", color: "#0284c7", marginBottom: "2px" }}>
-                    {stat.value}
-                  </div>
-                  <div style={{ fontSize: "9px", letterSpacing: "0.5px", color: "#64748b", textTransform: "uppercase", fontWeight: "700" }}>
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Hero Visual Graphic */}
-          <div
-            className="hidden lg:block"
-            style={{
-              position: "absolute",
-              right: "5%",
-              top: "50%",
-              transform: "translateY(-50%)",
-              width: "440px",
-              height: "440px",
-              opacity: 0.25,
-              pointerEvents: "none"
-            }}
-          >
-            <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <polygon points="200,10 380,110 380,290 200,390 20,290 20,110" stroke="#0284c7" strokeWidth="1.5" fill="none"/>
-              <polygon points="200,50 340,130 340,270 200,350 60,270 60,130" stroke="#2563eb" strokeWidth="1" fill="none"/>
-              <polygon points="200,90 300,150 300,250 200,310 100,250 100,150" stroke="#0284c7" strokeWidth="0.8" fill="none"/>
-              <circle cx="200" cy="200" r="60" stroke="#0284c7" strokeWidth="1" fill="rgba(2,132,199,0.06)"/>
-            </svg>
-          </div>
-
-          <div className="thermal-bar" style={{ position: "absolute", bottom: 0, left: 0, right: 0 }} />
-        </section>
-
-        {/* OFFICIAL BRAND BANNER SHOWCASE */}
-        <section style={{ padding: "24px 16px", background: "#0f172a" }}>
-          <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-            <div
-              style={{
-                width: "100%",
-                borderRadius: "16px",
-                overflow: "hidden",
-                border: "1px solid #334155",
-                boxShadow: "0 20px 50px rgba(0, 0, 0, 0.4)",
-                background: "#0f172a",
-              }}
-            >
-              <Image
-                src="/banner.png"
-                alt="Thermal Lexum - Maximum Cooling Official Banner"
-                width={9375}
-                height={1875}
-                priority
-                sizes="(max-width: 1280px) 100vw, 1280px"
-                style={{ width: "100%", height: "auto", display: "block" }}
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* FOUNDER SPOTLIGHT BANNER ON HOME PAGE */}
-        <section style={{ padding: "50px 16px", background: "#f8fafc", borderBottom: "1px solid #e2e8f0" }}>
-          <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-            <div
-              className="brand-card grid grid-cols-1 md:grid-cols-[180px_1fr] gap-6 md:gap-10 items-center p-5 sm:p-8"
-              style={{
-                background: "#ffffff",
-                border: "1px solid #cbd5e1",
-                boxShadow: "0 15px 35px rgba(0,0,0,0.04)"
-              }}
-            >
-              <div style={{ position: "relative", width: "160px", height: "180px", borderRadius: "16px", overflow: "hidden", border: "3px solid #0284c7", margin: "0 auto" }}>
-                <Image
-                  src="/founder.png"
-                  alt="Javed Shaikh - Founder & CEO"
-                  fill
-                  style={{ objectFit: "cover", objectPosition: "center top" }}
-                />
-              </div>
-
-              <div>
-                <div className="section-label" style={{ marginBottom: "8px" }}>FOUNDER'S MESSAGE</div>
-                <h3 style={{ fontSize: "clamp(20px, 4vw, 28px)", fontWeight: "900", color: "#0f172a", marginBottom: "12px", letterSpacing: "-0.5px" }}>
-                  “We don’t sell products. We sell confidence.”
-                </h3>
-                <p style={{ fontSize: "14px", color: "#475569", lineHeight: "1.6", marginBottom: "16px" }}>
-                  Read the founder's message by <strong>Javed Shaikh</strong> on liquid metal to liquid courage, thermal paste to trusted performance, and our commitment to zero compromise.
-                </p>
-                <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
-                  <Link href="/founder" className="btn-primary" style={{ padding: "10px 20px", fontSize: "12px" }}>
-                    Read Message
-                  </Link>
-                  <span style={{ fontSize: "13px", color: "#0284c7", fontWeight: "700" }}>— Javed Shaikh, Founder & CEO</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* PRODUCTS PREVIEW */}
-        <section style={{ padding: "60px 16px", background: "#ffffff" }}>
-          <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-            <div style={{ textAlign: "center", marginBottom: "40px" }}>
-              <div className="section-label" style={{ marginBottom: "12px" }}>HIGH PERFORMANCE LINEUP</div>
-              <h2 style={{ fontSize: "clamp(26px, 5vw, 48px)", fontWeight: "800", letterSpacing: "-1px", color: "#0f172a", marginBottom: "12px" }}>
-                Precision Thermal Interface Solutions
-              </h2>
-              <p style={{ fontSize: "14px", color: "#475569", maxWidth: "580px", margin: "0 auto" }}>
-                Formulated to maximize heat transfer efficiency and component lifespan across high-draw computing rigs.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {products.map((product) => (
-                <Link
-                  key={product.id}
-                  href={`/products?category=${product.label}`}
-                  style={{ textDecoration: "none" }}
+                  Unlock Your <span style={{ color: "#0E4D92" }}>English Fluency</span> at NESA
+                </h1>
+                <p
+                  style={{
+                    fontSize: "17px",
+                    color: "#475569",
+                    lineHeight: "1.7",
+                    marginBottom: "36px",
+                    maxWidth: "580px",
+                  }}
                 >
-                  <div
-                    className="brand-card"
-                    style={{
-                      padding: "24px",
-                      cursor: "pointer",
-                      position: "relative",
-                      overflow: "hidden",
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "space-between"
-                    }}
-                  >
-                    {/* Top Accent line */}
-                    <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: product.color }} />
-
-                    <div>
-                      {/* Category badge */}
-                      <div
-                        style={{
-                          display: "inline-block",
-                          padding: "4px 10px",
-                          borderRadius: "20px",
-                          background: `rgba(${product.color === "#0284c7" ? "2,132,199" : product.color === "#2563eb" ? "37,99,235" : "13,148,136"},0.1)`,
-                          border: `1px solid rgba(${product.color === "#0284c7" ? "2,132,199" : product.color === "#2563eb" ? "37,99,235" : "13,148,136"},0.3)`,
-                          fontFamily: "JetBrains Mono, monospace",
-                          fontSize: "10px",
-                          letterSpacing: "1px",
-                          color: product.color,
-                          marginBottom: "14px",
-                          fontWeight: "700"
-                        }}
-                      >
-                        {product.category}
-                      </div>
-
-                      <h3 style={{ fontSize: "22px", fontWeight: "800", color: "#0f172a", marginBottom: "10px" }}>
-                        {product.name}
-                      </h3>
-                      <p style={{ fontSize: "13px", color: "#475569", lineHeight: "1.6", marginBottom: "20px" }}>
-                        {product.desc}
-                      </p>
-
-                      <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "8px", marginBottom: "20px" }}>
-                        {product.specs.map((spec) => (
-                          <li key={spec} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", color: "#334155", fontWeight: "500" }}>
-                            <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: product.color, flexShrink: 0 }} />
-                            {spec}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", color: product.color, fontWeight: "700" }}>
-                      View Specifications
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                      </svg>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-
-            <div style={{ textAlign: "center", marginTop: "40px" }}>
-              <Link href="/products" className="btn-secondary" style={{ padding: "12px 28px" }}>
-                View Complete Catalog
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* WARRANTY & AUTHENTICITY SECTION */}
-        <section
-          style={{
-            padding: "60px 16px",
-            background: "#f8fafc",
-            position: "relative",
-            borderTop: "1px solid #e2e8f0",
-            borderBottom: "1px solid #e2e8f0"
-          }}
-        >
-          <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-            <div
-              className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center"
-            >
-              <div>
-                <div className="section-label" style={{ marginBottom: "12px" }}>DIGITAL WARRANTY PORTAL</div>
-                <h2 style={{ fontSize: "clamp(26px, 4.5vw, 48px)", fontWeight: "800", letterSpacing: "-1px", color: "#0f172a", marginBottom: "16px" }}>
-                  100% Authenticity.<br />Guaranteed Coverage.
-                </h2>
-                <p style={{ fontSize: "14px", color: "#475569", lineHeight: "1.6", marginBottom: "28px" }}>
-                  Every genuine Thermal Lexum product carries a unique anti-counterfeit serial code. Verify your product authenticity and register for 12-month replacement warranty in seconds.
+                  Unlock your English potential at NESA: The premier English speaking center where language mastery comes to life. Experience interactive sessions, expert guidance, and tailored programs that accelerate your journey towards confident and effective communication.
                 </p>
 
-                <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "32px" }}>
+                <div style={{ display: "flex", gap: "14px", flexWrap: "wrap", marginBottom: "40px" }}>
+                  <Link href="/courses" className="btn-primary" style={{ fontSize: "15px", padding: "16px 32px" }}>
+                    Explore All Courses 📚
+                  </Link>
+                  <Link href="/register" className="btn-secondary" style={{ fontSize: "15px", padding: "16px 28px" }}>
+                    Register Free Now ✨
+                  </Link>
+                </div>
+
+                {/* Stats row */}
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(110px, 1fr))", gap: "16px", background: "#ffffff", padding: "20px", borderRadius: "16px", border: "1px solid #e2e8f0", boxShadow: "0 8px 24px rgba(0,0,0,0.04)" }}>
                   {[
-                    { step: "01", title: "Scan Serial Number / Order ID", desc: "Locate the serial code on your box label or enter your retailer Order ID." },
-                    { step: "02", title: "Instant Cryptographic Verification", desc: "Our database verifies origin & batch manufacturing parameters in real time." },
-                    { step: "03", title: "Claim 12-Month Warranty", desc: "Get your digital certificate emailed instantly with 12 months guarantee." }
-                  ].map((item) => (
-                    <div key={item.step} style={{ display: "flex", gap: "14px", alignItems: "flex-start" }}>
-                      <div
-                        style={{
-                          width: "32px",
-                          height: "32px",
-                          borderRadius: "8px",
-                          background: "rgba(2, 132, 199, 0.1)",
-                          border: "1px solid rgba(2, 132, 199, 0.25)",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          fontFamily: "JetBrains Mono, monospace",
-                          fontSize: "11px",
-                          color: "#0284c7",
-                          fontWeight: "700",
-                          flexShrink: 0,
-                        }}
-                      >
-                        {item.step}
-                      </div>
-                      <div>
-                        <div style={{ fontSize: "14px", fontWeight: "700", color: "#0f172a", marginBottom: "2px" }}>{item.title}</div>
-                        <div style={{ fontSize: "12px", color: "#64748b" }}>{item.desc}</div>
-                      </div>
+                    { value: "10,000+", label: "Students Taught" },
+                    { value: "98%", label: "Success Rate" },
+                    { value: "12+", label: "Specialized Courses" },
+                    { value: "4.9 ★", label: "Student Rating" },
+                  ].map((st) => (
+                    <div key={st.label} style={{ textAlign: "center" }}>
+                      <div style={{ fontSize: "22px", fontWeight: "900", color: "#0E4D92", fontFamily: "Outfit, sans-serif" }}>{st.value}</div>
+                      <div style={{ fontSize: "11px", color: "#64748b", fontWeight: "700", marginTop: "2px" }}>{st.label}</div>
                     </div>
                   ))}
                 </div>
-
-                <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-                  <Link href="/warranty/register" className="btn-primary" style={{ padding: "14px 24px", fontSize: "13px" }}>
-                    Register Warranty Now
-                  </Link>
-                  <Link href="/warranty/lookup" className="btn-secondary" style={{ padding: "14px 24px", fontSize: "13px" }}>
-                    Verify Serial Code
-                  </Link>
-                </div>
               </div>
 
-              {/* Warranty Card Graphic */}
+              {/* Hero Graphic Card */}
               <div style={{ position: "relative" }}>
                 <div
-                  className="brand-card glow-cyan"
+                  className="card-nesa"
                   style={{
-                    padding: "24px 18px",
-                    borderRadius: "20px",
-                    position: "relative",
-                    background: "#ffffff",
-                    border: "1px solid #cbd5e1"
+                    background: "linear-gradient(135deg, #0E4D92 0%, #1a5ca4 100%)",
+                    color: "#ffffff",
+                    padding: "40px",
+                    borderRadius: "24px",
+                    boxShadow: "0 24px 60px rgba(14, 77, 146, 0.3)",
                   }}
                 >
-                  <div className="thermal-bar" style={{ position: "absolute", top: 0, left: 0, right: 0 }} />
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      flexWrap: "wrap",
-                      gap: "8px",
-                      marginBottom: "20px",
-                      borderBottom: "1px solid #f1f5f9",
-                      paddingBottom: "14px"
-                    }}
-                  >
-                    <div>
-                      <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "15px", fontWeight: "900", letterSpacing: "1px", color: "#0f172a" }}>
-                        THERMAL <span style={{ color: "#0284c7" }}>LEXUM</span>
-                      </div>
-                      <div style={{ fontFamily: "JetBrains Mono, monospace", fontSize: "9px", letterSpacing: "1px", color: "#0284c7", marginTop: "2px", fontWeight: "700" }}>
-                        OFFICIAL WARRANTY CERTIFICATE
-                      </div>
-                    </div>
-                    <span className="badge badge-active">12 MONTHS VALID</span>
+                  <div style={{ fontSize: "12px", letterSpacing: "2px", fontWeight: "800", color: "#ffd166", textTransform: "uppercase", marginBottom: "12px" }}>
+                    ENROLLMENT PROGRAM 2026
                   </div>
+                  <h3 style={{ fontSize: "28px", fontWeight: "900", color: "#ffffff", marginBottom: "16px" }}>
+                    Speak English Confidently in 30 Days
+                  </h3>
+                  <p style={{ fontSize: "15px", color: "#e2e8f0", lineHeight: "1.7", marginBottom: "28px" }}>
+                    Join live interactive classes, accent training, group discussions, and personal mentorship crafted by certified language experts.
+                  </p>
 
-                  <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "24px" }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginBottom: "32px" }}>
                     {[
-                      { label: "Product", val: "Thermal Lexum LX-TIM Pro" },
-                      { label: "Warranty Period", val: "12 Months (1 Year)" },
-                      { label: "Coverage", val: "Full Replacement Guarantee" },
-                      { label: "Verification", val: "Cryptographic Hash Verified" },
-                    ].map((row) => (
-                      <div key={row.label} style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "4px", fontSize: "12px", borderBottom: "1px solid #f8fafc", paddingBottom: "6px" }}>
-                        <span style={{ color: "#64748b" }}>{row.label}</span>
-                        <span style={{ color: "#0f172a", fontWeight: "700", textAlign: "right" }}>{row.val}</span>
+                      "✅ 1-on-1 Speaking Practice & Grammar Drills",
+                      "✅ Certified Instructors & Interactive Role-Plays",
+                      "✅ IELTS Band 8+ Training & Mock Interviews",
+                      "✅ Lifetime Access to NESA Study Material",
+                    ].map((item) => (
+                      <div key={item} style={{ fontSize: "14px", fontWeight: "600", color: "#ffffff" }}>
+                        {item}
                       </div>
                     ))}
                   </div>
 
-                  <div
-                    style={{
-                      padding: "12px 14px",
-                      background: "#f8fafc",
-                      borderRadius: "10px",
-                      border: "1px solid #e2e8f0",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      flexWrap: "wrap",
-                      gap: "8px"
-                    }}
-                  >
-                    <div style={{ fontSize: "11px", color: "#64748b" }}>
-                      Instant PDF Certificate Download
+                  <Link href="/register" className="btn-primary" style={{ background: "#ffffff", color: "#0E4D92", width: "100%", textAlign: "center", justifyContent: "center", fontSize: "15px", fontWeight: "800" }}>
+                    Join Next Batch Free →
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ─── 2. POPULAR COURSES SECTION ─── */}
+        <section style={{ padding: "90px 20px", background: "#ffffff" }}>
+          <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+            <div style={{ textAlign: "center", marginBottom: "50px" }}>
+              <span className="section-subtitle" style={{ marginBottom: "14px" }}>
+                EXPLORE PROGRAMMING
+              </span>
+              <h2 style={{ fontSize: "clamp(28px, 4.5vw, 48px)", fontWeight: "900", color: "#0f172a", marginBottom: "16px" }}>
+                Popular Spoken English Courses
+              </h2>
+              <p style={{ fontSize: "16px", color: "#64748b", maxWidth: "620px", margin: "0 auto" }}>
+                Enjoy top notch learning methods and achieve next level skills! Select from our curated learning tracks designed for beginners to corporate leaders.
+              </p>
+            </div>
+
+            <div className="responsive-grid-3">
+              {nesaCoursesList.map((course) => (
+                <div key={course.slug} className="card-nesa" style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "28px" }}>
+                  <div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+                      <span style={{ background: "#f0fcff", color: "#0E4D92", padding: "4px 12px", borderRadius: "20px", fontSize: "11px", fontWeight: "800", border: "1px solid #cceeff" }}>
+                        {course.badge}
+                      </span>
+                      <span style={{ fontSize: "20px", fontWeight: "900", color: "#0E4D92" }}>
+                        {course.price}
+                      </span>
                     </div>
-                    <span style={{ fontSize: "11px", color: "#0284c7", fontWeight: "700" }}>Available On Registration →</span>
+
+                    <h3 style={{ fontSize: "20px", fontWeight: "800", color: "#0f172a", marginBottom: "12px", lineHeight: "1.3" }}>
+                      <Link href={`/courses/${course.slug}`} style={{ color: "inherit", textDecoration: "none" }}>
+                        {course.name}
+                      </Link>
+                    </h3>
+
+                    <p style={{ fontSize: "14px", color: "#475569", lineHeight: "1.6", marginBottom: "24px" }}>
+                      {course.desc}
+                    </p>
+                  </div>
+
+                  <div>
+                    <div style={{ display: "flex", justifyContent: "space-between", padding: "12px 0", borderTop: "1px solid #f1f5f9", borderBottom: "1px solid #f1f5f9", marginBottom: "20px", fontSize: "12px", color: "#64748b", fontWeight: "600" }}>
+                      <span>📖 {course.lessons} Lessons</span>
+                      <span>👥 {course.students} Students</span>
+                    </div>
+
+                    <Link href={`/courses/${course.slug}`} className="btn-primary" style={{ width: "100%", justifyContent: "center" }}>
+                      View Course Details →
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ textAlign: "center", marginTop: "50px" }}>
+              <Link href="/courses" className="btn-secondary" style={{ fontSize: "15px", padding: "14px 32px" }}>
+                View All 12+ Courses →
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* ─── 3. ABOUT US SECTION ─── */}
+        <section style={{ padding: "90px 20px", background: "#f8fafc", borderTop: "1px solid #e2e8f0", borderBottom: "1px solid #e2e8f0" }}>
+          <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+              <div>
+                <span className="section-subtitle" style={{ marginBottom: "14px" }}>ABOUT US</span>
+                <h2 style={{ fontSize: "clamp(26px, 4vw, 42px)", fontWeight: "900", color: "#0f172a", marginBottom: "20px", lineHeight: "1.2" }}>
+                  Welcome to Nesa: Your English Speaking Hub for Confidence
+                </h2>
+                <p style={{ fontSize: "15px", color: "#475569", lineHeight: "1.8", marginBottom: "28px" }}>
+                  Welcome to Nesa, your ultimate destination for building English fluency and boosting your confidence! At Nesa, we create a friendly and immersive environment where you can enhance your speaking skills with ease. Our experienced instructors provide personalized guidance, engaging activities, and practical conversations to help you excel in English. Whether you're a beginner or advanced learner, Nesa is here to support you on your journey towards becoming a confident English speaker. Join us and unlock your linguistic potential today!
+                </p>
+
+                <div className="responsive-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "36px" }}>
+                  {[
+                    { icon: "🎓", title: "Expert Teachers", desc: "Certified spoken English instructors" },
+                    { icon: "⚡", title: "Time Efficient", desc: "Fast-track 30 to 90 days modules" },
+                    { icon: "📖", title: "Advance Learning", desc: "Comprehensive course materials" },
+                    { icon: "💪", title: "Boost Confidence", desc: "Group debates & public speaking" },
+                  ].map((feat) => (
+                    <div key={feat.title} style={{ background: "#ffffff", padding: "16px", borderRadius: "12px", border: "1px solid #e2e8f0" }}>
+                      <div style={{ fontSize: "24px", marginBottom: "6px" }}>{feat.icon}</div>
+                      <div style={{ fontSize: "15px", fontWeight: "800", color: "#0f172a", marginBottom: "2px" }}>{feat.title}</div>
+                      <div style={{ fontSize: "12px", color: "#64748b" }}>{feat.desc}</div>
+                    </div>
+                  ))}
+                </div>
+
+                <Link href="/about" className="btn-primary">
+                  Learn More About NESA →
+                </Link>
+              </div>
+
+              {/* Graphic Banner */}
+              <div>
+                <div className="card-nesa" style={{ padding: "40px", background: "#0E4D92", color: "#ffffff" }}>
+                  <div style={{ fontSize: "13px", fontWeight: "800", color: "#ffd166", letterSpacing: "2px", textTransform: "uppercase", marginBottom: "14px" }}>
+                    WHY LEARNERS CHOOSE NESA
+                  </div>
+                  <h3 style={{ fontSize: "26px", fontWeight: "900", color: "#ffffff", marginBottom: "20px" }}>
+                    "The premier English speaking center where language mastery comes to life."
+                  </h3>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                    {[
+                      { num: "01", title: "Interactive Speaking Practice", text: "Daily live speaking drills to eliminate hesitation and stage fear." },
+                      { num: "02", title: "Grammar & Vocabulary Mastery", text: "Structured sentence framing without tedious memorization." },
+                      { num: "03", title: "Career & Interview Preparation", text: "Mock interviews, resume refinement and professional etiquette." },
+                    ].map((step) => (
+                      <div key={step.num} style={{ display: "flex", gap: "16px", alignItems: "flex-start" }}>
+                        <span style={{ fontSize: "18px", fontWeight: "900", color: "#ffd166", fontFamily: "Outfit, sans-serif" }}>{step.num}</span>
+                        <div>
+                          <div style={{ fontSize: "16px", fontWeight: "800", color: "#ffffff" }}>{step.title}</div>
+                          <div style={{ fontSize: "13px", color: "#cbd5e1", marginTop: "2px" }}>{step.text}</div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
+
+        {/* ─── 4. WHY NESA SECTION ─── */}
+        <section style={{ padding: "90px 20px", background: "#ffffff" }}>
+          <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+            <div style={{ textAlign: "center", marginBottom: "50px" }}>
+              <span className="section-subtitle" style={{ marginBottom: "14px" }}>WHY NESA</span>
+              <h2 style={{ fontSize: "clamp(28px, 4.5vw, 46px)", fontWeight: "900", color: "#0f172a", marginBottom: "14px" }}>
+                Unlock Your English Potential with NESA
+              </h2>
+              <p style={{ fontSize: "16px", color: "#64748b", maxWidth: "600px", margin: "0 auto" }}>
+                Discover your English potential at NESA. Transform your language skills with our expert guidance and immersive programs.
+              </p>
+            </div>
+
+            <div className="responsive-grid-4">
+              {[
+                {
+                  icon: "🌱",
+                  title: "Immersive Environment",
+                  desc: "We provide an immersive environment where learners are surrounded by English-speaking activities.",
+                },
+                {
+                  icon: "👨‍🏫",
+                  title: "Experienced Language Tutors",
+                  desc: "We've a team of experienced and qualified language instructors who are skilled in teaching English.",
+                },
+                {
+                  icon: "🛡️",
+                  title: "Customized Programs",
+                  desc: "We offer customized programs tailored to the specific needs and proficiency levels of learners.",
+                },
+                {
+                  icon: "💡",
+                  title: "Interactive Approach",
+                  desc: "Group discussions, role plays, debates, and real-world scenarios to actively involve learners.",
+                },
+              ].map((box) => (
+                <div key={box.title} className="card-nesa" style={{ padding: "32px 24px", textAlign: "center" }}>
+                  <div style={{ fontSize: "40px", marginBottom: "16px" }}>{box.icon}</div>
+                  <h3 style={{ fontSize: "18px", fontWeight: "800", color: "#0f172a", marginBottom: "10px" }}>{box.title}</h3>
+                  <p style={{ fontSize: "14px", color: "#475569", lineHeight: "1.6", marginBottom: "20px" }}>{box.desc}</p>
+                  <Link href="/courses" style={{ color: "#0E4D92", fontWeight: "700", textDecoration: "none", fontSize: "13px" }}>
+                    Start Now →
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ─── 5. TESTIMONIALS SECTION ─── */}
+        <section style={{ padding: "90px 20px", background: "#f0fcff", borderTop: "1px solid #cceeff" }}>
+          <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+            <div style={{ textAlign: "center", marginBottom: "50px" }}>
+              <span className="section-subtitle" style={{ marginBottom: "14px" }}>OUR ACHIEVEMENTS</span>
+              <h2 style={{ fontSize: "clamp(28px, 4.5vw, 46px)", fontWeight: "900", color: "#0f172a", marginBottom: "14px" }}>
+                What Our Students Say About NESA
+              </h2>
+              <p style={{ fontSize: "16px", color: "#64748b", maxWidth: "620px", margin: "0 auto" }}>
+                Experience excellence in English language education at NESA. Our remarkable achievements stand as a witness to our dedication in empowering learners.
+              </p>
+            </div>
+
+            <div className="responsive-grid-3">
+              {[
+                {
+                  quote: "NESA has been a game-changer for me. Their immersive English programs and experienced instructors helped me gain confidence in speaking English fluently. I highly recommend NESA!",
+                  name: "David Warner",
+                  role: "QA Developer",
+                },
+                {
+                  quote: "I'm grateful to NESA for their personalized approach to language learning. Their tailored programs and supportive faculty created a conducive environment for me. Thanks to NESA, I now communicate confidently!",
+                  name: "Sarah Taylor",
+                  role: "PHP Developer",
+                },
+                {
+                  quote: "NESA's English speaking center transformed my language skills. The interactive classes, real-life scenarios, and constant practice made learning enjoyable. The faculty's dedication truly made a difference.",
+                  name: "Rohit Patel",
+                  role: "Business Person",
+                },
+                {
+                  quote: "Choosing NESA was the best decision I made for my English fluency. The dynamic learning environment and engaging activities made the entire experience enriching. I feel ready for any challenge!",
+                  name: "Olivar Lucy",
+                  role: "UI/UX Designer",
+                },
+                {
+                  quote: "NESA's English speaking center provided me with a nurturing platform to improve my language skills. The supportive instructors and well-designed curriculum accelerated my progress.",
+                  name: "Anita Sharma",
+                  role: "Corporate Executive",
+                },
+                {
+                  quote: "The IELTS training at NESA helped me achieve Band 8.5 on my first attempt! The mock interviews and writing feedback were outstanding.",
+                  name: "Vikram Malhotra",
+                  role: "IELTS Candidate",
+                },
+              ].map((t) => (
+                <div key={t.name} className="card-nesa" style={{ padding: "30px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                  <p style={{ fontSize: "14px", color: "#334155", lineHeight: "1.7", fontStyle: "italic", marginBottom: "20px" }}>
+                    "{t.quote}"
+                  </p>
+                  <div style={{ display: "flex", alignItems: "center", gap: "12px", borderTop: "1px solid #f1f5f9", paddingTop: "16px" }}>
+                    <div style={{ width: "42px", height: "42px", borderRadius: "50%", background: "#0E4D92", color: "#ffffff", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: "800", fontSize: "16px" }}>
+                      {t.name[0]}
+                    </div>
+                    <div>
+                      <div style={{ fontSize: "15px", fontWeight: "800", color: "#0f172a" }}>{t.name}</div>
+                      <div style={{ fontSize: "12px", color: "#0E4D92", fontWeight: "600" }}>{t.role}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ─── 6. ENROLLMENT BANNER ─── */}
+        <section style={{ padding: "80px 20px", background: "#0E4D92", color: "#ffffff", textAlign: "center" }}>
+          <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+            <h2 style={{ fontSize: "clamp(28px, 4.5vw, 44px)", fontWeight: "900", color: "#ffffff", marginBottom: "16px" }}>
+              Ready to Speak English Fluently & Confidently?
+            </h2>
+            <p style={{ fontSize: "17px", color: "#e2e8f0", lineHeight: "1.7", marginBottom: "32px" }}>
+              Enjoy the top notch learning methods and achieve next level skills! You are the creator of your own career & we will guide you through that.
+            </p>
+            <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
+              <Link href="/register" className="btn-primary" style={{ background: "#ffffff", color: "#0E4D92", fontSize: "16px", padding: "16px 36px", fontWeight: "800" }}>
+                Register Free Now! 🚀
+              </Link>
+              <Link href="/contact" className="btn-secondary" style={{ borderColor: "#ffffff", color: "#ffffff", background: "transparent", fontSize: "16px", padding: "16px 32px" }}>
+                Talk to Admissions 📞
+              </Link>
+            </div>
+          </div>
+        </section>
+
       </main>
       <Footer />
     </>
