@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import {
   AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
@@ -38,18 +39,45 @@ const PLATFORM_LABELS: Record<string, string> = {
 export default function AdminAnalyticsPage() {
   const [data, setData] = useState<Analytics | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     fetch("/api/admin/analytics")
-      .then((r) => r.json())
-      .then((d) => { setData(d); setLoading(false); });
+      .then((r) => {
+        if (!r.ok) {
+          throw new Error("Failed to fetch analytics");
+        }
+        return r.json();
+      })
+      .then((d) => {
+        if (d && d.error) {
+          setError(d.error);
+        } else {
+          setData(d);
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError("Unauthorized or server error. Please make sure you are logged in.");
+        setLoading(false);
+      });
   }, []);
 
   const formatRevenue = (paise: number) =>
-    new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", notation: "compact", maximumFractionDigits: 1 }).format(paise / 100);
+    new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", notation: "compact", maximumFractionDigits: 1 }).format((paise || 0) / 100);
 
-  if (loading) return <div style={{ textAlign: "center", padding: "80px", color: "#64748b" }}>Loading analytics…</div>;
-  if (!data) return <div style={{ color: "#64748b" }}>Failed to load analytics</div>;
+  if (loading) return <div style={{ textAlign: "center", padding: "80px", color: "#64748b", fontFamily: "Outfit, sans-serif" }}>🔄 Loading business analytics...</div>;
+  if (error || !data) return (
+    <div style={{ padding: "40px", textAlign: "center", background: "#fff", border: "1px solid #fee2e2", borderRadius: "12px", maxWidth: "500px", margin: "40px auto" }}>
+      <div style={{ fontSize: "40px", marginBottom: "16px" }}>⚠️</div>
+      <h3 style={{ color: "#b91c1c", fontSize: "18px", fontWeight: "800", marginBottom: "8px" }}>Failed to Load Analytics</h3>
+      <p style={{ color: "#64748b", fontSize: "14px", marginBottom: "20px" }}>{error || "Unauthorized access or database error."}</p>
+      <Link href="/admin/login" className="btn-primary" style={{ display: "inline-flex", padding: "10px 20px" }}>
+        Re-Login to Control Panel 🔐
+      </Link>
+    </div>
+  );
 
   const { overview, charts } = data;
 

@@ -29,7 +29,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     return <div style={{ textAlign: "center", padding: "100px", color: "#64748b" }}>Verifying Admin Authentication...</div>;
   }
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/admin/login", { method: "DELETE" });
+    } catch (e) {
+      console.error("Logout API call failed:", e);
+    }
     localStorage.removeItem("nesa_admin_auth");
     router.push("/admin/login");
   };

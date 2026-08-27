@@ -20,20 +20,31 @@ export default function AdminLoginPage() {
   const [showPass, setShowPass] = useState(false);
   const router = useRouter();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
     setError("");
 
-    setTimeout(() => {
-      if (email === ADMIN_EMAIL && password === ADMIN_PASS) {
+    try {
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (res.ok) {
         localStorage.setItem("nesa_admin_auth", "true");
         router.push("/admin");
       } else {
-        setError("❌ Wrong email or password. Use the credentials shown below.");
+        const data = await res.json();
+        setError(data.error || "❌ Wrong email or password. Use the credentials shown below.");
         setSubmitting(false);
       }
-    }, 600);
+    } catch (err) {
+      console.error(err);
+      setError("❌ Network error. Please try again.");
+      setSubmitting(false);
+    }
   };
 
   return (
