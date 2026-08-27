@@ -81,7 +81,7 @@ export default function HomePage() {
             display: "flex",
             alignItems: "center",
           }}
-          className="bg-grid"
+          className="bg-grid hero-container"
         >
           {/* Ambient Light Orbs */}
           <div
@@ -112,7 +112,7 @@ export default function HomePage() {
             style={{
               maxWidth: "1280px",
               margin: "0 auto",
-              padding: "130px 24px 70px",
+              padding: "110px 16px 50px",
               position: "relative",
               zIndex: 1,
               width: "100%",
@@ -123,17 +123,18 @@ export default function HomePage() {
               style={{
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "10px",
+                gap: "8px",
                 background: "rgba(2, 132, 199, 0.08)",
                 border: "1px solid rgba(2, 132, 199, 0.25)",
                 borderRadius: "100px",
-                padding: "6px 18px",
-                marginBottom: "28px",
-                backdropFilter: "blur(12px)"
+                padding: "6px 14px",
+                marginBottom: "20px",
+                backdropFilter: "blur(12px)",
+                maxWidth: "100%",
               }}
             >
-              <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#0284c7", boxShadow: "0 0 8px #0284c7" }} />
-              <span style={{ fontFamily: "JetBrains Mono, monospace", fontSize: "11px", letterSpacing: "3px", color: "#0284c7", fontWeight: "700" }}>
+              <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#0284c7", boxShadow: "0 0 8px #0284c7", flexShrink: 0 }} />
+              <span style={{ fontFamily: "JetBrains Mono, monospace", fontSize: "10px", letterSpacing: "1.5px", color: "#0284c7", fontWeight: "700" }}>
                 EXTREME THERMAL DISSIPATION SCIENCE
               </span>
             </div>
@@ -142,13 +143,14 @@ export default function HomePage() {
             <h1
               style={{
                 fontFamily: "Space Grotesk, sans-serif",
-                fontSize: "clamp(44px, 7.5vw, 88px)",
+                fontSize: "clamp(30px, 6.5vw, 84px)",
                 fontWeight: "900",
-                lineHeight: "1.02",
-                letterSpacing: "-3px",
+                lineHeight: "1.08",
+                letterSpacing: "-1.5px",
                 color: "#0f172a",
-                marginBottom: "24px",
+                marginBottom: "20px",
                 maxWidth: "850px",
+                wordBreak: "break-word",
               }}
             >
               ENGINEERED FOR{" "}
@@ -169,45 +171,45 @@ export default function HomePage() {
 
             <p
               style={{
-                fontSize: "18px",
+                fontSize: "clamp(14px, 4vw, 18px)",
                 color: "#475569",
-                lineHeight: "1.7",
+                lineHeight: "1.6",
                 maxWidth: "580px",
-                marginBottom: "40px",
+                marginBottom: "32px",
               }}
             >
               Thermal Lexum develops high-conductivity thermal interface compounds for gamers, overclockers, and workstation professionals who demand zero thermal throttling.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              <Link href="/products" className="btn-primary" style={{ padding: "16px 36px", fontSize: "13px" }}>
+            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+              <Link href="/products" className="btn-primary" style={{ padding: "14px 28px", fontSize: "13px" }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
                 Explore Products
               </Link>
-              <Link href="/warranty/register" className="btn-secondary" style={{ padding: "16px 32px", fontSize: "13px" }}>
+              <Link href="/warranty/register" className="btn-secondary" style={{ padding: "14px 24px", fontSize: "13px" }}>
                 Register Warranty (12 Months)
               </Link>
             </div>
 
             {/* Stats row */}
             <div
-              className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-slate-300 rounded-2xl overflow-hidden border border-slate-300 shadow-sm max-w-[680px] mt-12 w-full"
+              className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-slate-200 rounded-2xl overflow-hidden border border-slate-200 shadow-sm max-w-[680px] mt-10 w-full"
             >
               {stats.map((stat) => (
                 <div
                   key={stat.label}
                   style={{
                     background: "#ffffff",
-                    padding: "22px 18px",
+                    padding: "16px 12px",
                     textAlign: "center"
                   }}
                 >
-                  <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "24px", fontWeight: "800", color: "#0284c7", marginBottom: "4px" }}>
+                  <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "clamp(18px, 4vw, 24px)", fontWeight: "800", color: "#0284c7", marginBottom: "2px" }}>
                     {stat.value}
                   </div>
-                  <div style={{ fontSize: "10px", letterSpacing: "1px", color: "#64748b", textTransform: "uppercase", fontWeight: "700" }}>
+                  <div style={{ fontSize: "9px", letterSpacing: "0.5px", color: "#64748b", textTransform: "uppercase", fontWeight: "700" }}>
                     {stat.label}
                   </div>
                 </div>
@@ -241,15 +243,14 @@ export default function HomePage() {
         </section>
 
         {/* OFFICIAL BRAND BANNER SHOWCASE */}
-        <section style={{ padding: "48px 24px", background: "#0f172a" }}>
+        <section style={{ padding: "32px 16px", background: "#0f172a" }}>
           <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
             <div
+              className="banner-wrapper"
               style={{
                 position: "relative",
                 width: "100%",
-                aspectRatio: "3.2 / 1",
-                minHeight: "180px",
-                borderRadius: "20px",
+                borderRadius: "16px",
                 overflow: "hidden",
                 border: "1px solid #334155",
                 boxShadow: "0 20px 50px rgba(0, 0, 0, 0.4)"
@@ -268,17 +269,17 @@ export default function HomePage() {
         </section>
 
         {/* FOUNDER SPOTLIGHT BANNER ON HOME PAGE */}
-        <section style={{ padding: "80px 24px", background: "#f8fafc", borderBottom: "1px solid #e2e8f0" }}>
+        <section style={{ padding: "50px 16px", background: "#f8fafc", borderBottom: "1px solid #e2e8f0" }}>
           <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
             <div
-              className="brand-card grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 md:gap-10 items-center p-6 sm:p-10"
+              className="brand-card grid grid-cols-1 md:grid-cols-[180px_1fr] gap-6 md:gap-10 items-center p-5 sm:p-8"
               style={{
                 background: "#ffffff",
                 border: "1px solid #cbd5e1",
                 boxShadow: "0 15px 35px rgba(0,0,0,0.04)"
               }}
             >
-              <div style={{ position: "relative", width: "200px", height: "220px", borderRadius: "16px", overflow: "hidden", border: "3px solid #0284c7", margin: "0 auto" }}>
+              <div style={{ position: "relative", width: "160px", height: "180px", borderRadius: "16px", overflow: "hidden", border: "3px solid #0284c7", margin: "0 auto" }}>
                 <Image
                   src="/founder.png"
                   alt="Javed Shaikh - Founder & CEO"
@@ -288,18 +289,18 @@ export default function HomePage() {
               </div>
 
               <div>
-                <div className="section-label" style={{ marginBottom: "10px" }}>FOUNDER'S MESSAGE</div>
-                <h3 style={{ fontSize: "28px", fontWeight: "900", color: "#0f172a", marginBottom: "12px", letterSpacing: "-0.5px" }}>
+                <div className="section-label" style={{ marginBottom: "8px" }}>FOUNDER'S MESSAGE</div>
+                <h3 style={{ fontSize: "clamp(20px, 4vw, 28px)", fontWeight: "900", color: "#0f172a", marginBottom: "12px", letterSpacing: "-0.5px" }}>
                   “We don’t sell products. We sell confidence.”
                 </h3>
-                <p style={{ fontSize: "15px", color: "#475569", lineHeight: "1.7", marginBottom: "20px" }}>
+                <p style={{ fontSize: "14px", color: "#475569", lineHeight: "1.6", marginBottom: "16px" }}>
                   Read the founder's message by <strong>Javed Shaikh</strong> on liquid metal to liquid courage, thermal paste to trusted performance, and our commitment to zero compromise.
                 </p>
-                <div style={{ display: "flex", gap: "16px", alignItems: "center", flexWrap: "wrap" }}>
-                  <Link href="/founder" className="btn-primary" style={{ padding: "12px 24px", fontSize: "12px" }}>
+                <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
+                  <Link href="/founder" className="btn-primary" style={{ padding: "10px 20px", fontSize: "12px" }}>
                     Read Message
                   </Link>
-                  <span style={{ fontSize: "14px", color: "#0284c7", fontWeight: "700" }}>— Javed Shaikh, Founder & CEO</span>
+                  <span style={{ fontSize: "13px", color: "#0284c7", fontWeight: "700" }}>— Javed Shaikh, Founder & CEO</span>
                 </div>
               </div>
             </div>
@@ -307,19 +308,19 @@ export default function HomePage() {
         </section>
 
         {/* PRODUCTS PREVIEW */}
-        <section style={{ padding: "100px 24px", background: "#ffffff" }}>
+        <section style={{ padding: "60px 16px", background: "#ffffff" }}>
           <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-            <div style={{ textAlign: "center", marginBottom: "64px" }}>
-              <div className="section-label" style={{ marginBottom: "16px" }}>HIGH PERFORMANCE LINEUP</div>
-              <h2 style={{ fontSize: "clamp(32px, 5vw, 52px)", fontWeight: "800", letterSpacing: "-1.5px", color: "#0f172a", marginBottom: "16px" }}>
+            <div style={{ textAlign: "center", marginBottom: "40px" }}>
+              <div className="section-label" style={{ marginBottom: "12px" }}>HIGH PERFORMANCE LINEUP</div>
+              <h2 style={{ fontSize: "clamp(26px, 5vw, 48px)", fontWeight: "800", letterSpacing: "-1px", color: "#0f172a", marginBottom: "12px" }}>
                 Precision Thermal Interface Solutions
               </h2>
-              <p style={{ fontSize: "16px", color: "#475569", maxWidth: "580px", margin: "0 auto" }}>
+              <p style={{ fontSize: "14px", color: "#475569", maxWidth: "580px", margin: "0 auto" }}>
                 Formulated to maximize heat transfer efficiency and component lifespan across high-draw computing rigs.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {products.map((product) => (
                 <Link
                   key={product.id}
@@ -329,7 +330,7 @@ export default function HomePage() {
                   <div
                     className="brand-card"
                     style={{
-                      padding: "36px",
+                      padding: "24px",
                       cursor: "pointer",
                       position: "relative",
                       overflow: "hidden",
@@ -347,31 +348,31 @@ export default function HomePage() {
                       <div
                         style={{
                           display: "inline-block",
-                          padding: "4px 12px",
+                          padding: "4px 10px",
                           borderRadius: "20px",
                           background: `rgba(${product.color === "#0284c7" ? "2,132,199" : product.color === "#2563eb" ? "37,99,235" : "13,148,136"},0.1)`,
                           border: `1px solid rgba(${product.color === "#0284c7" ? "2,132,199" : product.color === "#2563eb" ? "37,99,235" : "13,148,136"},0.3)`,
                           fontFamily: "JetBrains Mono, monospace",
                           fontSize: "10px",
-                          letterSpacing: "2px",
+                          letterSpacing: "1px",
                           color: product.color,
-                          marginBottom: "20px",
+                          marginBottom: "14px",
                           fontWeight: "700"
                         }}
                       >
                         {product.category}
                       </div>
 
-                      <h3 style={{ fontSize: "26px", fontWeight: "800", color: "#0f172a", marginBottom: "14px" }}>
+                      <h3 style={{ fontSize: "22px", fontWeight: "800", color: "#0f172a", marginBottom: "10px" }}>
                         {product.name}
                       </h3>
-                      <p style={{ fontSize: "14px", color: "#475569", lineHeight: "1.7", marginBottom: "28px" }}>
+                      <p style={{ fontSize: "13px", color: "#475569", lineHeight: "1.6", marginBottom: "20px" }}>
                         {product.desc}
                       </p>
 
-                      <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "10px", marginBottom: "28px" }}>
+                      <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "8px", marginBottom: "20px" }}>
                         {product.specs.map((spec) => (
-                          <li key={spec} style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "13px", color: "#334155", fontWeight: "500" }}>
+                          <li key={spec} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", color: "#334155", fontWeight: "500" }}>
                             <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: product.color, flexShrink: 0 }} />
                             {spec}
                           </li>
@@ -379,7 +380,7 @@ export default function HomePage() {
                       </ul>
                     </div>
 
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px", color: product.color, fontWeight: "700" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", color: product.color, fontWeight: "700" }}>
                       View Specifications
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                         <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -390,8 +391,8 @@ export default function HomePage() {
               ))}
             </div>
 
-            <div style={{ textAlign: "center", marginTop: "56px" }}>
-              <Link href="/products" className="btn-secondary" style={{ padding: "14px 32px" }}>
+            <div style={{ textAlign: "center", marginTop: "40px" }}>
+              <Link href="/products" className="btn-secondary" style={{ padding: "12px 28px" }}>
                 View Complete Catalog
               </Link>
             </div>
@@ -401,7 +402,7 @@ export default function HomePage() {
         {/* WARRANTY & AUTHENTICITY SECTION */}
         <section
           style={{
-            padding: "100px 24px",
+            padding: "60px 16px",
             background: "#f8fafc",
             position: "relative",
             borderTop: "1px solid #e2e8f0",
@@ -410,36 +411,36 @@ export default function HomePage() {
         >
           <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
             <div
-              className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center"
+              className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center"
             >
               <div>
-                <div className="section-label" style={{ marginBottom: "16px" }}>DIGITAL WARRANTY PORTAL</div>
-                <h2 style={{ fontSize: "clamp(32px, 4.5vw, 52px)", fontWeight: "800", letterSpacing: "-1.5px", color: "#0f172a", marginBottom: "20px" }}>
+                <div className="section-label" style={{ marginBottom: "12px" }}>DIGITAL WARRANTY PORTAL</div>
+                <h2 style={{ fontSize: "clamp(26px, 4.5vw, 48px)", fontWeight: "800", letterSpacing: "-1px", color: "#0f172a", marginBottom: "16px" }}>
                   100% Authenticity.<br />Guaranteed Coverage.
                 </h2>
-                <p style={{ fontSize: "16px", color: "#475569", lineHeight: "1.7", marginBottom: "40px" }}>
+                <p style={{ fontSize: "14px", color: "#475569", lineHeight: "1.6", marginBottom: "28px" }}>
                   Every genuine Thermal Lexum product carries a unique anti-counterfeit serial code. Verify your product authenticity and register for 12-month replacement warranty in seconds.
                 </p>
 
-                <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginBottom: "48px" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "32px" }}>
                   {[
                     { step: "01", title: "Scan Serial Number / Order ID", desc: "Locate the serial code on your box label or enter your retailer Order ID." },
                     { step: "02", title: "Instant Cryptographic Verification", desc: "Our database verifies origin & batch manufacturing parameters in real time." },
                     { step: "03", title: "Claim 12-Month Warranty", desc: "Get your digital certificate emailed instantly with 12 months guarantee." }
                   ].map((item) => (
-                    <div key={item.step} style={{ display: "flex", gap: "16px", alignItems: "flex-start" }}>
+                    <div key={item.step} style={{ display: "flex", gap: "14px", alignItems: "flex-start" }}>
                       <div
                         style={{
-                          width: "36px",
-                          height: "36px",
-                          borderRadius: "10px",
+                          width: "32px",
+                          height: "32px",
+                          borderRadius: "8px",
                           background: "rgba(2, 132, 199, 0.1)",
                           border: "1px solid rgba(2, 132, 199, 0.25)",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
                           fontFamily: "JetBrains Mono, monospace",
-                          fontSize: "12px",
+                          fontSize: "11px",
                           color: "#0284c7",
                           fontWeight: "700",
                           flexShrink: 0,
@@ -448,18 +449,18 @@ export default function HomePage() {
                         {item.step}
                       </div>
                       <div>
-                        <div style={{ fontSize: "15px", fontWeight: "700", color: "#0f172a", marginBottom: "2px" }}>{item.title}</div>
-                        <div style={{ fontSize: "13px", color: "#64748b" }}>{item.desc}</div>
+                        <div style={{ fontSize: "14px", fontWeight: "700", color: "#0f172a", marginBottom: "2px" }}>{item.title}</div>
+                        <div style={{ fontSize: "12px", color: "#64748b" }}>{item.desc}</div>
                       </div>
                     </div>
                   ))}
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                  <Link href="/warranty/register" className="btn-primary">
+                <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                  <Link href="/warranty/register" className="btn-primary" style={{ padding: "14px 24px", fontSize: "13px" }}>
                     Register Warranty Now
                   </Link>
-                  <Link href="/warranty/lookup" className="btn-secondary">
+                  <Link href="/warranty/lookup" className="btn-secondary" style={{ padding: "14px 24px", fontSize: "13px" }}>
                     Verify Serial Code
                   </Link>
                 </div>
@@ -470,8 +471,8 @@ export default function HomePage() {
                 <div
                   className="brand-card glow-cyan"
                   style={{
-                    padding: "44px",
-                    borderRadius: "24px",
+                    padding: "24px 18px",
+                    borderRadius: "20px",
                     position: "relative",
                     background: "#ffffff",
                     border: "1px solid #cbd5e1"
@@ -483,30 +484,32 @@ export default function HomePage() {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      marginBottom: "32px",
+                      flexWrap: "wrap",
+                      gap: "8px",
+                      marginBottom: "20px",
                       borderBottom: "1px solid #f1f5f9",
-                      paddingBottom: "20px"
+                      paddingBottom: "14px"
                     }}
                   >
                     <div>
-                      <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "16px", fontWeight: "900", letterSpacing: "2px", color: "#0f172a" }}>
+                      <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "15px", fontWeight: "900", letterSpacing: "1px", color: "#0f172a" }}>
                         THERMAL <span style={{ color: "#0284c7" }}>LEXUM</span>
                       </div>
-                      <div style={{ fontFamily: "JetBrains Mono, monospace", fontSize: "9px", letterSpacing: "2px", color: "#0284c7", marginTop: "2px", fontWeight: "700" }}>
+                      <div style={{ fontFamily: "JetBrains Mono, monospace", fontSize: "9px", letterSpacing: "1px", color: "#0284c7", marginTop: "2px", fontWeight: "700" }}>
                         OFFICIAL WARRANTY CERTIFICATE
                       </div>
                     </div>
                     <span className="badge badge-active">12 MONTHS VALID</span>
                   </div>
 
-                  <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "32px" }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "24px" }}>
                     {[
                       { label: "Product", val: "Thermal Lexum LX-TIM Pro" },
                       { label: "Warranty Period", val: "12 Months (1 Year)" },
                       { label: "Coverage", val: "Full Replacement Guarantee" },
                       { label: "Verification", val: "Cryptographic Hash Verified" },
                     ].map((row) => (
-                      <div key={row.label} style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", borderBottom: "1px solid #f8fafc", paddingBottom: "8px" }}>
+                      <div key={row.label} style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "4px", fontSize: "12px", borderBottom: "1px solid #f8fafc", paddingBottom: "6px" }}>
                         <span style={{ color: "#64748b" }}>{row.label}</span>
                         <span style={{ color: "#0f172a", fontWeight: "700", textAlign: "right" }}>{row.val}</span>
                       </div>
@@ -515,19 +518,21 @@ export default function HomePage() {
 
                   <div
                     style={{
-                      padding: "16px",
+                      padding: "12px 14px",
                       background: "#f8fafc",
-                      borderRadius: "12px",
+                      borderRadius: "10px",
                       border: "1px solid #e2e8f0",
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: "space-between"
+                      justifyContent: "space-between",
+                      flexWrap: "wrap",
+                      gap: "8px"
                     }}
                   >
-                    <div style={{ fontSize: "12px", color: "#64748b" }}>
+                    <div style={{ fontSize: "11px", color: "#64748b" }}>
                       Instant PDF Certificate Download
                     </div>
-                    <span style={{ fontSize: "12px", color: "#0284c7", fontWeight: "700" }}>Available On Registration →</span>
+                    <span style={{ fontSize: "11px", color: "#0284c7", fontWeight: "700" }}>Available On Registration →</span>
                   </div>
                 </div>
               </div>
@@ -536,6 +541,18 @@ export default function HomePage() {
         </section>
       </main>
       <Footer />
+      <style>{`
+        .banner-wrapper {
+          aspect-ratio: 3.2 / 1;
+          min-height: 200px;
+        }
+        @media (max-width: 640px) {
+          .banner-wrapper {
+            aspect-ratio: 2 / 1 !important;
+            min-height: 150px !important;
+          }
+        }
+      `}</style>
     </>
   );
 }
