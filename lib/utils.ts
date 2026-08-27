@@ -1,69 +1,76 @@
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
-import { format, addMonths } from "date-fns";
+import { db } from "./db";
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+/**
+ * Generate sequential order ID in format TL-2026-001
+ */
+export async function generateOrderId(): Promise<string> {
+  const year = new Date().getFullYear();
+
+  // Upsert counter for this year
+  const counter = await db.orderCounter.upsert({
+    where: { id: 1 },
+    update: { count: { increment: 1 }, year },
+    create: { id: 1, count: 1, year },
+  });
+
+  // If year rolled over, reset
+  if (counter.year !== year) {
+    await db.orderCounter.update({
+      where: { id: 1 },
+      data: { count: 1, year },
+    });
+    return `TL-${year}-001`;
+  }
+
+  const seq = String(counter.count).padStart(3, "0");
+  return `TL-${year}-${seq}`;
 }
 
+/**
+ * Generate warranty registration ID: TLW-2026-0001
+ */
 export function generateRegistrationId(): string {
-  const timestamp = Date.now().toString(36).toUpperCase();
-  const random = Math.random().toString(36).substring(2, 7).toUpperCase();
-  return `TLW-${timestamp}-${random}`;
+  const year = new Date().getFullYear();
+  const rand = Math.floor(Math.random() * 9000) + 1000;
+  const ts = Date.now().toString().slice(-4);
+  return `TLW-${year}-${rand}${ts}`.slice(0, 15);
 }
 
-export function formatDate(date: Date | string): string {
-  return format(new Date(date), "dd MMM yyyy");
+/**
+ * Generate warranty claim ID: TLC-2026-001
+ */
+export function generateClaimId(): string {
+  const year = new Date().getFullYear();
+  const rand = String(Math.floor(Math.random() * 900) + 100);
+  return `TLC-${year}-${rand}`;
 }
 
-export function formatDateTime(date: Date | string): string {
-  return format(new Date(date), "dd MMM yyyy, HH:mm");
-}
-
-export function calculateWarrantyEndDate(
-  startDate: Date,
-  months: number
+/**
+ * Calculate warranty expiry date from purchase date + months
+ */
+export function calculateWarrantyExpiry(
+  purchaseDate: Date,
+  warrantyMonths: number
 ): Date {
-  return addMonths(startDate, months);
+  const expiry = new Date(purchaseDate);
+  expiry.setMonth(expiry.getMonth() + warrantyMonths);
+  return expiry;
 }
 
-export function isWarrantyActive(endDate: Date | null): boolean {
-  if (!endDate) return false;
-  return new Date() < new Date(endDate);
+/**
+ * Format price in paise to INR string
+ */
+export function formatPrice(paise: number): string {
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0,
+  }).format(paise / 100);
 }
 
-export function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9 -]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .trim();
+/**
+ * Generate OTP
+ */
+export function generateOTP(): string {
+  return String(Math.floor(100000 + Math.random() * 900000));
 }
-
-export function truncate(text: string, length: number): string {
-  if (text.length <= length) return text;
-  return text.substring(0, length) + "...";
-}
-
-export const PRODUCT_CATEGORIES = {
-  THERMAL_PASTE: "Thermal Paste",
-  LIQUID_METAL: "Liquid Metal",
-  THERMAL_PADS: "Thermal Pads",
-  OTHER: "Other",
-} as const;
-
-export const WARRANTY_STATUS_LABELS = {
-  PENDING: "Pending Review",
-  ACTIVE: "Active",
-  EXPIRED: "Expired",
-  REJECTED: "Rejected",
-  CLAIMED: "Claimed",
-} as const;
-
-export const PURCHASE_TYPE_LABELS = {
-  ONLINE: "Online Store",
-  RETAIL_STORE: "Retail Store",
-  DISTRIBUTOR: "Distributor",
-  OTHER: "Other",
-} as const;

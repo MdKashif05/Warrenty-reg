@@ -7,6 +7,8 @@ datasource db {
   provider = "postgresql"
 }
 
+// ─── Enums ────────────────────────────────────────────────────────────────────
+
 enum ProductCategory {
   THERMAL_PASTE
   LIQUID_METAL
@@ -27,6 +29,13 @@ enum PurchaseType {
   OTHER
 }
 
+enum PurchasePlatform {
+  OWN_WEBSITE
+  AMAZON
+  FLIPKART
+  OTHER
+}
+
 enum WarrantyStatus {
   PENDING
   ACTIVE
@@ -43,6 +52,29 @@ enum ClaimStatus {
   RESOLVED
 }
 
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum PaymentGateway {
+  RAZORPAY
+  PAYU
+  COD
+}
+
 enum B2bStatus {
   NEW
   IN_REVIEW
@@ -55,6 +87,8 @@ enum AdminRole {
   ADMIN
   SUPPORT
 }
+
+// ─── Admin ─────────────────────────────────────────────────────────────────────
 
 model Admin {
   id           String    @id @default(cuid())
@@ -72,6 +106,36 @@ model Admin {
   @@map("admins")
 }
 
+// ─── Customer ──────────────────────────────────────────────────────────────────
+
+model Customer {
+  id           String    @id @default(cuid())
+  firstName    String    @map("first_name")
+  lastName     String    @map("last_name")
+  email        String    @unique
+  phone        String?
+  passwordHash String?   @map("password_hash")
+  isVerified   Boolean   @default(false) @map("is_verified")
+  otpCode      String?   @map("otp_code")
+  otpExpiresAt DateTime? @map("otp_expires_at")
+  address      String?
+  city         String?
+  state        String?
+  country      String    @default("India")
+  postalCode   String?   @map("postal_code")
+  lastLoginAt  DateTime? @map("last_login_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  registrations WarrantyRegistration[]
+  orders        Order[]
+  cart          Cart?
+
+  @@map("customers")
+}
+
+// ─── Products ──────────────────────────────────────────────────────────────────
+
 model Product {
   id               String          @id @default(cuid())
   name             String
@@ -80,16 +144,41 @@ model Product {
   shortDescription String?         @map("short_description")
   description      String?
   imagePath        String?         @map("image_path")
+  images           String[]        @default([])
   warrantyMonths   Int             @default(12) @map("warranty_months")
   status           ProductStatus   @default(ACTIVE)
   sortOrder        Int             @default(0) @map("sort_order")
+  isSellable       Boolean         @default(false) @map("is_sellable")
   createdAt        DateTime        @default(now()) @map("created_at")
   updatedAt        DateTime        @updatedAt @map("updated_at")
 
+  variants      ProductVariant[]
   models        ProductModel[]
   serialNumbers SerialNumber[]
+  orderItems    OrderItem[]
+  cartItems     CartItem[]
 
   @@map("products")
+}
+
+model ProductVariant {
+  id          String   @id @default(cuid())
+  productId   String   @map("product_id")
+  name        String   // e.g. "3.5g", "5g", "10g"
+  sku         String?  @unique
+  price       Int      @default(0) // price in paise (INR)
+  mrp         Int      @default(0) // MRP in paise
+  stock       Int      @default(0)
+  isDefault   Boolean  @default(false) @map("is_default")
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  product    Product     @relation(fields: [productId], references: [id])
+  orderItems OrderItem[]
+  cartItems  CartItem[]
+
+  @@map("product_variants")
 }
 
 model ProductModel {
@@ -125,58 +214,152 @@ model SerialNumber {
   @@map("serial_numbers")
 }
 
-model Customer {
-  id         String   @id @default(cuid())
-  firstName  String   @map("first_name")
-  lastName   String   @map("last_name")
-  email      String   @unique
-  phone      String?
-  city       String?
-  state      String?
-  country    String   @default("India")
-  postalCode String?  @map("postal_code")
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+// ─── Orders & Cart ─────────────────────────────────────────────────────────────
 
-  registrations WarrantyRegistration[]
+model Order {
+  id              String         @id @default(cuid())
+  orderId         String         @unique @map("order_id") // TL-2026-001
+  customerId      String?        @map("customer_id")
+  // Guest checkout fields
+  guestName       String?        @map("guest_name")
+  guestEmail      String?        @map("guest_email")
+  guestPhone      String?        @map("guest_phone")
+  // Shipping
+  shippingName    String         @map("shipping_name")
+  shippingPhone   String         @map("shipping_phone")
+  shippingAddress String         @map("shipping_address")
+  shippingCity    String         @map("shipping_city")
+  shippingState   String         @map("shipping_state")
+  shippingPincode String         @map("shipping_pincode")
+  // Amounts (in paise)
+  subtotal        Int            @default(0)
+  shippingCharge  Int            @default(0) @map("shipping_charge")
+  discount        Int            @default(0)
+  totalAmount     Int            @map("total_amount")
+  // Status
+  status          OrderStatus    @default(PENDING)
+  paymentStatus   PaymentStatus  @default(PENDING) @map("payment_status")
+  paymentGateway  PaymentGateway? @map("payment_gateway")
+  // Razorpay
+  razorpayOrderId   String?      @map("razorpay_order_id")
+  razorpayPaymentId String?      @map("razorpay_payment_id")
+  razorpaySignature String?      @map("razorpay_signature")
+  // PayU
+  payuTxnId       String?        @map("payu_txn_id")
+  payuMihpayId    String?        @map("payu_mihpay_id")
+  // Meta
+  notes           String?
+  warrantyEmailSent Boolean      @default(false) @map("warranty_email_sent")
+  createdAt       DateTime       @default(now()) @map("created_at")
+  updatedAt       DateTime       @updatedAt @map("updated_at")
 
-  @@map("customers")
+  customer            Customer?              @relation(fields: [customerId], references: [id])
+  items               OrderItem[]
+  warrantyRegistration WarrantyRegistration?
+
+  @@index([orderId])
+  @@index([customerId])
+  @@map("orders")
 }
 
-model WarrantyRegistration {
-  id                String         @id @default(cuid())
-  registrationId    String         @unique @map("registration_id")
-  customerId        String         @map("customer_id")
-  serialNumberId    String         @unique @map("serial_number_id")
-  purchaseType      PurchaseType   @map("purchase_type")
-  purchaseDate      DateTime       @map("purchase_date")
-  purchasedFrom     String?        @map("purchased_from")
-  invoicePath       String?        @map("invoice_path")
-  warrantyStatus    WarrantyStatus @default(PENDING) @map("warranty_status")
-  warrantyStartDate DateTime?      @map("warranty_start_date")
-  warrantyEndDate   DateTime?      @map("warranty_end_date")
-  notes             String?
-  emailSent         Boolean        @default(false) @map("email_sent")
-  ipAddress         String?        @map("ip_address")
-  createdAt         DateTime       @default(now()) @map("created_at")
-  updatedAt         DateTime       @updatedAt @map("updated_at")
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String  @map("order_id")
+  productId String  @map("product_id")
+  variantId String? @map("variant_id")
+  name      String  // snapshot of product name at purchase time
+  variant   String? // snapshot of variant name
+  qty       Int     @default(1)
+  price     Int     // price in paise at time of purchase
 
-  customer     Customer       @relation(fields: [customerId], references: [id])
-  serialNumber SerialNumber   @relation(fields: [serialNumberId], references: [id])
+  order   Order          @relation(fields: [orderId], references: [id])
+  product Product        @relation(fields: [productId], references: [id])
+  productVariant ProductVariant? @relation(fields: [variantId], references: [id])
+
+  @@map("order_items")
+}
+
+model Cart {
+  id         String     @id @default(cuid())
+  customerId String?    @unique @map("customer_id")
+  sessionId  String?    @unique @map("session_id")
+  createdAt  DateTime   @default(now()) @map("created_at")
+  updatedAt  DateTime   @updatedAt @map("updated_at")
+
+  customer Customer?  @relation(fields: [customerId], references: [id])
+  items    CartItem[]
+
+  @@map("carts")
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  cartId    String   @map("cart_id")
+  productId String   @map("product_id")
+  variantId String?  @map("variant_id")
+  qty       Int      @default(1)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  cart    Cart            @relation(fields: [cartId], references: [id])
+  product Product         @relation(fields: [productId], references: [id])
+  productVariant ProductVariant? @relation(fields: [variantId], references: [id])
+
+  @@unique([cartId, productId, variantId])
+  @@map("cart_items")
+}
+
+// ─── Warranty ──────────────────────────────────────────────────────────────────
+
+model WarrantyRegistration {
+  id                String           @id @default(cuid())
+  registrationId    String           @unique @map("registration_id")
+  customerId        String           @map("customer_id")
+  serialNumberId    String?          @unique @map("serial_number_id")
+  // Platform info
+  purchasePlatform  PurchasePlatform @default(OTHER) @map("purchase_platform")
+  purchaseType      PurchaseType     @map("purchase_type")
+  purchaseDate      DateTime         @map("purchase_date")
+  purchasedFrom     String?          @map("purchased_from")
+  platformOrderId   String?          @map("platform_order_id") // Amazon/Flipkart order ID entered by customer
+  linkedOrderId     String?          @unique @map("linked_order_id") // FK to our Order (own website)
+  productId         String?          @map("product_id") // for platform orders without serial
+  productVariant    String?          @map("product_variant") // variant name for platform orders
+  // Warranty
+  invoicePath       String?          @map("invoice_path")
+  warrantyStatus    WarrantyStatus   @default(PENDING) @map("warranty_status")
+  warrantyStartDate DateTime?        @map("warranty_start_date")
+  warrantyEndDate   DateTime?        @map("warranty_end_date")
+  warrantyMonths    Int              @default(12) @map("warranty_months")
+  // Meta
+  notes             String?
+  adminNotes        String?          @map("admin_notes")
+  emailSent         Boolean          @default(false) @map("email_sent")
+  ipAddress         String?          @map("ip_address")
+  createdAt         DateTime         @default(now()) @map("created_at")
+  updatedAt         DateTime         @updatedAt @map("updated_at")
+
+  customer     Customer      @relation(fields: [customerId], references: [id])
+  serialNumber SerialNumber? @relation(fields: [serialNumberId], references: [id])
+  linkedOrder  Order?        @relation(fields: [linkedOrderId], references: [orderId])
   claims       WarrantyClaim[]
 
   @@index([registrationId])
   @@index([customerId])
+  @@index([linkedOrderId])
   @@map("warranty_registrations")
 }
 
 model WarrantyClaim {
   id             String      @id @default(cuid())
+  claimId        String      @unique @map("claim_id") // TLC-2026-001
   registrationId String      @map("registration_id")
   claimStatus    ClaimStatus @default(OPEN) @map("claim_status")
   issueType      String      @map("issue_type")
   description    String
+  attachments    String[]    @default([])
   resolution     String?
+  adminNotes     String?     @map("admin_notes")
   resolvedAt     DateTime?   @map("resolved_at")
   createdAt      DateTime    @default(now()) @map("created_at")
   updatedAt      DateTime    @updatedAt @map("updated_at")
@@ -185,6 +368,26 @@ model WarrantyClaim {
 
   @@map("warranty_claims")
 }
+
+// ─── Email Campaigns ──────────────────────────────────────────────────────────
+
+model EmailCampaign {
+  id          String   @id @default(cuid())
+  name        String
+  subject     String
+  body        String   @db.Text
+  segment     String   @default("all") // all | active_warranty | pending_warranty | customers_with_orders
+  recipientCount Int   @default(0) @map("recipient_count")
+  sentCount   Int      @default(0) @map("sent_count")
+  status      String   @default("DRAFT") // DRAFT | SENDING | SENT | FAILED
+  sentAt      DateTime? @map("sent_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("email_campaigns")
+}
+
+// ─── Other Models ─────────────────────────────────────────────────────────────
 
 model ContactMessage {
   id        String   @id @default(cuid())
@@ -246,4 +449,15 @@ model AuditLog {
   admin Admin? @relation(fields: [adminId], references: [id])
 
   @@map("audit_logs")
+}
+
+// ─── Order Counter (for sequential order IDs) ─────────────────────────────────
+
+model OrderCounter {
+  id        Int      @id @default(1)
+  count     Int      @default(0)
+  year      Int
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("order_counter")
 }

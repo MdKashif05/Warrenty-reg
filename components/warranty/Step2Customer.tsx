@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import type { WarrantyState } from "@/app/warranty/register/page";
+import type { WarrantyState } from "@/types/warranty";
 
 interface Props {
   state: WarrantyState;

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import type { WarrantyState } from "@/app/warranty/register/page";
+import type { WarrantyState } from "@/types/warranty";
 
 interface Props {
   state: WarrantyState;
@@ -25,7 +25,7 @@ export default function Step4Review({ state, updateState }: Props) {
       const formData = new FormData();
       formData.append("serialNumber", state.serialNumber);
       if (state.customerDetails) {
-        Object.entries(state.customerDetails).forEach(([k, v]) => formData.append(`customer_${k}`, v));
+        Object.entries(state.customerDetails).forEach(([k, v]) => formData.append(`customer_${k}`, String(v)));
       }
       if (state.purchaseDetails) {
         formData.append("purchaseType", state.purchaseDetails.purchaseType);

@@ -28,8 +28,8 @@ export async function GET(req: Request) {
         success: true,
         data: {
           registrationId: record.registrationId,
-          productName: record.serialNumber.product.name,
-          serialNumber: record.serialNumber.serialNumber,
+          productName: record.serialNumber?.product.name || record.productVariant || "Unknown",
+          serialNumber: record.serialNumber?.serialNumber || record.platformOrderId || "—",
           customerName: `${record.customer.firstName} ${record.customer.lastName}`,
           status: record.warrantyStatus,
           purchaseDate: record.purchaseDate.toLocaleDateString("en-IN"),

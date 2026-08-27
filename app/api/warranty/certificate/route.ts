@@ -18,8 +18,8 @@ export async function GET(req: Request) {
         success: true,
         data: {
           registrationId: reg.registrationId,
-          productName: reg.serialNumber.product.name,
-          serialNumber: reg.serialNumber.serialNumber,
+          productName: reg.serialNumber?.product.name || reg.productVariant || "Unknown",
+          serialNumber: reg.serialNumber?.serialNumber || reg.platformOrderId || "—",
           customerName: `${reg.customer.firstName} ${reg.customer.lastName}`,
           purchaseDate: reg.purchaseDate.toLocaleDateString("en-IN"),
           expiryDate: reg.warrantyEndDate?.toLocaleDateString("en-IN") || "N/A"
