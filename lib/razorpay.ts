@@ -1,10 +1,12 @@
 import Razorpay from "razorpay";
 import crypto from "crypto";
 
-export const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID || "",
-  key_secret: process.env.RAZORPAY_KEY_SECRET || "",
-});
+export function getRazorpay(): Razorpay {
+  return new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID || "rzp_test_placeholder",
+    key_secret: process.env.RAZORPAY_KEY_SECRET || "placeholder_secret",
+  });
+}
 
 export function verifyRazorpaySignature(
   orderId: string,
@@ -35,7 +37,8 @@ export async function createRazorpayOrder(
   receipt: string,
   notes?: Record<string, string>
 ): Promise<RazorpayOrderResult> {
-  const order = await razorpay.orders.create({
+  const rzp = getRazorpay();
+  const order = await rzp.orders.create({
     amount: amountPaise,
     currency: "INR",
     receipt,
