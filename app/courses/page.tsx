@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import Navbar, { nesaCoursesList } from "@/components/layout/Navbar";
+import Navbar, { nesaCoursesList, CourseItem } from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
 export default function CoursesPage() {
@@ -10,19 +10,19 @@ export default function CoursesPage() {
       <main style={{ background: "#ffffff", paddingTop: "100px", minHeight: "100vh" }}>
         <div style={{ background: "linear-gradient(135deg, #0E4D92 0%, #1a5ca4 100%)", color: "#ffffff", padding: "60px 20px" }}>
           <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-            <span style={{ fontSize: "12px", letterSpacing: "2px", fontWeight: "800", color: "#ffd166", textTransform: "uppercase" }}>NESA CURRICULUM</span>
+            <span style={{ fontSize: "12px", letterSpacing: "2px", fontWeight: "800", color: "#ffd166", textTransform: "uppercase" }}>THERMAL LEXUM CATALOG</span>
             <h1 style={{ fontSize: "clamp(32px, 5vw, 54px)", fontWeight: "900", color: "#ffffff", marginTop: "8px", marginBottom: "16px" }}>
-              Spoken English & IELTS Courses
+              High-Conductivity Thermal Paste & Cooling Solutions
             </h1>
             <p style={{ fontSize: "17px", color: "#e2e8f0", maxWidth: "680px", lineHeight: "1.6" }}>
-              Explore our comprehensive programs tailored for beginners, professionals, executives, kids, and exam aspirants.
+              Explore our high-performance thermal management lineup designed for CPUs, GPUs, workstations, and gaming rigs.
             </p>
           </div>
         </div>
 
         <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "60px 20px" }}>
           <div className="responsive-grid-3">
-            {nesaCoursesList.map((course) => (
+            {nesaCoursesList.map((course: CourseItem) => (
               <div key={course.slug} className="card-nesa" style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "30px" }}>
                 <div>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
@@ -47,12 +47,12 @@ export default function CoursesPage() {
 
                 <div>
                   <div style={{ display: "flex", justifyContent: "space-between", padding: "12px 0", borderTop: "1px solid #f1f5f9", borderBottom: "1px solid #f1f5f9", marginBottom: "20px", fontSize: "13px", color: "#64748b", fontWeight: "600" }}>
-                    <span>📖 {course.lessons} Lessons</span>
-                    <span>👥 {course.students} Enrolled</span>
+                    <span>🛡️ 3 Years Warranty</span>
+                    <span>👥 {course.students} Delivered</span>
                   </div>
 
                   <Link href={`/courses/${course.slug}`} className="btn-primary" style={{ width: "100%", justifyContent: "center" }}>
-                    Enroll in Course →
+                    View Specifications & Buy →
                   </Link>
                 </div>
               </div>

@@ -49,7 +49,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div style={{ padding: "20px 16px", borderBottom: "1px solid #e2e8f0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div>
             <div style={{ fontFamily: "Outfit, sans-serif", fontSize: "18px", fontWeight: "900", color: "#0E4D92", letterSpacing: "1px" }}>
-              NESA INSTITUTE
+              THERMAL LEXUM
             </div>
             <div style={{ fontFamily: "JetBrains Mono, monospace", fontSize: "10px", color: "#64748b", letterSpacing: "1px", marginTop: "2px", fontWeight: "700" }}>
               ADMIN CONTROL PANEL
