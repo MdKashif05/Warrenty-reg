@@ -3,11 +3,11 @@ import { useState } from "react";
 
 export default function AdminRegistrationsPage() {
   const [registrations, setRegistrations] = useState([
-    { id: "REG-1001", name: "Rahul Sharma", email: "rahul.sharma@example.com", phone: "+91 98765 43210", course: "NESA Fluent English Level 1", status: "CONFIRMED", date: "2026-08-27" },
-    { id: "REG-1002", name: "Priya Patel", email: "priya.patel@gmail.com", phone: "+91 91234 56789", course: "NESA IELTS Preparation", status: "CONFIRMED", date: "2026-08-26" },
-    { id: "REG-1003", name: "Anish Verma", email: "anish.verma@techcorp.in", phone: "+91 99887 76655", course: "NESA Corporate English Course", status: "PENDING", date: "2026-08-26" },
-    { id: "REG-1004", name: "Sunita Gupta", email: "sunita.gupta@yahoo.com", phone: "+91 98111 22334", course: "NESA English Foundation", status: "CONFIRMED", date: "2026-08-25" },
-    { id: "REG-1005", name: "Karan Johar", email: "karan.j@creative.io", phone: "+91 97777 88888", course: "NESA Spoken English Advance", status: "PENDING", date: "2026-08-24" },
+    { id: "REG-1001", name: "Rahul Sharma", email: "rahul.sharma@example.com", phone: "+91 98765 43210", course: "TL-X1 Ultra Thermal Paste (4g)", status: "CONFIRMED", date: "2026-08-27" },
+    { id: "REG-1002", name: "Priya Patel", email: "priya.patel@gmail.com", phone: "+91 91234 56789", course: "Liquid Metal Extreme", status: "CONFIRMED", date: "2026-08-26" },
+    { id: "REG-1003", name: "Anish Verma", email: "anish.verma@techcorp.in", phone: "+91 99887 76655", course: "TL-PRO Extreme Thermal Paste", status: "PENDING", date: "2026-08-26" },
+    { id: "REG-1004", name: "Sunita Gupta", email: "sunita.gupta@yahoo.com", phone: "+91 98111 22334", course: "Thermal Pad Matrix (12.8 W/mK)", status: "CONFIRMED", date: "2026-08-25" },
+    { id: "REG-1005", name: "Karan Johar", email: "karan.j@creative.io", phone: "+91 97777 88888", course: "TL-X1 Ultra Thermal Paste (8g)", status: "PENDING", date: "2026-08-24" },
   ]);
 
   const [search, setSearch] = useState("");

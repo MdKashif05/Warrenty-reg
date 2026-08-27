@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 export interface CourseItem {
@@ -67,10 +68,20 @@ export default function Navbar() {
           gap: "16px",
         }}
       >
-        {/* BRAND NAME: THERMAL LEXUM (NO LOGO) */}
+        {/* LOGO + BRAND */}
         <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: "10px" }}>
+          <div style={{ position: "relative", width: "52px", height: "52px", flexShrink: 0 }}>
+            <Image
+              src="/logo.png"
+              alt="Thermal Lexum Logo"
+              fill
+              sizes="52px"
+              style={{ objectFit: "contain" }}
+              priority
+            />
+          </div>
           <div>
-            <div style={{ fontWeight: "900", fontSize: "22px", color: "#0E4D92", fontFamily: "Outfit, sans-serif", letterSpacing: "-0.5px", lineHeight: "1" }}>
+            <div style={{ fontWeight: "900", fontSize: "20px", color: "#0E4D92", fontFamily: "Outfit, sans-serif", letterSpacing: "-0.5px", lineHeight: "1" }}>
               THERMAL <span style={{ color: "#ff6b35" }}>LEXUM</span>
             </div>
             <div style={{ fontSize: "10px", color: "#64748b", fontWeight: "700", letterSpacing: "1px", textTransform: "uppercase", marginTop: "2px" }}>
@@ -81,70 +92,43 @@ export default function Navbar() {
 
         {/* DESKTOP NAV LINKS */}
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }} className="hidden lg:flex">
-          <Link href="/" style={{ padding: "8px 14px", color: pathname === "/" ? "#0E4D92" : "#334155", fontWeight: pathname === "/" ? "800" : "600", textDecoration: "none", fontSize: "14px" }}>
-            Home
-          </Link>
-          <Link href="/products" style={{ padding: "8px 14px", color: pathname.startsWith("/products") ? "#0E4D92" : "#334155", fontWeight: pathname.startsWith("/products") ? "800" : "600", textDecoration: "none", fontSize: "14px" }}>
-            Products
-          </Link>
-          <Link href="/warranty/register" style={{ padding: "8px 14px", color: pathname.startsWith("/warranty") ? "#0E4D92" : "#334155", fontWeight: pathname.startsWith("/warranty") ? "800" : "600", textDecoration: "none", fontSize: "14px" }}>
-            Register Warranty 🛡️
-          </Link>
-          <Link href="/b2b" style={{ padding: "8px 14px", color: pathname === "/b2b" ? "#0E4D92" : "#334155", fontWeight: pathname === "/b2b" ? "800" : "600", textDecoration: "none", fontSize: "14px" }}>
-            B2B Bulk Orders
-          </Link>
-          <Link href="/about" style={{ padding: "8px 14px", color: pathname === "/about" ? "#0E4D92" : "#334155", fontWeight: pathname === "/about" ? "800" : "600", textDecoration: "none", fontSize: "14px" }}>
-            About Us
-          </Link>
-          <Link href="/contact" style={{ padding: "8px 14px", color: pathname === "/contact" ? "#0E4D92" : "#334155", fontWeight: pathname === "/contact" ? "800" : "600", textDecoration: "none", fontSize: "14px" }}>
-            Contact Us
-          </Link>
+          <Link href="/" style={{ padding: "8px 14px", color: pathname === "/" ? "#0E4D92" : "#334155", fontWeight: pathname === "/" ? "800" : "600", textDecoration: "none", fontSize: "14px" }}>Home</Link>
+          <Link href="/products" style={{ padding: "8px 14px", color: pathname.startsWith("/products") ? "#0E4D92" : "#334155", fontWeight: pathname.startsWith("/products") ? "800" : "600", textDecoration: "none", fontSize: "14px" }}>Products</Link>
+          <Link href="/warranty/register" style={{ padding: "8px 14px", color: pathname.startsWith("/warranty") ? "#0E4D92" : "#334155", fontWeight: pathname.startsWith("/warranty") ? "800" : "600", textDecoration: "none", fontSize: "14px" }}>Register Warranty 🛡️</Link>
+          <Link href="/b2b" style={{ padding: "8px 14px", color: pathname === "/b2b" ? "#0E4D92" : "#334155", fontWeight: pathname === "/b2b" ? "800" : "600", textDecoration: "none", fontSize: "14px" }}>B2B Bulk Orders</Link>
+          <Link href="/about" style={{ padding: "8px 14px", color: pathname === "/about" ? "#0E4D92" : "#334155", fontWeight: pathname === "/about" ? "800" : "600", textDecoration: "none", fontSize: "14px" }}>About Us</Link>
+          <Link href="/contact" style={{ padding: "8px 14px", color: pathname === "/contact" ? "#0E4D92" : "#334155", fontWeight: pathname === "/contact" ? "800" : "600", textDecoration: "none", fontSize: "14px" }}>Contact Us</Link>
         </div>
 
         {/* DESKTOP CTAS */}
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }} className="hidden lg:flex">
-          <Link href="/cart" className="btn-secondary" style={{ padding: "9px 16px", fontSize: "13px" }}>
-            🛒 Cart
-          </Link>
-          <Link href="/account" className="btn-primary" style={{ padding: "9px 18px", fontSize: "13px" }}>
-            👤 Account
-          </Link>
+          <Link href="/cart" className="btn-secondary" style={{ padding: "9px 16px", fontSize: "13px" }}>🛒 Cart</Link>
+          <Link href="/account" className="btn-primary" style={{ padding: "9px 18px", fontSize: "13px" }}>👤 Account</Link>
         </div>
 
         {/* MOBILE TOGGLE */}
         <div className="flex lg:hidden" style={{ alignItems: "center", gap: "8px" }}>
-          <Link href="/cart" style={{ padding: "8px 12px", background: "#f0fcff", color: "#0E4D92", borderRadius: "8px", fontWeight: "700", fontSize: "13px", textDecoration: "none" }}>
-            🛒 Cart
-          </Link>
+          <Link href="/cart" style={{ padding: "8px 12px", background: "#f0fcff", color: "#0E4D92", borderRadius: "8px", fontWeight: "700", fontSize: "13px", textDecoration: "none" }}>🛒</Link>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle Navigation"
-            style={{
-              padding: "8px 12px",
-              background: "#0E4D92",
-              color: "#ffffff",
-              border: "none",
-              borderRadius: "8px",
-              fontWeight: "700",
-              fontSize: "14px",
-              cursor: "pointer",
-            }}
+            style={{ padding: "8px 12px", background: "#0E4D92", color: "#ffffff", border: "none", borderRadius: "8px", fontWeight: "700", fontSize: "14px", cursor: "pointer" }}
           >
-            {mobileOpen ? "✕ Close" : "☰ Menu"}
+            {mobileOpen ? "✕" : "☰"}
           </button>
         </div>
       </div>
 
       {/* MOBILE MENU */}
       {mobileOpen && (
-        <div style={{ background: "#ffffff", borderTop: "1px solid #e2e8f0", padding: "16px", display: "flex", flexDirection: "column", gap: "8px" }}>
-          <Link href="/" style={{ padding: "12px", fontWeight: "700", color: "#0E4D92", textDecoration: "none", borderBottom: "1px solid #f1f5f9" }}>🏠 Home</Link>
-          <Link href="/products" style={{ padding: "12px", fontWeight: "700", color: "#0f172a", textDecoration: "none", borderBottom: "1px solid #f1f5f9" }}>📦 Products Catalog</Link>
-          <Link href="/warranty/register" style={{ padding: "12px", fontWeight: "700", color: "#0f172a", textDecoration: "none", borderBottom: "1px solid #f1f5f9" }}>🛡️ Register Warranty</Link>
-          <Link href="/b2b" style={{ padding: "12px", fontWeight: "700", color: "#0f172a", textDecoration: "none", borderBottom: "1px solid #f1f5f9" }}>💼 B2B / Bulk Enquiries</Link>
-          <Link href="/about" style={{ padding: "12px", fontWeight: "700", color: "#0f172a", textDecoration: "none", borderBottom: "1px solid #f1f5f9" }}>ℹ️ About Us</Link>
-          <Link href="/contact" style={{ padding: "12px", fontWeight: "700", color: "#0f172a", textDecoration: "none", borderBottom: "1px solid #f1f5f9" }}>📞 Contact Us</Link>
-          <div style={{ display: "flex", gap: "10px", marginTop: "12px" }}>
+        <div style={{ background: "#ffffff", borderTop: "1px solid #e2e8f0", padding: "16px", display: "flex", flexDirection: "column", gap: "4px" }}>
+          <Link href="/" style={{ padding: "12px 16px", fontWeight: "700", color: "#0E4D92", textDecoration: "none", borderRadius: "8px", background: pathname === "/" ? "#f0f7ff" : "transparent" }}>🏠 Home</Link>
+          <Link href="/products" style={{ padding: "12px 16px", fontWeight: "700", color: "#0f172a", textDecoration: "none", borderRadius: "8px" }}>📦 Products Catalog</Link>
+          <Link href="/warranty/register" style={{ padding: "12px 16px", fontWeight: "700", color: "#0f172a", textDecoration: "none", borderRadius: "8px" }}>🛡️ Register Warranty</Link>
+          <Link href="/b2b" style={{ padding: "12px 16px", fontWeight: "700", color: "#0f172a", textDecoration: "none", borderRadius: "8px" }}>💼 B2B / Bulk Enquiries</Link>
+          <Link href="/about" style={{ padding: "12px 16px", fontWeight: "700", color: "#0f172a", textDecoration: "none", borderRadius: "8px" }}>ℹ️ About Us</Link>
+          <Link href="/contact" style={{ padding: "12px 16px", fontWeight: "700", color: "#0f172a", textDecoration: "none", borderRadius: "8px" }}>📞 Contact Us</Link>
+          <div style={{ display: "flex", gap: "10px", marginTop: "12px", borderTop: "1px solid #f1f5f9", paddingTop: "12px" }}>
             <Link href="/cart" className="btn-secondary" style={{ flex: 1, textAlign: "center", justifyContent: "center" }}>🛒 Cart</Link>
             <Link href="/account" className="btn-primary" style={{ flex: 1, textAlign: "center", justifyContent: "center" }}>👤 Account</Link>
           </div>
