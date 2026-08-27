@@ -86,7 +86,7 @@ export default function AccountDashboardPage() {
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
               <h2 style={{ fontSize: "16px", fontWeight: "800", color: "#0f172a" }}>Profile Details</h2>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+            <div className="responsive-form-grid-2" style={{ gap: "16px" }}>
               {[
                 { label: "Name", value: `${customer?.firstName} ${customer?.lastName}` },
                 { label: "Email", value: customer?.email },

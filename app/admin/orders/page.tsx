@@ -96,7 +96,8 @@ export default function AdminOrdersPage() {
 
       {/* Table */}
       <div className="brand-card" style={{ background: "#fff", border: "1px solid #e2e8f0", padding: "0", overflow: "hidden" }}>
-        <table className="data-table" style={{ width: "100%" }}>
+        <div className="data-table-container">
+          <table className="data-table" style={{ width: "100%" }}>
           <thead>
             <tr>
               <th>ORDER ID</th>
@@ -159,6 +160,7 @@ export default function AdminOrdersPage() {
             })}
           </tbody>
         </table>
+      </div>
       </div>
 
       {/* Pagination */}

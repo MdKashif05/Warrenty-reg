@@ -92,7 +92,7 @@ export default function AccountWarrantiesPage() {
                       </div>
                       <span style={{ background: statusInfo.bg, color: statusInfo.color, padding: "4px 12px", borderRadius: "20px", fontSize: "12px", fontWeight: "700" }}>{statusInfo.label}</span>
                     </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "12px", marginBottom: "16px" }}>
+                    <div className="responsive-form-grid-3" style={{ gap: "12px", marginBottom: "16px" }}>
                       <div style={{ padding: "10px", background: "#f8fafc", borderRadius: "8px" }}>
                         <div style={{ fontSize: "10px", fontWeight: "700", color: "#94a3b8", textTransform: "uppercase", marginBottom: "2px" }}>Purchased From</div>
                         <div style={{ fontSize: "13px", fontWeight: "600", color: "#0f172a" }}>{platformLabel[w.purchasePlatform] || w.purchasePlatform}</div>

@@ -92,10 +92,11 @@ export default function AdminWarrantiesPage() {
         </select>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: selected ? "1fr 360px" : "1fr", gap: "20px", alignItems: "start" }}>
+      <div className={`warranties-grid ${selected ? "has-selected" : ""}`} style={{ gap: "20px", alignItems: "start" }}>
         {/* Table */}
         <div className="brand-card" style={{ background: "#fff", border: "1px solid #e2e8f0", padding: "0", overflow: "hidden" }}>
-          <table className="data-table" style={{ width: "100%" }}>
+          <div className="data-table-container">
+            <table className="data-table" style={{ width: "100%" }}>
             <thead>
               <tr>
                 <th>REG ID</th>
@@ -142,6 +143,7 @@ export default function AdminWarrantiesPage() {
             </tbody>
           </table>
         </div>
+      </div>
 
         {/* Detail / Verify Panel */}
         {selected && (
@@ -189,6 +191,13 @@ export default function AdminWarrantiesPage() {
           </div>
         )}
       </div>
+      <style>{`
+        .warranties-grid { display: grid; grid-template-columns: 1fr; }
+        @media (min-width: 1024px) {
+          .warranties-grid.has-selected { grid-template-columns: 1fr 360px !important; }
+        }
+      `}</style>
     </div>
   );
 }
+

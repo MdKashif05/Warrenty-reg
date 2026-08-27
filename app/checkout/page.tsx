@@ -189,7 +189,7 @@ export default function CheckoutPage() {
                 {/* Contact */}
                 <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "24px" }}>
                   <h2 style={{ fontSize: "15px", fontWeight: "800", color: "#0f172a", marginBottom: "20px" }}>Contact Information</h2>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                  <div className="responsive-form-grid-2">
                     <div>
                       <label style={labelStyle}>First Name *</label>
                       <input name="firstName" value={form.firstName} onChange={handleChange} required style={inputStyle} placeholder="Rahul" />
@@ -217,7 +217,7 @@ export default function CheckoutPage() {
                       <label style={labelStyle}>Full Address *</label>
                       <input name="address" value={form.address} onChange={handleChange} required style={inputStyle} placeholder="House/Flat no, Street, Area" />
                     </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                    <div className="responsive-form-grid-2">
                       <div>
                         <label style={labelStyle}>City *</label>
                         <input name="city" value={form.city} onChange={handleChange} required style={inputStyle} placeholder="Bengaluru" />

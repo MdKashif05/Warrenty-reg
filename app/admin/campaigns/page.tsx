@@ -122,7 +122,8 @@ export default function AdminCampaignsPage() {
 
       {/* Campaigns Table */}
       <div className="brand-card" style={{ background: "#fff", border: "1px solid #e2e8f0", padding: "0", overflow: "hidden" }}>
-        <table className="data-table" style={{ width: "100%" }}>
+        <div className="data-table-container">
+          <table className="data-table" style={{ width: "100%" }}>
           <thead>
             <tr>
               <th>CAMPAIGN</th>
@@ -166,6 +167,7 @@ export default function AdminCampaignsPage() {
             })}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

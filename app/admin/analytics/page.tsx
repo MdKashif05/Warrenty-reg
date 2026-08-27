@@ -99,7 +99,7 @@ export default function AdminAnalyticsPage() {
       </div>
 
       {/* Charts Row 1 */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", marginBottom: "20px" }}>
+      <div className="responsive-grid-2" style={{ marginBottom: "20px" }}>
         {/* Monthly Revenue */}
         <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "20px" }}>
           <h2 style={{ fontSize: "14px", fontWeight: "800", color: "#0f172a", marginBottom: "16px" }}>Monthly Revenue (₹)</h2>
@@ -136,7 +136,7 @@ export default function AdminAnalyticsPage() {
       </div>
 
       {/* Charts Row 2 */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
+      <div className="responsive-grid-2">
         {/* Platform Breakdown */}
         <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "20px" }}>
           <h2 style={{ fontSize: "14px", fontWeight: "800", color: "#0f172a", marginBottom: "16px" }}>Warranty Registrations by Platform</h2>

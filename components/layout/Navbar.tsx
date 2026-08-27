@@ -6,9 +6,10 @@ import { usePathname } from "next/navigation";
 
 const navLinks = [
   { label: "Products", href: "/products" },
+  { label: "Cart 🛒", href: "/cart" },
+  { label: "Account 👤", href: "/account" },
   { label: "B2B / Bulk", href: "/b2b" },
   { label: "About", href: "/about" },
-  { label: "Founder", href: "/founder" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -60,7 +61,6 @@ export default function Navbar() {
       >
         {/* ─── LOGO ─── */}
         <Link href="/" style={{ textDecoration: "none", flexShrink: 0, display: "flex", alignItems: "center" }} aria-label="Thermal Lexum - Home">
-          {/* objectFit:cover zooms into the center of the square PNG, showing THERMAL LEXUM clearly */}
           <div style={{ position: "relative", width: "140px", height: "46px", overflow: "hidden", borderRadius: "4px" }}>
             <Image
               src="/logo.png"
@@ -91,7 +91,7 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 style={{
-                  padding: "8px 16px",
+                  padding: "8px 14px",
                   borderRadius: "8px",
                   fontSize: "13px",
                   fontWeight: isActive ? "700" : "600",
@@ -112,19 +112,36 @@ export default function Navbar() {
         {/* ─── DESKTOP CTAs (hidden on < 1024px) ─── */}
         <div className="hidden lg:flex" style={{ alignItems: "center", gap: "10px", flexShrink: 0 }}>
           <Link href="/warranty/lookup" className="btn-ghost" style={{ fontSize: "13px" }}>
-            Warranty Lookup
+            Lookup
           </Link>
-          <Link href="/warranty/register" className="btn-primary" style={{ padding: "10px 20px", fontSize: "12px", whiteSpace: "nowrap" }}>
+          <Link href="/warranty/register" className="btn-primary" style={{ padding: "10px 18px", fontSize: "12px", whiteSpace: "nowrap" }}>
             Register Warranty
           </Link>
         </div>
 
-        {/* ─── MOBILE: Register Warranty + Hamburger ─── */}
+        {/* ─── MOBILE: Cart + Register Warranty + Hamburger ─── */}
         <div className="flex lg:hidden" style={{ alignItems: "center", gap: "8px", flexShrink: 0 }}>
+          <Link
+            href="/cart"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "36px",
+              height: "36px",
+              background: "#f1f5f9",
+              borderRadius: "8px",
+              textDecoration: "none",
+              fontSize: "16px",
+            }}
+            aria-label="Shopping Cart"
+          >
+            🛒
+          </Link>
           <Link
             href="/warranty/register"
             className="btn-primary"
-            style={{ padding: "9px 14px", fontSize: "11px", letterSpacing: "0.5px", whiteSpace: "nowrap" }}
+            style={{ padding: "8px 12px", fontSize: "11px", letterSpacing: "0.5px", whiteSpace: "nowrap" }}
           >
             Register
           </Link>
@@ -136,8 +153,8 @@ export default function Navbar() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              width: "40px",
-              height: "40px",
+              width: "36px",
+              height: "36px",
               background: mobileOpen ? "rgba(2,132,199,0.1)" : "#f1f5f9",
               border: "1px solid #e2e8f0",
               borderRadius: "8px",
@@ -179,7 +196,7 @@ export default function Navbar() {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  padding: "13px 16px",
+                  padding: "12px 16px",
                   borderRadius: "10px",
                   fontSize: "15px",
                   fontWeight: isActive ? "700" : "500",
@@ -202,7 +219,7 @@ export default function Navbar() {
             style={{
               display: "flex",
               alignItems: "center",
-              padding: "13px 16px",
+              padding: "12px 16px",
               borderRadius: "10px",
               fontSize: "15px",
               fontWeight: "600",

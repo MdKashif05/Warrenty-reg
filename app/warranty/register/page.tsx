@@ -198,7 +198,7 @@ function WarrantyRegisterForm() {
                 ✅ Pre-filled from your order. Just verify and submit!
               </div>
             )}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
+            <div className="responsive-form-grid-2" style={{ gap: "14px" }}>
               <div>
                 <label style={labelStyle}>First Name *</label>
                 <input name="firstName" value={form.firstName} onChange={handleChange} required style={prefill ? readOnlyStyle : inputStyle} readOnly={!!prefill} placeholder="Rahul" />
@@ -225,7 +225,7 @@ function WarrantyRegisterForm() {
           {/* Product & Purchase Details */}
           <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "24px" }}>
             <h2 style={{ fontSize: "15px", fontWeight: "800", color: "#0f172a", marginBottom: "16px" }}>📦 Product & Purchase Details</h2>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
+            <div className="responsive-form-grid-2" style={{ gap: "14px" }}>
               <div>
                 <label style={labelStyle}>Product Name *</label>
                 <input name="productName" value={form.productName} onChange={handleChange} required style={prefill ? readOnlyStyle : inputStyle} readOnly={!!prefill} placeholder="LX-TIM Pro Thermal Paste" />

@@ -60,10 +60,11 @@ export default function AdminClaimsPage() {
         <p style={{ color: "#64748b", fontSize: "14px" }}>{claims.filter((c) => c.claimStatus === "OPEN").length} open claims</p>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: selected ? "1fr 380px" : "1fr", gap: "20px", alignItems: "start" }}>
+      <div className={`claims-grid ${selected ? "has-selected" : ""}`} style={{ gap: "20px", alignItems: "start" }}>
         {/* Claims Table */}
         <div className="brand-card" style={{ background: "#fff", border: "1px solid #e2e8f0", padding: "0", overflow: "hidden" }}>
-          <table className="data-table" style={{ width: "100%" }}>
+          <div className="data-table-container">
+            <table className="data-table" style={{ width: "100%" }}>
             <thead>
               <tr>
                 <th>CLAIM ID</th>
@@ -112,6 +113,7 @@ export default function AdminClaimsPage() {
             </tbody>
           </table>
         </div>
+      </div>
 
         {/* Detail Panel */}
         {selected && (
@@ -152,6 +154,13 @@ export default function AdminClaimsPage() {
           </div>
         )}
       </div>
+      <style>{`
+        .claims-grid { display: grid; grid-template-columns: 1fr; }
+        @media (min-width: 1024px) {
+          .claims-grid.has-selected { grid-template-columns: 1fr 380px !important; }
+        }
+      `}</style>
     </div>
   );
 }
+

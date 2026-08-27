@@ -72,7 +72,7 @@ export default function CartPage() {
               {/* Items */}
               <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                 {items.map((item) => (
-                  <div key={item.id} style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "20px", display: "flex", gap: "16px", alignItems: "center" }}>
+                  <div key={item.id} className="cart-item-card" style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "20px", display: "flex", gap: "16px", alignItems: "center" }}>
                     {/* Image */}
                     <div style={{ width: "80px", height: "80px", background: "#f1f5f9", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                       {item.product.imagePath ? (
@@ -93,7 +93,7 @@ export default function CartPage() {
                       </div>
                     </div>
                     {/* Qty Controls */}
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
+                    <div className="cart-qty-controls" style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
                       <button
                         onClick={() => updateQty(item, item.qty - 1)}
                         disabled={updating === item.id}
@@ -163,6 +163,10 @@ export default function CartPage() {
       <style>{`
         @media (max-width: 768px) {
           main > div > div:last-child { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 500px) {
+          .cart-item-card { flex-wrap: wrap !important; }
+          .cart-qty-controls { width: 100% !important; justify-content: space-between !important; margin-top: 8px !important; border-top: 1px solid #f1f5f9; padding-top: 8px; }
         }
       `}</style>
     </>
