@@ -91,7 +91,7 @@ export default function Navbar() {
         </Link>
 
         {/* DESKTOP NAV LINKS */}
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }} className="hidden lg:flex">
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }} className="hidden-mobile">
           <Link href="/" style={{ padding: "8px 14px", color: pathname === "/" ? "#0E4D92" : "#334155", fontWeight: pathname === "/" ? "800" : "600", textDecoration: "none", fontSize: "14px" }}>Home</Link>
           <Link href="/products" style={{ padding: "8px 14px", color: pathname.startsWith("/products") ? "#0E4D92" : "#334155", fontWeight: pathname.startsWith("/products") ? "800" : "600", textDecoration: "none", fontSize: "14px" }}>Products</Link>
           <Link href="/warranty/register" style={{ padding: "8px 14px", color: pathname.startsWith("/warranty") ? "#0E4D92" : "#334155", fontWeight: pathname.startsWith("/warranty") ? "800" : "600", textDecoration: "none", fontSize: "14px" }}>Register Warranty 🛡️</Link>
@@ -101,13 +101,13 @@ export default function Navbar() {
         </div>
 
         {/* DESKTOP CTAS */}
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }} className="hidden lg:flex">
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }} className="hidden-mobile">
           <Link href="/cart" className="btn-secondary" style={{ padding: "9px 16px", fontSize: "13px" }}>🛒 Cart</Link>
           <Link href="/account" className="btn-primary" style={{ padding: "9px 18px", fontSize: "13px" }}>👤 Account</Link>
         </div>
 
         {/* MOBILE TOGGLE */}
-        <div className="flex lg:hidden" style={{ alignItems: "center", gap: "8px" }}>
+        <div className="hidden-desktop" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <Link href="/cart" style={{ padding: "8px 12px", background: "#f0fcff", color: "#0E4D92", borderRadius: "8px", fontWeight: "700", fontSize: "13px", textDecoration: "none" }}>🛒</Link>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -121,7 +121,7 @@ export default function Navbar() {
 
       {/* MOBILE MENU */}
       {mobileOpen && (
-        <div style={{ background: "#ffffff", borderTop: "1px solid #e2e8f0", padding: "16px", display: "flex", flexDirection: "column", gap: "4px" }}>
+        <div style={{ background: "#ffffff", borderTop: "1px solid #e2e8f0", padding: "16px", display: "flex", flexDirection: "column", gap: "4px", maxHeight: "80vh", overflowY: "auto" }}>
           <Link href="/" style={{ padding: "12px 16px", fontWeight: "700", color: "#0E4D92", textDecoration: "none", borderRadius: "8px", background: pathname === "/" ? "#f0f7ff" : "transparent" }}>🏠 Home</Link>
           <Link href="/products" style={{ padding: "12px 16px", fontWeight: "700", color: "#0f172a", textDecoration: "none", borderRadius: "8px" }}>📦 Products Catalog</Link>
           <Link href="/warranty/register" style={{ padding: "12px 16px", fontWeight: "700", color: "#0f172a", textDecoration: "none", borderRadius: "8px" }}>🛡️ Register Warranty</Link>

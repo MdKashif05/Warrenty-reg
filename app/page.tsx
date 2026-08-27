@@ -22,22 +22,22 @@ export default function HomePage() {
         
         {/* ─── 1. HERO BANNER — uses real /public/banner.png ─── */}
         <section style={{ position: "relative", borderBottom: "1px solid #1e3a5f" }}>
-          {/* Full-width banner image */}
-          <div style={{ position: "relative", width: "100%", height: "clamp(220px, 35vw, 480px)", overflow: "hidden" }}>
+          {/* Proportional responsive container */}
+          <div className="hero-banner-container">
             <Image
               src="/banner.png"
               alt="Thermal Lexum – Maximum Cooling"
               fill
               priority
-              style={{ objectFit: "cover", objectPosition: "center" }}
+              className="hero-banner-image"
             />
             {/* Overlay gradient so text below blends smoothly */}
-            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.55) 100%)" }} />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.55) 100%)", zIndex: 5 }} />
             {/* Centered CTA on banner */}
-            <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", padding: "32px 20px", gap: "14px" }}>
+            <div className="hero-cta-container">
               <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
-                <Link href="/products" className="btn-primary" style={{ fontSize: "15px", padding: "14px 28px", boxShadow: "0 6px 24px rgba(0,0,0,0.35)" }}>Shop Products 📦</Link>
-                <Link href="/warranty/register" className="btn-secondary" style={{ fontSize: "15px", padding: "14px 24px", background: "rgba(255,255,255,0.92)", color: "#0E4D92", fontWeight: "800" }}>Register Warranty 🛡️</Link>
+                <Link href="/products" className="btn-primary" style={{ fontSize: "14px", padding: "12px 24px", boxShadow: "0 6px 24px rgba(0,0,0,0.35)" }}>Shop Products 📦</Link>
+                <Link href="/warranty/register" className="btn-secondary" style={{ fontSize: "14px", padding: "12px 20px", background: "rgba(255,255,255,0.92)", color: "#0E4D92", fontWeight: "800" }}>Register Warranty 🛡️</Link>
               </div>
             </div>
           </div>
