@@ -33,13 +33,13 @@ export default function HomePage() {
             />
             {/* Desktop-only subtle overlay gradient */}
             <div className="banner-overlay" style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,0,0,0.5) 100%)" }} />
-          </div>
 
-          {/* Responsive CTA buttons */}
-          <div className="banner-cta-section">
-            <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
-              <Link href="/products" className="btn-primary" style={{ fontSize: "15px", padding: "12px 26px", boxShadow: "0 6px 20px rgba(14,77,146,0.25)" }}>Shop Products 📦</Link>
-              <Link href="/warranty/register" className="btn-secondary" style={{ fontSize: "15px", padding: "12px 24px", background: "#f8fafc", color: "#0E4D92", fontWeight: "800", border: "1px solid #cbd5e1" }}>Register Warranty 🛡️</Link>
+            {/* Responsive CTA buttons */}
+            <div className="banner-cta-section">
+              <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
+                <Link href="/products" className="btn-primary" style={{ fontSize: "15px", padding: "12px 26px", boxShadow: "0 6px 20px rgba(14,77,146,0.25)" }}>Shop Products 📦</Link>
+                <Link href="/warranty/register" className="btn-secondary" style={{ fontSize: "15px", padding: "12px 24px", background: "#f8fafc", color: "#0E4D92", fontWeight: "800", border: "1px solid #cbd5e1" }}>Register Warranty 🛡️</Link>
+              </div>
             </div>
           </div>
 
