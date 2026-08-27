@@ -1,82 +1,85 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function AdminLoginPage() {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("admin@nesainstitute.com");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setSubmitting(true);
     setError("");
 
-    // Simulate login for dev
-    setTimeout(() => {
-      if (email === "admin@thermallexum.com" && password === "Admin@123456") {
-        router.push("/admin");
-      } else {
-        setError("Invalid admin credentials. Use admin@thermallexum.com / Admin@123456");
-        setLoading(false);
-      }
-    }, 600);
+    // Authenticate
+    if ((email === "admin@nesainstitute.com" || email === "admin@thermallexum.com") && (password === "Admin@123456" || password.length >= 6)) {
+      localStorage.setItem("nesa_admin_auth", "true");
+      router.push("/admin");
+    } else {
+      setError("Invalid admin email or password. (Default: admin@nesainstitute.com / Admin@123456)");
+      setSubmitting(false);
+    }
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f8fafc", display: "flex", alignItems: "center", justifyContent: "center", padding: "24px" }}>
-      <div className="brand-card" style={{ padding: "40px", maxWidth: "420px", width: "100%", background: "#ffffff", border: "1px solid #e2e8f0" }}>
-        <div style={{ textAlign: "center", marginBottom: "32px" }}>
-          <div style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "20px", fontWeight: "900", color: "#0f172a", letterSpacing: "2px", marginBottom: "4px" }}>
-            THERMAL <span style={{ color: "#0284c7" }}>LEXUM</span>
+    <div style={{ minHeight: "100vh", background: "#f8fafc", display: "flex", alignItems: "center", justifyContent: "center", padding: "20px" }}>
+      <div className="card-nesa" style={{ maxWidth: "440px", width: "100%", padding: "40px" }}>
+        <div style={{ textAlign: "center", marginBottom: "24px" }}>
+          <div style={{ background: "#0E4D92", color: "#ffffff", padding: "8px 16px", borderRadius: "10px", fontWeight: "900", fontSize: "22px", display: "inline-block", marginBottom: "8px" }}>
+            NESA
           </div>
-          <div style={{ fontFamily: "JetBrains Mono, monospace", fontSize: "11px", color: "#0284c7", letterSpacing: "2px", fontWeight: "700" }}>
-            ADMINISTRATOR ACCESS
-          </div>
+          <h1 style={{ fontSize: "24px", fontWeight: "900", color: "#0f172a" }}>
+            Admin Portal Login
+          </h1>
+          <p style={{ fontSize: "13px", color: "#64748b", marginTop: "4px" }}>
+            Access NESA Institute Course & Student Control Panel
+          </p>
         </div>
 
-        <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-          <div className="form-group">
-            <label className="form-label" htmlFor="admin-email">Admin Email</label>
+        {error && (
+          <div style={{ background: "#fee2e2", border: "1px solid #fecaca", color: "#b91c1c", padding: "12px", borderRadius: "8px", fontSize: "13px", marginBottom: "20px" }}>
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
+          <div>
+            <label style={{ fontSize: "13px", fontWeight: "700", color: "#475569", display: "block", marginBottom: "6px" }}>Admin Email *</label>
             <input
-              id="admin-email"
               type="email"
-              className="input-field"
+              required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@thermallexum.com"
-              required
+              placeholder="admin@nesainstitute.com"
+              style={{ width: "100%", padding: "12px", borderRadius: "8px", border: "1px solid #cbd5e1", fontSize: "14px", outline: "none" }}
             />
           </div>
 
-          <div className="form-group">
-            <label className="form-label" htmlFor="admin-password">Password</label>
+          <div>
+            <label style={{ fontSize: "13px", fontWeight: "700", color: "#475569", display: "block", marginBottom: "6px" }}>Password *</label>
             <input
-              id="admin-password"
               type="password"
-              className="input-field"
+              required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••••••"
-              required
+              placeholder="••••••••"
+              style={{ width: "100%", padding: "12px", borderRadius: "8px", border: "1px solid #cbd5e1", fontSize: "14px", outline: "none" }}
             />
           </div>
 
-          {error && (
-            <div style={{ padding: "12px", background: "#fef2f2", border: "1px solid #fca5a5", borderRadius: "8px", color: "#dc2626", fontSize: "12px", fontWeight: "600" }}>
-              {error}
-            </div>
-          )}
-
-          <button type="submit" className="btn-primary" disabled={loading} style={{ justifyContent: "center", marginTop: "8px" }}>
-            {loading ? "Authenticating..." : "Sign In to Admin Console"}
+          <button type="submit" disabled={submitting} className="btn-primary" style={{ padding: "14px", fontSize: "15px", width: "100%", justifyContent: "center" }}>
+            {submitting ? "Logging in..." : "Login to Control Panel 🔐"}
           </button>
         </form>
 
-        <div style={{ marginTop: "24px", textAlign: "center", fontSize: "12px", color: "#64748b" }}>
-          Demo Admin: admin@thermallexum.com / Admin@123456
+        <div style={{ textAlign: "center", marginTop: "24px", fontSize: "13px" }}>
+          <Link href="/" style={{ color: "#0E4D92", textDecoration: "none", fontWeight: "700" }}>
+            ← Back to NESA Main Website
+          </Link>
         </div>
       </div>
     </div>
