@@ -22,15 +22,14 @@ export default function HomePage() {
         
         {/* ─── 1. HERO BANNER — uses real /public/banner.png ─── */}
         <section style={{ position: "relative", borderBottom: "1px solid #1e3a5f" }}>
-          {/* Full-width responsive banner image */}
-          <div style={{ position: "relative", width: "100%", height: "auto", overflow: "hidden" }}>
+          {/* Full-width responsive banner image with fixed height constraints */}
+          <div className="banner-container">
             <Image
               src="/banner.png"
               alt="Thermal Lexum – Maximum Cooling"
-              width={9375}
-              height={1875}
+              fill
               priority
-              style={{ width: "100%", height: "auto", display: "block" }}
+              style={{ objectFit: "contain", objectPosition: "center" }}
             />
             {/* Desktop-only subtle overlay gradient */}
             <div className="banner-overlay" style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,0,0,0.5) 100%)" }} />
@@ -62,6 +61,13 @@ export default function HomePage() {
           </div>
 
           <style>{`
+            .banner-container {
+              position: relative;
+              width: 100%;
+              height: 420px;
+              background-color: #000000;
+              overflow: hidden;
+            }
             .banner-cta-section {
               padding: 24px 20px;
               background: #ffffff;
@@ -83,9 +89,22 @@ export default function HomePage() {
                 border: none !important;
               }
             }
+            @media (max-width: 1024px) {
+              .banner-container {
+                height: 300px;
+              }
+            }
             @media (max-width: 768px) {
+              .banner-container {
+                height: 180px;
+              }
               .banner-overlay {
                 display: none !important;
+              }
+            }
+            @media (max-width: 480px) {
+              .banner-container {
+                height: 120px;
               }
             }
           `}</style>
