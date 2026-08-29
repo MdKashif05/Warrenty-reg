@@ -70,7 +70,7 @@ export default function HomePage() {
   return (
     <>
       <Navbar />
-      <main style={{ background: "#ffffff", paddingTop: "72px" }}>
+      <main style={{ background: "#ffffff", paddingTop: "64px" }}>
         {/* HERO SECTION */}
         <section
           style={{
