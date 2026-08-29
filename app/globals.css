@@ -589,3 +589,23 @@ h1, h2, h3, h4, h5, h6 {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ── Mobile Navbar + Banner Fix ─────────────────────────────────── */
+@media (max-width: 768px) {
+  .navbar {
+    height: 64px !important;
+  }
+  main[style] {
+    padding-top: 64px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    height: 56px !important;
+  }
+  main[style] {
+    padding-top: 56px !important;
+  }
+}
+

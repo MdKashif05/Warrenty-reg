@@ -70,7 +70,7 @@ export default function HomePage() {
   return (
     <>
       <Navbar />
-      <main style={{ background: "#ffffff" }}>
+      <main style={{ background: "#ffffff", paddingTop: "72px" }}>
         {/* HERO SECTION */}
         <section
           style={{
@@ -112,7 +112,7 @@ export default function HomePage() {
             style={{
               maxWidth: "1280px",
               margin: "0 auto",
-              padding: "130px 24px 70px",
+              padding: "60px 24px 70px",
               position: "relative",
               zIndex: 1,
               width: "100%",
@@ -247,21 +247,21 @@ export default function HomePage() {
               style={{
                 position: "relative",
                 width: "100%",
-                aspectRatio: "3.2 / 1",
-                minHeight: "180px",
                 borderRadius: "20px",
                 overflow: "hidden",
                 border: "1px solid #334155",
-                boxShadow: "0 20px 50px rgba(0, 0, 0, 0.4)"
+                boxShadow: "0 20px 50px rgba(0, 0, 0, 0.4)",
+                lineHeight: 0,
               }}
             >
               <Image
                 src="/banner.png"
                 alt="Thermal Lexum - Maximum Cooling Official Banner"
-                fill
+                width={9375}
+                height={1875}
                 priority
-                sizes="(max-width: 1280px) 100vw, 1280px"
-                style={{ objectFit: "cover", objectPosition: "center" }}
+                sizes="(max-width: 768px) 100vw, (max-width: 1280px) 100vw, 1280px"
+                style={{ width: "100%", height: "auto", display: "block" }}
               />
             </div>
           </div>
