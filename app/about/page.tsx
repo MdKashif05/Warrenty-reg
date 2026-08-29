@@ -1,179 +1,205 @@
-"use client";
-import Link from "next/link";
-import Image from "next/image";
+import type { Metadata } from "next";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import Link from "next/link";
+import Image from "next/image";
+
+export const metadata: Metadata = {
+  title: "About Us | Thermal Lexum",
+  description: "Learn about Thermal Lexum — our mission, engineering values, leadership under Founder Javed Shaikh, and commitment to performance.",
+};
+
+const values = [
+  {
+    icon: "⚡",
+    title: "Performance First",
+    desc: "Every decision we make is centered around delivering maximum thermal dissipation and stability for high-draw hardware.",
+  },
+  {
+    icon: "🔬",
+    title: "Engineering Excellence",
+    desc: "Our thermal interface compounds are tested across thousands of heat cycles under intense overclocking scenarios.",
+  },
+  {
+    icon: "🛡️",
+    title: "Reliability & Longevity",
+    desc: "Formulated to prevent drying out, pumping out, or breakdown, ensuring years of consistent cooling performance.",
+  },
+  {
+    icon: "🌐",
+    title: "Global Standards",
+    desc: "Thermal Lexum products adhere to strict international quality, non-toxicity, and electrical isolation standards.",
+  },
+];
 
 export default function AboutPage() {
   return (
     <>
       <Navbar />
-      <main style={{ background: "#ffffff", paddingTop: "80px", minHeight: "100vh" }}>
-
-        {/* ─── HERO BANNER ─── */}
-        <section style={{ position: "relative", borderBottom: "1px solid #1e3a5f" }}>
-          <div style={{ position: "relative", width: "100%", height: "clamp(180px, 28vw, 360px)", overflow: "hidden" }}>
-            <Image
-              src="/banner.png"
-              alt="Thermal Lexum – Maximum Cooling"
-              fill
-              priority
-              style={{ objectFit: "cover", objectPosition: "center" }}
-            />
-            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.65) 100%)" }} />
-            <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "10px", padding: "0 20px", textAlign: "center" }}>
-              <div style={{ fontSize: "12px", letterSpacing: "3px", fontWeight: "800", color: "#ffd166", textTransform: "uppercase" }}>ABOUT THERMAL LEXUM</div>
-              <h1 style={{ fontSize: "clamp(26px, 5vw, 52px)", fontWeight: "900", color: "#ffffff", letterSpacing: "-1px", lineHeight: "1.15" }}>
-                Built on Engineering Integrity
-              </h1>
-              <p style={{ fontSize: "16px", color: "#e2e8f0", maxWidth: "560px", lineHeight: "1.6" }}>
-                Thermal Lexum — where every gram of compound is engineered to last, perform, and protect your hardware.
-              </p>
-            </div>
+      <main style={{ minHeight: "100vh", background: "#ffffff" }}>
+        {/* Hero */}
+        <section
+          className="page-hero bg-grid"
+          style={{
+            background: "radial-gradient(circle at 50% 0%, rgba(2, 132, 199, 0.08) 0%, #ffffff 80%)",
+            borderBottom: "1px solid #e2e8f0",
+            paddingTop: "140px",
+            paddingBottom: "80px"
+          }}
+        >
+          <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 24px" }}>
+            <div className="section-label" style={{ marginBottom: "16px" }}>ABOUT THERMAL LEXUM</div>
+            <h1 style={{ fontSize: "clamp(36px, 5vw, 64px)", fontWeight: "900", letterSpacing: "-2px", color: "#0f172a", marginBottom: "16px" }}>
+              Built for Those Who<br />
+              <span className="text-gradient">Demand Thermal Mastery.</span>
+            </h1>
+            <p style={{ fontSize: "16px", color: "#475569", maxWidth: "600px", lineHeight: "1.7" }}>
+              Thermal Lexum is a performance-focused thermal technology brand dedicated to engineering high-conductivity thermal interface solutions for modern computing.
+            </p>
           </div>
+          <div className="thermal-bar" style={{ marginTop: "48px" }} />
         </section>
 
-        {/* ─── FOUNDER MESSAGE ─── */}
-        <section style={{ padding: "80px 20px", background: "#ffffff" }}>
-          <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "60px", alignItems: "center" }}>
-
-              {/* Founder Photo Card */}
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <div style={{
-                  borderRadius: "24px",
-                  overflow: "hidden",
-                  border: "2px solid #0E4D92",
-                  boxShadow: "0 24px 60px rgba(14,77,146,0.25)",
-                  maxWidth: "360px",
-                  width: "100%",
-                  position: "relative"
-                }}>
-                  <div style={{ position: "relative", width: "100%", aspectRatio: "3/4" }}>
-                    <Image
-                      src="/founder.png"
-                      alt="Javed Shaikh – Founder & CEO, Thermal Lexum"
-                      fill
-                      sizes="(max-width: 768px) 100vw, 360px"
-                      style={{ objectFit: "cover", objectPosition: "center top" }}
-                    />
-                    {/* Name overlay */}
-                    <div style={{
-                      position: "absolute", bottom: 0, left: 0, right: 0,
-                      background: "linear-gradient(to top, rgba(14,77,146,0.95) 0%, transparent 100%)",
-                      padding: "40px 24px 24px"
-                    }}>
-                      <div style={{ fontSize: "22px", fontWeight: "900", color: "#ffffff", marginBottom: "4px" }}>Javed Shaikh</div>
-                      <div style={{ fontSize: "12px", fontWeight: "700", color: "#ffd166", letterSpacing: "2px", textTransform: "uppercase" }}>Founder & CEO</div>
-                    </div>
-                  </div>
-                  {/* Bottom bar */}
-                  <div style={{ background: "#0E4D92", padding: "16px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <div>
-                      <div style={{ fontSize: "11px", color: "#bfdbfe" }}>Company</div>
-                      <div style={{ fontSize: "15px", fontWeight: "800", color: "#ffffff" }}>Thermal Lexum</div>
-                    </div>
-                    <div style={{ textAlign: "right" }}>
-                      <div style={{ fontSize: "11px", color: "#bfdbfe" }}>Location</div>
-                      <div style={{ fontSize: "15px", fontWeight: "800", color: "#ffd166" }}>Bengaluru, India</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Founder Message Text */}
+        {/* Mission */}
+        <section style={{ padding: "100px 24px", background: "#ffffff" }}>
+          <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+            <div className="responsive-grid-2" style={{ alignItems: "center" }}>
               <div>
-                <div style={{
-                  display: "inline-flex", alignItems: "center", gap: "8px",
-                  background: "rgba(14,77,146,0.08)", border: "1px solid rgba(14,77,146,0.2)",
-                  borderRadius: "20px", padding: "6px 16px", marginBottom: "24px"
-                }}>
-                  <span style={{ fontSize: "12px", fontWeight: "700", color: "#0E4D92", letterSpacing: "1px", textTransform: "uppercase" }}>
-                    MESSAGE FROM THE FOUNDER
-                  </span>
-                </div>
-
-                <h2 style={{ fontSize: "clamp(26px, 4vw, 40px)", fontWeight: "900", color: "#0f172a", letterSpacing: "-1px", lineHeight: "1.2", marginBottom: "28px" }}>
-                  "Cool Systems.<br />
-                  <span style={{ color: "#0E4D92" }}>Unstoppable Performance.</span>"
+                <div className="section-label" style={{ marginBottom: "16px" }}>OUR MISSION</div>
+                <h2 style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: "800", letterSpacing: "-1.5px", color: "#0f172a", marginBottom: "24px" }}>
+                  Thermal Science Engineered Without Shortcuts.
                 </h2>
-
-                <div style={{ display: "flex", flexDirection: "column", gap: "18px", fontSize: "16px", color: "#334155", lineHeight: "1.8" }}>
-                  <p style={{ fontSize: "18px", fontWeight: "600", color: "#0f172a" }}>
-                    I'm Javed Shaikh. I created Thermal Lexum because the world needed thermal solutions that actually deliver — no compromise, no shortcuts.
+                <div style={{ display: "flex", flexDirection: "column", gap: "20px", fontSize: "15px", color: "#475569", lineHeight: "1.8" }}>
+                  <p>
+                    Thermal Lexum was founded on a simple principle: cooling is not optional — it is the heartbeat of hardware performance and lifespan.
                   </p>
                   <p>
-                    From liquid metal for extreme delidded builds to professional-grade thermal pads protecting VRAM and VRM — every product we make is engineered with precision and tested under real-world loads.
-                  </p>
-                  <p style={{ fontSize: "18px", fontWeight: "700", color: "#0E4D92" }}>
-                    We don't sell products. We sell confidence.
+                    From enthusiasm-driven desktop rigs to workstation render nodes, poor heat transfer throttles power. We eliminate thermal bottlenecks through micro-particulate zinc and aluminum oxide matrix formulas.
                   </p>
                   <p>
-                    Join the revolution. Cool your passion.
+                    Trusted by builders, overclockers, and professionals worldwide, every Thermal Lexum product is backed by digital warranty verification and direct engineering support.
                   </p>
-                </div>
-
-                {/* Quote box */}
-                <div style={{
-                  marginTop: "32px", padding: "28px 32px", borderRadius: "16px",
-                  background: "linear-gradient(135deg, rgba(14,77,146,0.05) 0%, rgba(37,99,235,0.05) 100%)",
-                  borderLeft: "5px solid #0E4D92", border: "1px solid #e2e8f0",
-                  borderLeftWidth: "5px", borderLeftColor: "#0E4D92"
-                }}>
-                  <p style={{ fontSize: "18px", fontWeight: "700", color: "#0f172a", fontStyle: "italic", lineHeight: "1.6", marginBottom: "14px" }}>
-                    "Liquid metal to liquid courage. Thermal paste to trusted performance. Thermal pads to pure innovation."
-                  </p>
-                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    <div style={{ width: "24px", height: "3px", background: "#0E4D92" }} />
-                    <span style={{ fontSize: "14px", fontWeight: "800", color: "#0E4D92" }}>Javed Shaikh, Founder — Thermal Lexum</span>
-                  </div>
-                </div>
-
-                <div style={{ display: "flex", gap: "14px", flexWrap: "wrap", marginTop: "36px" }}>
-                  <Link href="/founder" className="btn-primary">Read Full Message →</Link>
-                  <Link href="/contact" className="btn-secondary">Contact Us</Link>
                 </div>
               </div>
 
+              {/* Stats Box */}
+              <div className="responsive-form-grid-2">
+                {[
+                  { num: "17.6 W/mK", label: "Peak Conductivity" },
+                  { num: "100%", label: "Authenticity Verified" },
+                  { num: "1 Year", label: "Warranty Backed" },
+                  { num: "24/7", label: "Customer Support" },
+                ].map((stat) => (
+                  <div
+                    key={stat.label}
+                    className="brand-card"
+                    style={{
+                      padding: "28px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      border: "1px solid #e2e8f0",
+                      background: "#f8fafc"
+                    }}
+                  >
+                    <span style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "32px", fontWeight: "900", color: "#0284c7", marginBottom: "4px" }}>
+                      {stat.num}
+                    </span>
+                    <span style={{ fontSize: "13px", color: "#64748b", fontWeight: "600", letterSpacing: "0.5px" }}>
+                      {stat.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
-        {/* ─── MISSION & VALUES ─── */}
-        <section style={{ padding: "80px 20px", background: "#f8fafc", borderTop: "1px solid #e2e8f0" }}>
-          <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-            <div style={{ textAlign: "center", marginBottom: "56px" }}>
-              <span style={{ fontSize: "12px", letterSpacing: "2px", fontWeight: "800", color: "#0E4D92", textTransform: "uppercase" }}>
-                OUR MISSION
-              </span>
-              <h2 style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: "900", color: "#0f172a", marginTop: "10px" }}>
-                Why Choose Thermal Lexum?
+        {/* Founder Spotlight Section */}
+        <section
+          style={{
+            padding: "90px 24px",
+            background: "#f8fafc",
+            borderTop: "1px solid #e2e8f0",
+            borderBottom: "1px solid #e2e8f0"
+          }}
+        >
+          <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+            <div
+              className="brand-card founder-card-grid"
+              style={{
+                padding: "48px",
+                background: "#ffffff",
+                border: "1px solid #cbd5e1",
+                boxShadow: "0 15px 35px rgba(0,0,0,0.05)"
+              }}
+            >
+              <div style={{ position: "relative", width: "100%", height: "320px", borderRadius: "16px", overflow: "hidden", border: "3px solid #0284c7" }}>
+                <Image
+                  src="/founder.png"
+                  alt="Javed Shaikh - Founder of Thermal Lexum"
+                  fill
+                  style={{ objectFit: "cover", objectPosition: "center top" }}
+                />
+              </div>
+
+              <div>
+                <div className="section-label" style={{ marginBottom: "12px" }}>FOUNDER SPOTLIGHT</div>
+                <h3 style={{ fontSize: "30px", fontWeight: "800", color: "#0f172a", marginBottom: "16px" }}>
+                  "We don't sell products. We sell confidence."
+                </h3>
+                <p style={{ fontSize: "16px", color: "#475569", lineHeight: "1.8", marginBottom: "24px" }}>
+                  Founder <strong>Javed Shaikh</strong> established Thermal Lexum to deliver zero-compromise thermal solutions — liquid metal to liquid courage, thermal paste to trusted performance, thermal pads to pure innovation.
+                </p>
+                <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+                  <Link href="/founder" className="btn-primary">
+                    Read Javed Shaikh's Message
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </Link>
+                  <span style={{ fontSize: "14px", color: "#0284c7", fontWeight: "700" }}>— Javed Shaikh, Founder & CEO</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Values */}
+        <section style={{ padding: "100px 24px", background: "#ffffff" }}>
+          <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+            <div style={{ textAlign: "center", marginBottom: "64px" }}>
+              <div className="section-label" style={{ marginBottom: "16px" }}>OUR CORE VALUES</div>
+              <h2 style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: "800", letterSpacing: "-1.5px", color: "#0f172a" }}>
+                The Principles Behind Every Compound
               </h2>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "24px" }}>
-              {[
-                { icon: "🧪", title: "Lab-Grade Formulation", desc: "Every compound is tested for thermal conductivity, viscosity, and long-term stability before reaching your hands." },
-                { icon: "🛡️", title: "3-Year Official Warranty", desc: "Full replacement warranty on all products. Register online in 60 seconds — no paperwork, no hassle." },
-                { icon: "🔬", title: "Zero-Compromise Quality", desc: "14.8 W/m·K conductivity ceiling — the highest in its class. Built for delidded CPUs, GPUs, and industrial systems." },
-                { icon: "🇮🇳", title: "Proudly Indian Brand", desc: "Designed, formulated, and supported from Bengaluru. Trusted by 50,000+ Indian PC builders and system integrators." },
-              ].map((item) => (
-                <div
-                  key={item.title}
-                  style={{
-                    padding: "32px", background: "#ffffff", borderRadius: "16px",
-                    border: "1px solid #e2e8f0", boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
-                    transition: "transform 0.2s, box-shadow 0.2s"
-                  }}
-                >
-                  <div style={{ fontSize: "36px", marginBottom: "16px" }}>{item.icon}</div>
-                  <h3 style={{ fontSize: "18px", fontWeight: "800", color: "#0f172a", marginBottom: "10px" }}>{item.title}</h3>
-                  <p style={{ fontSize: "14px", color: "#475569", lineHeight: "1.7" }}>{item.desc}</p>
+
+            <div className="responsive-grid-2">
+              {values.map((val) => (
+                <div key={val.title} className="brand-card" style={{ padding: "36px" }}>
+                  <div style={{ fontSize: "36px", marginBottom: "16px" }}>{val.icon}</div>
+                  <h3 style={{ fontSize: "20px", fontWeight: "700", color: "#0f172a", marginBottom: "12px" }}>{val.title}</h3>
+                  <p style={{ fontSize: "14px", color: "#475569", lineHeight: "1.7" }}>{val.desc}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
+        {/* CTA */}
+        <section style={{ padding: "80px 24px", background: "#f8fafc", textAlign: "center", borderTop: "1px solid #e2e8f0" }}>
+          <div style={{ maxWidth: "540px", margin: "0 auto" }}>
+            <h2 style={{ fontSize: "36px", fontWeight: "800", letterSpacing: "-1.5px", color: "#0f172a", marginBottom: "16px" }}>
+              Join the Revolution. Cool Your Passion.
+            </h2>
+            <p style={{ fontSize: "15px", color: "#475569", marginBottom: "32px", lineHeight: "1.7" }}>
+              Join thousands of enthusiasts and professionals who rely on Thermal Lexum for peak system stability.
+            </p>
+            <div style={{ display: "flex", gap: "16px", justifyContent: "center" }}>
+              <Link href="/products" className="btn-primary">Explore Products</Link>
+              <Link href="/contact" className="btn-secondary">Contact Us</Link>
+            </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </>

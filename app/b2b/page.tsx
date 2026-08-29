@@ -16,7 +16,7 @@ const indianStates = [
 ];
 
 const productOptions = [
-  "LX-TIM Pro (Thermal Paste - 14.2 W/mK)",
+  "LX-TIM Pro (Thermal Paste - 17.6 W/mK)",
   "LX-TIM Ultra (Extreme Thermal Paste - 16.8 W/mK)",
   "LX-LM Elite (Liquid Metal - 73.0 W/mK)",
   "LX-PAD Standard (Thermal Pad - 12.5 W/mK)",

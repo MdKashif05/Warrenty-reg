@@ -26,7 +26,7 @@ export default function WhyLexumPage() {
               {
                 icon: "🧪",
                 title: "Lab-Grade Nano-Diamond Formula",
-                desc: "Our TL-X1 Ultra uses nano-diamond particles suspended in a carrier compound to achieve 14.2 W/m·K thermal conductivity — engineered for peak CPU and GPU performance.",
+                desc: "Our TL-X1 Ultra uses nano-diamond particles suspended in a carrier compound to achieve 17.6 W/m·K thermal conductivity — engineered for peak CPU and GPU performance.",
               },
               {
                 icon: "🛡️",

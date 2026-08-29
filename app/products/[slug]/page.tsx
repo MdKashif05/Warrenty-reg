@@ -29,7 +29,7 @@ const productDatabase: Record<string, {
       "Easy application spreader included in packaging"
     ],
     specs: [
-      { label: "Thermal Conductivity", value: "14.2 W/mK" },
+      { label: "Thermal Conductivity", value: "17.6 W/mK" },
       { label: "Viscosity", value: "85,000 Pas" },
       { label: "Density", value: "2.6 g/cm³" },
       { label: "Operating Temp Range", value: "-50°C to +250°C" },

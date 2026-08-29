@@ -45,7 +45,7 @@ export default function AdminB2bPage() {
           businessEmail: "procurement@apexgaming.in",
           phone: "+91 98765 43210",
           gstin: "29ABCDE1234F1Z5",
-          productRequired: "LX-TIM Pro (Thermal Paste - 14.2 W/mK)",
+          productRequired: "LX-TIM Pro (Thermal Paste - 17.6 W/mK)",
           quantity: 50,
           deliveryCity: "Bengaluru",
           deliveryState: "Karnataka",

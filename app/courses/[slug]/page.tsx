@@ -50,7 +50,7 @@ export default function CourseDetailPage() {
               </h3>
               <div className="responsive-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "40px" }}>
                 {[
-                  "✅ 14.2 W/mK Extreme Thermal Conductivity",
+                  "✅ 17.6 W/mK Extreme Thermal Conductivity",
                   "✅ Zero Electrical Conductivity (Safe for All Components)",
                   "✅ Long-Term Durability (No Dry-Out up to 8 Years)",
                   "✅ Syringe Applicator + Spatula Spreader Included",

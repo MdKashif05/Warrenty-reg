@@ -18,11 +18,11 @@ const products = [
     category: "THERMAL_PASTE",
     tagline: "Professional-Grade Thermal Compound",
     description:
-      "Engineered for high-performance processors, LX-TIM Pro delivers 14.2 W/mK conductivity with long-term stability under heavy gaming and rendering workloads.",
+      "Engineered for high-performance processors, LX-TIM Pro delivers 17.6 W/mK conductivity with long-term stability under heavy gaming and rendering workloads.",
     specs: [
       { label: "Category", value: "Thermal Paste" },
-      { label: "Conductivity", value: "14.2 W/mK" },
-      { label: "Warranty", value: "12 Months Coverage" },
+      { label: "Conductivity", value: "17.6 W/mK" },
+      { label: "Warranty", value: "1 Year Coverage" },
     ],
     color: "#0284c7",
     tag: "RECOMMENDED",
@@ -37,7 +37,7 @@ const products = [
     specs: [
       { label: "Category", value: "Thermal Paste" },
       { label: "Conductivity", value: "16.8 W/mK" },
-      { label: "Warranty", value: "12 Months Coverage" },
+      { label: "Warranty", value: "1 Year Coverage" },
     ],
     color: "#0284c7",
     tag: "EXTREME",
@@ -52,7 +52,7 @@ const products = [
     specs: [
       { label: "Category", value: "Liquid Metal" },
       { label: "Conductivity", value: "73.0 W/mK" },
-      { label: "Warranty", value: "12 Months Coverage" },
+      { label: "Warranty", value: "1 Year Coverage" },
     ],
     color: "#2563eb",
     tag: "PROFESSIONAL",
@@ -67,7 +67,7 @@ const products = [
     specs: [
       { label: "Category", value: "Thermal Pads" },
       { label: "Conductivity", value: "12.5 W/mK" },
-      { label: "Warranty", value: "12 Months Coverage" },
+      { label: "Warranty", value: "1 Year Coverage" },
     ],
     color: "#0d9488",
     tag: "",
@@ -82,7 +82,7 @@ const products = [
     specs: [
       { label: "Category", value: "Thermal Pads" },
       { label: "Conductivity", value: "15.0 W/mK" },
-      { label: "Warranty", value: "12 Months Coverage" },
+      { label: "Warranty", value: "1 Year Coverage" },
     ],
     color: "#0d9488",
     tag: "NEW",
