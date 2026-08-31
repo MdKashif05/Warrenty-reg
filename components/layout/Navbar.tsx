@@ -76,7 +76,10 @@ export default function Navbar() {
           aria-label="Thermal Lexum - Home"
           style={{ textDecoration: "none", display: "flex", alignItems: "center", flexShrink: 0 }}
         >
-          <div style={{ position: "relative", height: "34px", width: "130px" }}>
+          <div 
+            className="w-[140px] h-[36px] md:w-[180px] md:h-[46px]"
+            style={{ position: "relative" }}
+          >
             <Image
               src="/logo.png"
               alt="Thermal Lexum"
