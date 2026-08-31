@@ -61,24 +61,6 @@ export default function Navbar() {
           transition: "all 0.3s ease",
         }}
       >
-        {/* ── Top Announcement Bar ── */}
-        <div
-          style={{
-            background: "linear-gradient(90deg, #1e293b, #0f172a)",
-            color: "#fff",
-            padding: "5px 16px",
-            fontSize: "11px",
-            textAlign: "center",
-            fontWeight: "600",
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-            textOverflow: "ellipsis",
-            letterSpacing: "0.5px",
-          }}
-        >
-          ⚡ Premium Cooling: Thermal Paste, Liquid Metal & Phase-Change Pads!
-        </div>
-
         {/* ── Main Nav Bar ── */}
         <nav
           style={{
@@ -140,7 +122,7 @@ export default function Navbar() {
               alignItems: "center",
             }}
           >
-            <div style={{ position: "relative", height: "46px", width: "210px" }}>
+            <div style={{ position: "relative", height: "50px", width: "260px" }}>
               <Image
                 src="/logo.png"
                 alt="Thermal Lexum"
@@ -203,7 +185,7 @@ export default function Navbar() {
         <div
           style={{
             position: "fixed",
-            top: "84px",
+            top: "56px",
             left: 0,
             right: 0,
             bottom: 0,
