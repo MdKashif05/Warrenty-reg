@@ -140,7 +140,7 @@ export default function Navbar() {
               alignItems: "center",
             }}
           >
-            <div style={{ position: "relative", height: "30px", width: "110px" }}>
+            <div style={{ position: "relative", height: "40px", width: "155px" }}>
               <Image
                 src="/logo.png"
                 alt="Thermal Lexum"
