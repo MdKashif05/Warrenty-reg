@@ -5,11 +5,11 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 const navLinks = [
-  { label: "Products", href: "/products" },
-  { label: "B2B / Bulk", href: "/b2b" },
-  { label: "About", href: "/about" },
-  { label: "Founder", href: "/founder" },
-  { label: "Contact", href: "/contact" },
+  { label: "Products", href: "/products", icon: "📦" },
+  { label: "B2B / Bulk", href: "/b2b", icon: "🏢" },
+  { label: "About", href: "/about", icon: "ℹ️" },
+  { label: "Founder", href: "/founder", icon: "👨‍💼" },
+  { label: "Contact", href: "/contact", icon: "📞" },
 ];
 
 export interface CourseItem {
@@ -37,7 +37,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -45,236 +45,264 @@ export default function Navbar() {
   useEffect(() => { setMobileOpen(false); }, [pathname]);
 
   return (
-    <nav
-      className={`navbar ${scrolled ? "scrolled" : ""}`}
-      role="navigation"
-      aria-label="Main navigation"
-      style={{
-        background: scrolled ? "rgba(255,255,255,0.98)" : "rgba(255,255,255,0.92)",
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
-        borderBottom: "1px solid #e2e8f0",
-        boxShadow: scrolled ? "0 4px 20px rgba(0,0,0,0.06)" : "none",
-      }}
-    >
-      {/* ── Top Bar ─────────────────────────── */}
-      <div
+    <>
+      <header
         style={{
-          maxWidth: "1280px",
-          margin: "0 auto",
-          padding: "0 16px",
-          height: "64px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: "12px",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+          background: scrolled ? "rgba(255, 255, 255, 0.98)" : "rgba(255, 255, 255, 0.95)",
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
+          borderBottom: "1px solid #e2e8f0",
+          boxShadow: scrolled ? "0 4px 24px rgba(0, 0, 0, 0.06)" : "none",
+          transition: "all 0.3s ease",
         }}
       >
-        {/* Logo */}
-        <Link
-          href="/"
-          aria-label="Thermal Lexum - Home"
-          style={{ textDecoration: "none", display: "flex", alignItems: "center", flexShrink: 0 }}
+        {/* ── Top Announcement Bar ── */}
+        <div
+          style={{
+            background: "linear-gradient(90deg, #1e293b, #0f172a)",
+            color: "#fff",
+            padding: "5px 16px",
+            fontSize: "11px",
+            textAlign: "center",
+            fontWeight: "600",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+            letterSpacing: "0.5px",
+          }}
         >
-          <div 
-            className="w-[140px] h-[36px] md:w-[180px] md:h-[46px]"
-            style={{ position: "relative" }}
-          >
-            <Image
-              src="/logo.png"
-              alt="Thermal Lexum"
-              fill
-              style={{ objectFit: "contain", objectPosition: "left center" }}
-              priority
-            />
-          </div>
-        </Link>
-
-        {/* Desktop Nav Links (hidden on < 1024px) */}
-        <div className="hidden lg:flex items-center gap-1" style={{ flex: 1, justifyContent: "center" }}>
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href;
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                style={{
-                  padding: "8px 16px",
-                  borderRadius: "8px",
-                  fontSize: "13px",
-                  fontWeight: isActive ? "700" : "600",
-                  letterSpacing: "0.5px",
-                  color: isActive ? "#0284c7" : "#475569",
-                  textDecoration: "none",
-                  transition: "all 0.2s ease",
-                  background: isActive ? "rgba(2,132,199,0.08)" : "transparent",
-                  border: isActive ? "1px solid rgba(2,132,199,0.2)" : "1px solid transparent",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
+          ⚡ Premium Cooling: Thermal Paste, Liquid Metal & Phase-Change Pads!
         </div>
 
-        {/* Right side actions */}
-        <div style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
-          {/* Desktop CTAs */}
-          <Link
-            href="/warranty/lookup"
-            className="hidden lg:inline-flex btn-ghost"
-            style={{ fontSize: "13px", whiteSpace: "nowrap" }}
-          >
-            Warranty Lookup
-          </Link>
-          <Link
-            href="/warranty/register"
-            className="hidden lg:inline-flex btn-primary"
-            style={{ padding: "10px 18px", fontSize: "12px", whiteSpace: "nowrap" }}
-          >
-            Register Warranty
-          </Link>
-
-          {/* Hamburger — visible only on < 1024px */}
+        {/* ── Main Nav Bar ── */}
+        <nav
+          style={{
+            maxWidth: "1400px",
+            margin: "0 auto",
+            padding: "0 12px",
+            height: "56px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            position: "relative",
+          }}
+        >
+          {/* LEFT: Menu Trigger Button (Menu icon and text matching NESA) */}
           <button
-            id="mobile-menu-toggle"
-            onClick={() => setMobileOpen((o) => !o)}
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-drawer"
-            className="lg:hidden"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle Menu"
             style={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "center",
-              width: "44px",
-              height: "44px",
-              background: mobileOpen ? "rgba(2,132,199,0.1)" : "#f1f5f9",
-              border: `1.5px solid ${mobileOpen ? "rgba(2,132,199,0.4)" : "#cbd5e1"}`,
-              borderRadius: "10px",
+              gap: "6px",
+              background: mobileOpen ? "rgba(2, 132, 199, 0.06)" : "transparent",
+              border: "1px solid #dde3ea",
+              padding: "6px 10px",
+              borderRadius: "8px",
               cursor: "pointer",
+              color: "#0f172a",
+              fontSize: "11px",
+              fontWeight: "800",
+              letterSpacing: "1px",
+              textTransform: "uppercase",
               flexShrink: 0,
-              transition: "all 0.2s ease",
-              padding: 0,
             }}
           >
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 22 22"
-              fill="none"
-              stroke={mobileOpen ? "#0284c7" : "#1e293b"}
-              strokeWidth="2"
-              strokeLinecap="round"
-            >
-              {mobileOpen ? (
-                <>
-                  <line x1="4" y1="4" x2="18" y2="18" />
-                  <line x1="18" y1="4" x2="4" y2="18" />
-                </>
-              ) : (
-                <>
-                  <line x1="3" y1="6" x2="19" y2="6" />
-                  <line x1="3" y1="11" x2="19" y2="11" />
-                  <line x1="3" y1="16" x2="19" y2="16" />
-                </>
-              )}
-            </svg>
+            {mobileOpen ? (
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#0284c7" strokeWidth="2.2" strokeLinecap="round">
+                <line x1="2" y1="2" x2="14" y2="14" />
+                <line x1="14" y1="2" x2="2" y2="14" />
+              </svg>
+            ) : (
+              <svg width="18" height="12" viewBox="0 0 20 12" fill="none" stroke="#0284c7" strokeWidth="2.2" strokeLinecap="round">
+                <line x1="0" y1="1" x2="20" y2="1" />
+                <line x1="0" y1="6" x2="14" y2="6" />
+                <line x1="0" y1="11" x2="20" y2="11" />
+              </svg>
+            )}
+            <span className="hidden sm:inline">{mobileOpen ? "CLOSE" : "MENU"}</span>
           </button>
-        </div>
-      </div>
 
-      {/* ── Mobile Drawer ─────────────────── */}
-      {mobileOpen && (
-        <div
-          id="mobile-drawer"
-          className="lg:hidden"
-          style={{
-            background: "#ffffff",
-            borderTop: "1px solid #e2e8f0",
-            boxShadow: "0 16px 40px rgba(0,0,0,0.13)",
-          }}
-        >
-          {/* Nav links list */}
-          <div style={{ padding: "8px 16px 0" }}>
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "12px",
-                    padding: "14px 12px",
-                    borderBottom: "1px solid #f1f5f9",
-                    fontSize: "15px",
-                    color: isActive ? "#0284c7" : "#0f172a",
-                    textDecoration: "none",
-                    fontWeight: isActive ? "700" : "500",
-                    background: isActive ? "rgba(2,132,199,0.04)" : "transparent",
-                    borderRadius: "8px",
-                    transition: "background 0.15s",
-                  }}
-                >
-                  <span
-                    style={{
-                      display: "inline-block",
-                      width: "7px",
-                      height: "7px",
-                      borderRadius: "50%",
-                      background: isActive ? "#0284c7" : "#94a3b8",
-                      flexShrink: 0,
-                    }}
-                  />
-                  {link.label}
-                </Link>
-              );
-            })}
+          {/* CENTER: Centered Logo Image (NESA alignment) */}
+          <Link
+            href="/"
+            style={{
+              position: "absolute",
+              left: "50%",
+              transform: "translateX(-50%)",
+              textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <div style={{ position: "relative", height: "30px", width: "110px" }}>
+              <Image
+                src="/logo.png"
+                alt="Thermal Lexum"
+                fill
+                style={{ objectFit: "contain" }}
+                priority
+              />
+            </div>
+          </Link>
 
-            {/* Warranty Lookup link */}
+          {/* RIGHT: Actions (Lookup Icon + Sign In Icon) */}
+          <div style={{ display: "flex", alignItems: "center", gap: "6px", flexShrink: 0 }}>
+            {/* Warranty Lookup Icon */}
             <Link
               href="/warranty/lookup"
-              onClick={() => setMobileOpen(false)}
+              aria-label="Warranty Status Lookup"
               style={{
+                background: "#f1f5f9",
+                border: "1px solid #dde3ea",
+                borderRadius: "8px",
+                width: "36px",
+                height: "36px",
                 display: "flex",
                 alignItems: "center",
-                gap: "12px",
-                padding: "14px 12px",
-                fontSize: "15px",
-                color: "#0284c7",
+                justifyContent: "center",
                 textDecoration: "none",
-                fontWeight: "600",
+                fontSize: "16px",
+                flexShrink: 0,
               }}
             >
-              <span style={{ display: "inline-block", width: "7px", height: "7px", borderRadius: "50%", background: "#0284c7", flexShrink: 0 }} />
-              Warranty Lookup
+              🔍
+            </Link>
+
+            {/* Admin Login Icon */}
+            <Link
+              href="/admin/login"
+              aria-label="Admin Sign In"
+              style={{
+                background: "#f1f5f9",
+                border: "1px solid #dde3ea",
+                borderRadius: "8px",
+                width: "36px",
+                height: "36px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                textDecoration: "none",
+                fontSize: "16px",
+                flexShrink: 0,
+              }}
+            >
+              👤
             </Link>
           </div>
+        </nav>
+      </header>
 
-          {/* CTA Button */}
-          <div style={{ padding: "12px 16px 20px" }}>
-            <Link
-              href="/warranty/register"
-              onClick={() => setMobileOpen(false)}
-              className="btn-primary"
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-                padding: "14px 20px",
-                fontSize: "13px",
-                boxSizing: "border-box",
-              }}
-            >
-              Register Warranty →
-            </Link>
+      {/* ── SIDE DRAWER MENU (Identical responsive slide to NESA) ── */}
+      {mobileOpen && (
+        <div
+          style={{
+            position: "fixed",
+            top: "84px",
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "rgba(15, 23, 42, 0.35)",
+            backdropFilter: "blur(4px)",
+            zIndex: 999,
+          }}
+          onClick={() => setMobileOpen(false)}
+        >
+          <div
+            style={{
+              width: "85%",
+              maxWidth: "320px",
+              height: "100%",
+              background: "#fff",
+              borderRight: "1px solid #e2e8f0",
+              boxShadow: "8px 0 30px rgba(0, 0, 0, 0.12)",
+              padding: "20px 16px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              overflowY: "auto",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+              <div style={{ fontSize: "10px", fontWeight: "800", color: "#0284c7", letterSpacing: "2px", marginBottom: "8px" }}>NAVIGATE</div>
+
+              {navLinks.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                    style={{
+                      padding: "12px 14px",
+                      borderRadius: "10px",
+                      fontSize: "14px",
+                      fontWeight: isActive ? "800" : "600",
+                      color: isActive ? "#0284c7" : "#0f172a",
+                      background: isActive ? "rgba(2, 132, 199, 0.04)" : "transparent",
+                      border: isActive ? "1px solid rgba(2, 132, 199, 0.15)" : "1px solid transparent",
+                      textDecoration: "none",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                    }}
+                  >
+                    <span>{item.icon}</span>
+                    <span style={{ flex: 1 }}>{item.label}</span>
+                    <span style={{ fontSize: "11px", color: "#94a3b8" }}>›</span>
+                  </Link>
+                );
+              })}
+
+              <hr style={{ margin: "12px 0", borderColor: "#f1f5f9" }} />
+
+              <div style={{ fontSize: "10px", fontWeight: "800", color: "#0284c7", letterSpacing: "2px", marginBottom: "6px" }}>SUPPORT & TOOLS</div>
+              <Link
+                href="/warranty/lookup"
+                onClick={() => setMobileOpen(false)}
+                style={{
+                  padding: "8px 12px",
+                  fontSize: "13px",
+                  color: "#334155",
+                  textDecoration: "none",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                }}
+              >
+                <span>🔍</span>
+                <span>Warranty Status Lookup</span>
+              </Link>
+            </div>
+
+            {/* Bottom Drawer CTAs matching NESA structure */}
+            <div style={{ marginTop: "20px", display: "flex", flexDirection: "column", gap: "8px" }}>
+              <Link
+                href="/admin/login"
+                onClick={() => setMobileOpen(false)}
+                className="btn-secondary"
+                style={{ width: "100%", justifyContent: "center", padding: "11px", fontSize: "12px" }}
+              >
+                🔑 Admin Sign In
+              </Link>
+              <Link
+                href="/warranty/register"
+                onClick={() => setMobileOpen(false)}
+                className="btn-primary"
+                style={{ width: "100%", justifyContent: "center", padding: "13px", fontSize: "13px" }}
+              >
+                Register Warranty Now 🚀
+              </Link>
+            </div>
           </div>
         </div>
       )}
-    </nav>
+    </>
   );
 }
