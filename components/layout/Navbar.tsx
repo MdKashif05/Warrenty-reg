@@ -66,8 +66,8 @@ export default function Navbar() {
           style={{
             maxWidth: "1400px",
             margin: "0 auto",
-            padding: "0 12px",
-            height: "56px",
+            padding: "0 14px",
+            height: "72px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -84,7 +84,7 @@ export default function Navbar() {
               gap: "6px",
               background: mobileOpen ? "rgba(2, 132, 199, 0.06)" : "transparent",
               border: "1px solid #dde3ea",
-              padding: "6px 10px",
+              padding: "8px 12px",
               borderRadius: "8px",
               cursor: "pointer",
               color: "#0f172a",
@@ -110,7 +110,7 @@ export default function Navbar() {
             <span className="hidden sm:inline">{mobileOpen ? "CLOSE" : "MENU"}</span>
           </button>
 
-          {/* CENTER: Centered Logo Image (Increased length and breadth) */}
+          {/* CENTER: Centered Logo Image (Enlarged length and breadth) */}
           <Link
             href="/"
             style={{
@@ -122,7 +122,7 @@ export default function Navbar() {
               alignItems: "center",
             }}
           >
-            <div style={{ position: "relative", height: "52px", width: "220px", maxWidth: "48vw" }}>
+            <div style={{ position: "relative", height: "64px", width: "310px", maxWidth: "58vw" }}>
               <Image
                 src="/logo.png"
                 alt="Thermal Lexum"
@@ -143,13 +143,13 @@ export default function Navbar() {
                 background: "#f1f5f9",
                 border: "1px solid #dde3ea",
                 borderRadius: "8px",
-                width: "36px",
-                height: "36px",
+                width: "40px",
+                height: "40px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 textDecoration: "none",
-                fontSize: "16px",
+                fontSize: "17px",
                 flexShrink: 0,
               }}
             >
@@ -164,13 +164,13 @@ export default function Navbar() {
                 background: "#f1f5f9",
                 border: "1px solid #dde3ea",
                 borderRadius: "8px",
-                width: "36px",
-                height: "36px",
+                width: "40px",
+                height: "40px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 textDecoration: "none",
-                fontSize: "16px",
+                fontSize: "17px",
                 flexShrink: 0,
               }}
             >
@@ -185,7 +185,7 @@ export default function Navbar() {
         <div
           style={{
             position: "fixed",
-            top: "56px",
+            top: "72px",
             left: 0,
             right: 0,
             bottom: 0,

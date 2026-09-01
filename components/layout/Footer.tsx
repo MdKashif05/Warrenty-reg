@@ -80,7 +80,7 @@ export default function Footer() {
         >
           {/* Brand */}
           <div>
-            <div style={{ position: "relative", height: "56px", width: "240px", marginBottom: "16px" }}>
+            <div style={{ position: "relative", height: "68px", width: "290px", marginBottom: "16px" }}>
               <Image
                 src="/logo.png"
                 alt="Thermal Lexum"
