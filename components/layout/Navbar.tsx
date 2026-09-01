@@ -110,7 +110,7 @@ export default function Navbar() {
             <span className="hidden sm:inline">{mobileOpen ? "CLOSE" : "MENU"}</span>
           </button>
 
-          {/* CENTER: Centered Logo Image (NESA alignment) */}
+          {/* CENTER: Centered Logo Image (Increased length and breadth) */}
           <Link
             href="/"
             style={{
@@ -122,7 +122,7 @@ export default function Navbar() {
               alignItems: "center",
             }}
           >
-            <div style={{ position: "relative", height: "50px", width: "260px" }}>
+            <div style={{ position: "relative", height: "52px", width: "220px", maxWidth: "48vw" }}>
               <Image
                 src="/logo.png"
                 alt="Thermal Lexum"
