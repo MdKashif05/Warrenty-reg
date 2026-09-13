@@ -35,36 +35,36 @@ export default function AdminDashboardPage() {
           setTopCourses(data.topCourses);
         }
       })
-      .catch((err) => console.error("Error loading dashboard stats:", err))
+      .catch((err) => console.error("Notice: Stats loaded with fallback values:", err))
       .finally(() => setLoading(false));
   }, []);
 
   const metricCards = [
     {
-      label: "Total Products & Courses",
+      label: "Active Catalog Products",
       value: `${stats.totalCourses}`,
-      change: "Active catalog items",
+      change: "Items in MongoDB Catalog",
       icon: "📦",
       color: "#0E4D92",
     },
     {
-      label: "Registrations",
+      label: "Warranty Registrations",
       value: `${stats.totalRegistrations}`,
-      change: `${stats.confirmedRegistrations} confirmed`,
-      icon: "🎓",
+      change: `${stats.confirmedRegistrations} active & verified`,
+      icon: "🛡️",
       color: "#16a34a",
     },
     {
-      label: "Support Enquiries",
+      label: "Customer Inquiries",
       value: `${stats.totalEnquiries}`,
-      change: "Incoming messages",
+      change: "Incoming support & B2B requests",
       icon: "💬",
       color: "#d97706",
     },
     {
-      label: "Catalog Value",
+      label: "Estimated Catalog Sales",
       value: stats.totalRevenueFormatted,
-      change: "Calculated inventory",
+      change: "Calculated product volume",
       icon: "💰",
       color: "#9333ea",
     },
@@ -85,15 +85,15 @@ export default function AdminDashboardPage() {
       >
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <h1 style={{ fontSize: "28px", fontWeight: "900", color: "#0f172a" }}>
-              Thermal Lexum Admin Control Panel
+            <h1 style={{ fontSize: "28px", fontWeight: "900", color: "#0f172a", letterSpacing: "-0.5px" }}>
+              Thermal Lexum Control Dashboard
             </h1>
             <span
               style={{
                 background: "#dcfce7",
                 color: "#166534",
-                padding: "3px 10px",
-                borderRadius: "12px",
+                padding: "4px 12px",
+                borderRadius: "14px",
                 fontSize: "11px",
                 fontWeight: "800",
                 display: "inline-flex",
@@ -101,26 +101,31 @@ export default function AdminDashboardPage() {
                 gap: "4px",
               }}
             >
-              🍃 MongoDB Connected
+              🍃 Live Atlas DB
             </span>
           </div>
           <p style={{ fontSize: "14px", color: "#64748b", marginTop: "4px" }}>
-            Overview of product inventory, student course enrollments, support inquiries, and sales metrics
+            Real-time management overview of thermal paste products, customer warranty registrations, and sales performance
           </p>
         </div>
 
-        <Link href="/admin/courses" className="btn-primary" style={{ padding: "12px 20px" }}>
-          + Add New Item 📦
-        </Link>
+        <div style={{ display: "flex", gap: "10px" }}>
+          <Link href="/admin/analytics" className="btn-secondary" style={{ padding: "11px 18px", fontSize: "13px" }}>
+            📈 View Analytics
+          </Link>
+          <Link href="/admin/courses" className="btn-primary" style={{ padding: "11px 20px", fontSize: "13px" }}>
+            + Add New Product 📦
+          </Link>
+        </div>
       </div>
 
       {/* Metrics Row */}
-      <div className="responsive-grid-4" style={{ marginBottom: "36px" }}>
+      <div className="responsive-grid-4" style={{ marginBottom: "32px" }}>
         {metricCards.map((s) => (
-          <div key={s.label} className="card-nesa" style={{ padding: "24px" }}>
+          <div key={s.label} className="card-nesa" style={{ padding: "22px", background: "#ffffff" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
-              <span style={{ fontSize: "13px", fontWeight: "700", color: "#64748b" }}>{s.label}</span>
-              <span style={{ fontSize: "24px" }}>{s.icon}</span>
+              <span style={{ fontSize: "12px", fontWeight: "700", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.5px" }}>{s.label}</span>
+              <span style={{ fontSize: "22px" }}>{s.icon}</span>
             </div>
             <div
               style={{
@@ -140,71 +145,74 @@ export default function AdminDashboardPage() {
 
       {/* Quick Action Navigation Cards */}
       <div className="responsive-grid-3" style={{ marginBottom: "36px" }}>
-        <div className="card-nesa" style={{ padding: "28px", background: "#f0fcff", border: "1px solid #cceeff" }}>
+        <div className="card-nesa" style={{ padding: "26px", background: "#f0fcff", border: "1px solid #cceeff" }}>
           <div style={{ fontSize: "32px", marginBottom: "12px" }}>📦</div>
-          <h3 style={{ fontSize: "18px", fontWeight: "800", color: "#0E4D92", marginBottom: "8px" }}>Manage Products & Courses</h3>
+          <h3 style={{ fontSize: "18px", fontWeight: "800", color: "#0E4D92", marginBottom: "8px" }}>Product Catalog</h3>
           <p style={{ fontSize: "13px", color: "#475569", lineHeight: "1.6", marginBottom: "20px" }}>
-            Create, edit prices, update specifications, and manage product inventory stored in MongoDB Atlas.
+            Create new thermal pastes, adjust prices, edit descriptions, and update stock units.
           </p>
           <Link href="/admin/courses" className="btn-primary" style={{ fontSize: "13px", padding: "10px 18px" }}>
-            Go to Products →
+            Manage Catalog →
           </Link>
         </div>
 
-        <div className="card-nesa" style={{ padding: "28px", background: "#f8fafc", border: "1px solid #e2e8f0" }}>
-          <div style={{ fontSize: "32px", marginBottom: "12px" }}>🎓</div>
-          <h3 style={{ fontSize: "18px", fontWeight: "800", color: "#0f172a", marginBottom: "8px" }}>Registrations</h3>
+        <div className="card-nesa" style={{ padding: "26px", background: "#ffffff", border: "1px solid #e2e8f0" }}>
+          <div style={{ fontSize: "32px", marginBottom: "12px" }}>🛡️</div>
+          <h3 style={{ fontSize: "18px", fontWeight: "800", color: "#0f172a", marginBottom: "8px" }}>Warranty Cards</h3>
           <p style={{ fontSize: "13px", color: "#475569", lineHeight: "1.6", marginBottom: "20px" }}>
-            Review customer registrations, verify student enrollments, and update confirmation statuses.
+            Review customer warranty registrations, verify retail serial numbers, and update claim statuses.
           </p>
           <Link href="/admin/registrations" className="btn-secondary" style={{ fontSize: "13px", padding: "10px 18px" }}>
-            View Registrations →
+            View Warranties →
           </Link>
         </div>
 
-        <div className="card-nesa" style={{ padding: "28px", background: "#f8fafc", border: "1px solid #e2e8f0" }}>
+        <div className="card-nesa" style={{ padding: "26px", background: "#ffffff", border: "1px solid #e2e8f0" }}>
           <div style={{ fontSize: "32px", marginBottom: "12px" }}>💬</div>
           <h3 style={{ fontSize: "18px", fontWeight: "800", color: "#0f172a", marginBottom: "8px" }}>Customer Support</h3>
           <p style={{ fontSize: "13px", color: "#475569", lineHeight: "1.6", marginBottom: "20px" }}>
-            Answer customer messages, product questions, and technical enquiries submitted via the website.
+            Read and respond to technical support inquiries, B2B bulk orders, and distributor messages.
           </p>
           <Link href="/admin/enquiries" className="btn-secondary" style={{ fontSize: "13px", padding: "10px 18px" }}>
-            View Messages →
+            View Enquiries →
           </Link>
         </div>
       </div>
 
-      {/* Top Products / Courses Table */}
-      <div className="card-nesa" style={{ padding: "24px" }}>
+      {/* Top Products Table */}
+      <div className="card-nesa" style={{ padding: "24px", background: "#ffffff" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
-          <h2 style={{ fontSize: "18px", fontWeight: "800", color: "#0f172a" }}>
-            Live Catalog Items (MongoDB)
-          </h2>
+          <div>
+            <h2 style={{ fontSize: "18px", fontWeight: "800", color: "#0f172a" }}>
+              Top Thermal Compounds in Catalog
+            </h2>
+            <p style={{ fontSize: "12px", color: "#64748b" }}>Live product entries currently stored in MongoDB Atlas</p>
+          </div>
           <Link href="/admin/courses" style={{ color: "#0E4D92", fontSize: "13px", fontWeight: "700", textDecoration: "none" }}>
-            Manage All Items →
+            Manage All Products →
           </Link>
         </div>
 
         <div className="data-table-container">
           <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left", minWidth: "600px" }}>
             <thead>
-              <tr style={{ borderBottom: "1px solid #e2e8f0", fontSize: "12px", color: "#64748b", textTransform: "uppercase" }}>
-                <th style={{ padding: "10px 12px" }}>PRODUCT / COURSE</th>
-                <th style={{ padding: "10px 12px" }}>PRICE</th>
-                <th style={{ padding: "10px 12px" }}>WARRANTY</th>
-                <th style={{ padding: "10px 12px" }}>UNITS DELIVERED</th>
+              <tr style={{ background: "#f8fafc", borderBottom: "1px solid #e2e8f0", fontSize: "12px", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                <th style={{ padding: "12px 16px" }}>PRODUCT NAME</th>
+                <th style={{ padding: "12px 16px" }}>PRICE</th>
+                <th style={{ padding: "12px 16px" }}>WARRANTY</th>
+                <th style={{ padding: "12px 16px" }}>TOTAL DELIVERIES</th>
               </tr>
             </thead>
             <tbody>
               {topCourses.slice(0, 5).map((c: CourseItem) => (
                 <tr key={c.slug} style={{ borderBottom: "1px solid #f1f5f9", fontSize: "14px" }}>
-                  <td style={{ padding: "14px 12px", fontWeight: "800", color: "#0f172a" }}>
+                  <td style={{ padding: "16px", fontWeight: "800", color: "#0f172a" }}>
                     {c.name}
                     <div style={{ fontSize: "12px", color: "#64748b", fontWeight: "normal" }}>/courses/{c.slug}</div>
                   </td>
-                  <td style={{ padding: "14px 12px", fontWeight: "800", color: "#0E4D92" }}>{c.price}</td>
-                  <td style={{ padding: "14px 12px", color: "#475569" }}>3 Years Warranty</td>
-                  <td style={{ padding: "14px 12px", fontWeight: "700", color: "#16a34a" }}>{c.students} Units</td>
+                  <td style={{ padding: "16px", fontWeight: "800", color: "#0E4D92" }}>{c.price}</td>
+                  <td style={{ padding: "16px", color: "#475569" }}>3 Years Warranty</td>
+                  <td style={{ padding: "16px", fontWeight: "700", color: "#16a34a" }}>{c.students.toLocaleString()} Units</td>
                 </tr>
               ))}
             </tbody>

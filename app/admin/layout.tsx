@@ -26,14 +26,18 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   if (authenticated === null) {
-    return <div style={{ textAlign: "center", padding: "100px", color: "#64748b" }}>Verifying Admin Authentication...</div>;
+    return (
+      <div style={{ textAlign: "center", padding: "100px", color: "#64748b", fontFamily: "Outfit, sans-serif" }}>
+        🔄 Verifying Admin Authentication...
+      </div>
+    );
   }
 
   const handleLogout = async () => {
     try {
       await fetch("/api/admin/login", { method: "DELETE" });
     } catch (e) {
-      console.error("Logout API call failed:", e);
+      console.error("Logout API call notice:", e);
     }
     localStorage.removeItem("nesa_admin_auth");
     router.push("/admin/login");
@@ -41,23 +45,23 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const navItems = [
     { label: "Dashboard", href: "/admin", icon: "📊" },
-    { label: "Manage Courses", href: "/admin/courses", icon: "📚" },
-    { label: "Registrations", href: "/admin/registrations", icon: "🎓" },
-    { label: "Contact Enquiries", href: "/admin/enquiries", icon: "💬" },
-    { label: "Analytics", href: "/admin/analytics", icon: "📈" },
+    { label: "Product Catalog", href: "/admin/courses", icon: "📦" },
+    { label: "Warranty Registrations", href: "/admin/registrations", icon: "🛡️" },
+    { label: "Customer Enquiries", href: "/admin/enquiries", icon: "💬" },
+    { label: "Analytics & Performance", href: "/admin/analytics", icon: "📈" },
   ];
 
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh", background: "#f8fafc" }} className="admin-wrapper">
       {/* Admin Sidebar */}
       <aside className="admin-sidebar" style={{ background: "#ffffff", borderRight: "1px solid #e2e8f0", display: "flex", flexDirection: "column" }}>
-        <div style={{ padding: "20px 16px", borderBottom: "1px solid #e2e8f0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ padding: "24px 20px", borderBottom: "1px solid #e2e8f0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div>
-            <div style={{ fontFamily: "Outfit, sans-serif", fontSize: "18px", fontWeight: "900", color: "#0E4D92", letterSpacing: "1px" }}>
+            <div style={{ fontFamily: "Outfit, sans-serif", fontSize: "17px", fontWeight: "900", color: "#0E4D92", letterSpacing: "1px" }}>
               THERMAL LEXUM
             </div>
-            <div style={{ fontFamily: "JetBrains Mono, monospace", fontSize: "10px", color: "#64748b", letterSpacing: "1px", marginTop: "2px", fontWeight: "700" }}>
-              ADMIN CONTROL PANEL
+            <div style={{ fontFamily: "JetBrains Mono, monospace", fontSize: "10px", color: "#64748b", letterSpacing: "1px", marginTop: "3px", fontWeight: "700" }}>
+              MANAGEMENT CONTROL
             </div>
           </div>
           <button onClick={handleLogout} className="btn-secondary hide-desktop-exit" style={{ fontSize: "11px", padding: "6px 12px" }}>
@@ -65,7 +69,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </button>
         </div>
 
-        <nav style={{ padding: "12px 0", flex: 1, display: "flex", flexDirection: "column", gap: "4px" }}>
+        <nav style={{ padding: "16px 0", flex: 1, display: "flex", flexDirection: "column", gap: "4px" }}>
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
@@ -76,9 +80,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "10px",
+                  gap: "12px",
                   padding: "12px 20px",
-                  fontSize: "14px",
+                  fontSize: "13.5px",
                   textDecoration: "none",
                   color: isActive ? "#0E4D92" : "#475569",
                   background: isActive ? "rgba(14, 77, 146, 0.08)" : "transparent",
@@ -86,18 +90,45 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   borderLeft: isActive ? "4px solid #0E4D92" : "4px solid transparent",
                 }}
               >
-                <span>{item.icon}</span>
+                <span style={{ fontSize: "16px" }}>{item.icon}</span>
                 <span>{item.label}</span>
               </Link>
             );
           })}
         </nav>
 
-        <div style={{ padding: "16px", display: "flex", flexDirection: "column", gap: "8px" }} className="sidebar-exit-btn">
-          <button onClick={handleLogout} className="btn-secondary" style={{ width: "100%", justifyContent: "center", fontSize: "12px", padding: "8px", background: "#fee2e2", color: "#b91c1c", border: "1px solid #fecaca" }}>
+        <div style={{ padding: "20px 16px", display: "flex", flexDirection: "column", gap: "10px", borderTop: "1px solid #f1f5f9" }} className="sidebar-exit-btn">
+          <button
+            onClick={handleLogout}
+            style={{
+              width: "100%",
+              padding: "10px",
+              background: "#fee2e2",
+              color: "#b91c1c",
+              border: "1px solid #fecaca",
+              borderRadius: "8px",
+              fontWeight: "700",
+              fontSize: "13px",
+              cursor: "pointer",
+            }}
+          >
             Logout 🚪
           </button>
-          <Link href="/" className="btn-secondary" style={{ width: "100%", justifyContent: "center", fontSize: "12px", padding: "8px" }}>
+          <Link
+            href="/"
+            style={{
+              width: "100%",
+              textAlign: "center",
+              padding: "10px",
+              background: "#f8fafc",
+              color: "#334155",
+              border: "1px solid #e2e8f0",
+              borderRadius: "8px",
+              fontWeight: "600",
+              fontSize: "13px",
+              textDecoration: "none",
+            }}
+          >
             Exit to Website 🌐
           </Link>
         </div>
@@ -110,7 +141,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       <style>{`
         .admin-sidebar {
-          width: 240px;
+          width: 250px;
           position: fixed;
           top: 0;
           bottom: 0;
@@ -119,7 +150,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         }
         @media (min-width: 769px) {
           .admin-wrapper { flex-direction: row !important; }
-          .admin-content-area { margin-left: 240px !important; padding: 32px 40px !important; }
+          .admin-content-area { margin-left: 250px !important; padding: 36px 40px !important; }
           .hide-desktop-exit { display: none !important; }
         }
         @media (max-width: 768px) {
