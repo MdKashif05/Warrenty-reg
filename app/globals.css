@@ -443,6 +443,12 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
 }
 
+.responsive-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
 .responsive-grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -453,6 +459,12 @@ h1, h2, h3, h4, h5, h6 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 48px;
+}
+
+.data-table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .responsive-form-grid-2 {
@@ -489,6 +501,9 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 1024px) {
   .hide-mobile { display: none !important; }
   .hide-mobile-cta { display: none !important; }
+  .responsive-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
   .responsive-grid-3 {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -515,12 +530,13 @@ h1, h2, h3, h4, h5, h6 {
   .founder-card-grid > div:first-child {
     margin: 0 auto;
   }
+  .responsive-grid-4,
   .responsive-grid-3,
   .responsive-grid-2,
   .review-grid,
   .contact-grid {
     grid-template-columns: 1fr !important;
-    gap: 24px !important;
+    gap: 20px !important;
   }
   .responsive-form-grid-2,
   .responsive-form-grid-3 {

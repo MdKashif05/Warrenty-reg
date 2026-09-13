@@ -3,15 +3,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-/* ── ADMIN CREDENTIALS ──────────────────────────
-   Email    : admin@thermallexum.com
-   Password : Admin@123456
-   URL      : /admin/login
-─────────────────────────────────────────────── */
-
-const ADMIN_EMAIL = "admin@thermallexum.com";
-const ADMIN_PASS = "Admin@123456";
-
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,12 +28,12 @@ export default function AdminLoginPage() {
         router.push("/admin");
       } else {
         const data = await res.json();
-        setError(data.error || "❌ Wrong email or password. Use the credentials shown below.");
+        setError(data.error || "Invalid administrator credentials. Please verify and try again.");
         setSubmitting(false);
       }
     } catch (err) {
       console.error(err);
-      setError("❌ Network error. Please try again.");
+      setError("Network connection error. Please try again.");
       setSubmitting(false);
     }
   };
@@ -64,7 +55,7 @@ export default function AdminLoginPage() {
       <div
         style={{
           width: "100%",
-          maxWidth: "460px",
+          maxWidth: "440px",
           background: "#ffffff",
           borderRadius: "24px",
           overflow: "hidden",
@@ -79,14 +70,14 @@ export default function AdminLoginPage() {
             textAlign: "center",
           }}
         >
-          <div style={{ fontSize: "11px", letterSpacing: "3px", fontWeight: "700", color: "#ffd166", textTransform: "uppercase", marginBottom: "6px" }}>
-            ADMIN CONTROL PANEL
+          <div style={{ fontSize: "11px", letterSpacing: "3px", fontWeight: "800", color: "#ffd166", textTransform: "uppercase", marginBottom: "6px" }}>
+            ADMINISTRATOR PORTAL
           </div>
-          <div style={{ fontSize: "30px", fontWeight: "900", color: "#ffffff", letterSpacing: "-0.5px" }}>
+          <div style={{ fontSize: "28px", fontWeight: "900", color: "#ffffff", letterSpacing: "-0.5px" }}>
             THERMAL LEXUM
           </div>
           <div style={{ fontSize: "13px", color: "#bfdbfe", marginTop: "6px" }}>
-            Secure administrative access
+            Authorized Staff & Management Access
           </div>
         </div>
 
@@ -98,14 +89,18 @@ export default function AdminLoginPage() {
                 background: "#fee2e2",
                 border: "1px solid #fca5a5",
                 color: "#b91c1c",
-                padding: "14px 16px",
+                padding: "12px 16px",
                 borderRadius: "10px",
-                fontSize: "14px",
+                fontSize: "13px",
                 marginBottom: "24px",
                 fontWeight: "600",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
               }}
             >
-              {error}
+              <span>⚠️</span>
+              <span>{error}</span>
             </div>
           )}
 
@@ -114,7 +109,7 @@ export default function AdminLoginPage() {
               <label
                 style={{ fontSize: "13px", fontWeight: "700", color: "#374151", display: "block", marginBottom: "8px" }}
               >
-                Admin Email
+                Administrator Email
               </label>
               <input
                 id="admin-email"
@@ -151,7 +146,7 @@ export default function AdminLoginPage() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter admin password"
+                  placeholder="••••••••••••"
                   style={{
                     width: "100%",
                     padding: "14px 50px 14px 16px",
@@ -169,8 +164,15 @@ export default function AdminLoginPage() {
                   type="button"
                   onClick={() => setShowPass(!showPass)}
                   style={{
-                    position: "absolute", right: "14px", top: "50%", transform: "translateY(-50%)",
-                    background: "none", border: "none", cursor: "pointer", fontSize: "18px", color: "#6b7280"
+                    position: "absolute",
+                    right: "14px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    fontSize: "18px",
+                    color: "#6b7280",
                   }}
                 >
                   {showPass ? "🙈" : "👁️"}
@@ -195,64 +197,19 @@ export default function AdminLoginPage() {
                 letterSpacing: "0.3px",
                 boxShadow: submitting ? "none" : "0 8px 24px rgba(14,77,146,0.35)",
                 transition: "all 0.2s",
+                marginTop: "4px",
               }}
             >
-              {submitting ? "Logging in..." : "🔐 Login to Admin Panel"}
+              {submitting ? "Authenticating..." : "Sign In to Control Panel 🔐"}
             </button>
           </form>
 
-          {/* Credentials Box */}
-          <div
-            style={{
-              marginTop: "28px",
-              background: "#f0fdf4",
-              border: "1px solid #bbf7d0",
-              borderRadius: "12px",
-              padding: "20px",
-            }}
-          >
-            <div style={{ fontSize: "11px", fontWeight: "800", color: "#15803d", letterSpacing: "1px", textTransform: "uppercase", marginBottom: "12px" }}>
-              🔑 Admin Credentials
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ fontSize: "13px", color: "#374151", fontWeight: "600" }}>Email:</span>
-                <code
-                  style={{
-                    fontSize: "13px", background: "#dcfce7", padding: "4px 10px",
-                    borderRadius: "6px", color: "#15803d", fontWeight: "700", userSelect: "all"
-                  }}
-                  onClick={() => setEmail(ADMIN_EMAIL)}
-                  title="Click to auto-fill"
-                >
-                  {ADMIN_EMAIL}
-                </code>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ fontSize: "13px", color: "#374151", fontWeight: "600" }}>Password:</span>
-                <code
-                  style={{
-                    fontSize: "13px", background: "#dcfce7", padding: "4px 10px",
-                    borderRadius: "6px", color: "#15803d", fontWeight: "700", userSelect: "all"
-                  }}
-                  onClick={() => setPassword(ADMIN_PASS)}
-                  title="Click to auto-fill"
-                >
-                  {ADMIN_PASS}
-                </code>
-              </div>
-            </div>
-            <div style={{ fontSize: "11px", color: "#6b7280", marginTop: "10px" }}>
-              💡 Click on email or password to auto-fill
-            </div>
-          </div>
-
-          <div style={{ textAlign: "center", marginTop: "24px" }}>
+          <div style={{ textAlign: "center", marginTop: "28px", borderTop: "1px solid #f1f5f9", paddingTop: "20px" }}>
             <Link
               href="/"
               style={{ color: "#0E4D92", textDecoration: "none", fontWeight: "700", fontSize: "14px" }}
             >
-              ← Back to Thermal Lexum Website
+              ← Back to Main Website
             </Link>
           </div>
         </div>

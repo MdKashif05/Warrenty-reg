@@ -8,17 +8,17 @@ const footerLinks = {
     { label: "B2B Direct Purchase (30% OFF)", href: "/b2b" },
     { label: "About Us", href: "/about" },
     { label: "Founder's Message", href: "/founder" },
-    { label: "Contact", href: "/contact" },
+    { label: "Contact Support", href: "/contact" },
   ],
   PRODUCTS: [
-    { label: "Thermal Paste", href: "/products?category=THERMAL_PASTE" },
-    { label: "Liquid Metal", href: "/products?category=LIQUID_METAL" },
-    { label: "Thermal Pads", href: "/products?category=THERMAL_PADS" },
+    { label: "Thermal Paste Lineup", href: "/courses" },
+    { label: "Liquid Metal Extreme", href: "/courses/lx-lm-pro" },
+    { label: "Thermal Pad Matrix", href: "/courses/lx-pad-pro" },
   ],
   SUPPORT: [
     { label: "Register Warranty", href: "/warranty/register" },
     { label: "Warranty Lookup", href: "/warranty/lookup" },
-    { label: "FAQ", href: "/faq" },
+    { label: "FAQ & Guide", href: "/faq" },
     { label: "Warranty Terms", href: "/warranty-terms" },
   ],
 };
@@ -68,19 +68,12 @@ export default function Footer() {
       role="contentinfo"
     >
       <div className="thermal-bar" />
-      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "72px 24px 40px" }}>
+      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "60px 20px 40px" }}>
         {/* Top section */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "2fr repeat(3, 1fr)",
-            gap: "48px",
-            marginBottom: "64px",
-          }}
-        >
+        <div className="footer-grid">
           {/* Brand */}
-          <div>
-            <div style={{ position: "relative", height: "68px", width: "290px", marginBottom: "16px" }}>
+          <div className="footer-brand-col">
+            <div className="footer-logo-wrapper">
               <Image
                 src="/logo.png"
                 alt="Thermal Lexum"
@@ -94,8 +87,8 @@ export default function Footer() {
                 fontSize: "10px",
                 letterSpacing: "3px",
                 color: "#0284c7",
-                marginBottom: "20px",
-                fontWeight: "700"
+                marginBottom: "16px",
+                fontWeight: "700",
               }}
             >
               COOL SYSTEMS. UNSTOPPABLE PERFORMANCE.
@@ -105,8 +98,8 @@ export default function Footer() {
                 fontSize: "14px",
                 color: "#475569",
                 lineHeight: "1.7",
-                maxWidth: "300px",
-                marginBottom: "24px",
+                maxWidth: "320px",
+                marginBottom: "20px",
               }}
             >
               High-performance thermal interface solutions engineered under Founder <strong>Javed Shaikh</strong> for gamers, overclockers, and workstation professionals.
@@ -148,57 +141,59 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Links */}
-          {Object.entries(footerLinks).map(([title, links]) => (
-            <div key={title}>
-              <div
-                style={{
-                  fontFamily: "JetBrains Mono, monospace",
-                  fontSize: "11px",
-                  letterSpacing: "2px",
-                  color: "#64748b",
-                  marginBottom: "20px",
-                  fontWeight: "700"
-                }}
-              >
-                {title}
+          {/* Links Columns */}
+          <div className="footer-links-grid">
+            {Object.entries(footerLinks).map(([title, links]) => (
+              <div key={title}>
+                <div
+                  style={{
+                    fontFamily: "JetBrains Mono, monospace",
+                    fontSize: "11px",
+                    letterSpacing: "2px",
+                    color: "#64748b",
+                    marginBottom: "16px",
+                    fontWeight: "700",
+                  }}
+                >
+                  {title}
+                </div>
+                <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
+                  {links.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        style={{
+                          color: "#475569",
+                          textDecoration: "none",
+                          fontSize: "14px",
+                          fontWeight: "500",
+                          transition: "color 0.2s",
+                        }}
+                        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#0284c7"; }}
+                        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "#475569"; }}
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "12px" }}>
-                {links.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      style={{
-                        color: "#475569",
-                        textDecoration: "none",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                        transition: "color 0.2s",
-                      }}
-                      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#0284c7"; }}
-                      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "#475569"; }}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Contact bar */}
         <div
           style={{
-            padding: "24px 32px",
+            padding: "20px 24px",
             background: "#ffffff",
             border: "1px solid #cbd5e1",
             borderRadius: "12px",
             display: "flex",
-            gap: "48px",
+            gap: "24px 48px",
             flexWrap: "wrap",
-            marginBottom: "40px",
-            boxShadow: "0 4px 15px rgba(0,0,0,0.03)"
+            marginBottom: "36px",
+            boxShadow: "0 4px 15px rgba(0,0,0,0.03)",
           }}
         >
           <div>
@@ -230,7 +225,7 @@ export default function Footer() {
           <p style={{ fontSize: "13px", color: "#64748b" }}>
             © 2026 Thermal Lexum. All Rights Reserved. Founder Javed Shaikh.
           </p>
-          <div style={{ display: "flex", gap: "24px" }}>
+          <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
             {[
               { label: "Privacy Policy", href: "/privacy" },
               { label: "Terms & Conditions", href: "/terms" },
@@ -247,6 +242,48 @@ export default function Footer() {
           </div>
         </div>
       </div>
+
+      <style>{`
+        .footer-grid {
+          display: grid;
+          grid-template-columns: 1.5fr 2.5fr;
+          gap: 48px;
+          margin-bottom: 48px;
+        }
+        .footer-links-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 32px;
+        }
+        .footer-logo-wrapper {
+          position: relative;
+          height: 60px;
+          width: 250px;
+          margin-bottom: 12px;
+        }
+        @media (max-width: 900px) {
+          .footer-grid {
+            grid-template-columns: 1fr;
+            gap: 36px;
+          }
+        }
+        @media (max-width: 600px) {
+          .footer-links-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+          }
+          .footer-logo-wrapper {
+            height: 48px;
+            width: 200px;
+          }
+        }
+        @media (max-width: 400px) {
+          .footer-links-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+          }
+        }
+      `}</style>
     </footer>
   );
 }

@@ -1,4 +1,5 @@
 "use client";
+import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import Navbar, { nesaCoursesList, CourseItem } from "@/components/layout/Navbar";
@@ -8,7 +9,25 @@ export default function CourseDetailPage() {
   const params = useParams();
   const slug = params?.slug as string;
 
-  const course = nesaCoursesList.find((c: CourseItem) => c.slug === slug) || nesaCoursesList[0];
+  const [course, setCourse] = useState<CourseItem>(
+    nesaCoursesList.find((c: CourseItem) => c.slug === slug) || nesaCoursesList[0]
+  );
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/courses")
+      .then((r) => r.json())
+      .then((data) => {
+        if (data && data.courses && Array.isArray(data.courses)) {
+          const found = data.courses.find((c: CourseItem) => c.slug === slug);
+          if (found) {
+            setCourse(found);
+          }
+        }
+      })
+      .catch((err) => console.error("Error finding course by slug:", err))
+      .finally(() => setLoading(false));
+  }, [slug]);
 
   return (
     <>
@@ -19,7 +38,7 @@ export default function CourseDetailPage() {
           <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
             <div style={{ display: "flex", gap: "10px", alignItems: "center", marginBottom: "12px" }}>
               <span style={{ background: "#ffd166", color: "#0E4D92", padding: "4px 12px", borderRadius: "20px", fontSize: "11px", fontWeight: "900" }}>
-                {course.badge}
+                {course.badge || "POPULAR"}
               </span>
               <span style={{ fontSize: "13px", color: "#e2e8f0" }}>Thermal Lexum Genuine Item</span>
             </div>

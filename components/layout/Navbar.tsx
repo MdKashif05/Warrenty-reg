@@ -66,7 +66,7 @@ export default function Navbar() {
           style={{
             maxWidth: "1400px",
             margin: "0 auto",
-            padding: "0 14px",
+            padding: "0 16px",
             height: "72px",
             display: "flex",
             alignItems: "center",
@@ -74,7 +74,7 @@ export default function Navbar() {
             position: "relative",
           }}
         >
-          {/* LEFT: Menu Trigger Button (Menu icon and text matching NESA) */}
+          {/* LEFT: Menu Trigger Button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle Menu"
@@ -110,7 +110,7 @@ export default function Navbar() {
             <span className="hidden sm:inline">{mobileOpen ? "CLOSE" : "MENU"}</span>
           </button>
 
-          {/* CENTER: Centered Logo Image (Enlarged length and breadth) */}
+          {/* CENTER: Centered Responsive Logo */}
           <Link
             href="/"
             style={{
@@ -120,9 +120,10 @@ export default function Navbar() {
               textDecoration: "none",
               display: "flex",
               alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            <div style={{ position: "relative", height: "64px", width: "310px", maxWidth: "58vw" }}>
+            <div className="nav-logo-wrapper">
               <Image
                 src="/logo.png"
                 alt="Thermal Lexum"
@@ -133,12 +134,13 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* RIGHT: Actions (Lookup Icon + Sign In Icon) */}
-          <div style={{ display: "flex", alignItems: "center", gap: "6px", flexShrink: 0 }}>
+          {/* RIGHT: Actions */}
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
             {/* Warranty Lookup Icon */}
             <Link
               href="/warranty/lookup"
               aria-label="Warranty Status Lookup"
+              title="Lookup Warranty"
               style={{
                 background: "#f1f5f9",
                 border: "1px solid #dde3ea",
@@ -160,6 +162,7 @@ export default function Navbar() {
             <Link
               href="/admin/login"
               aria-label="Admin Sign In"
+              title="Admin Portal"
               style={{
                 background: "#f1f5f9",
                 border: "1px solid #dde3ea",
@@ -180,7 +183,7 @@ export default function Navbar() {
         </nav>
       </header>
 
-      {/* ── SIDE DRAWER MENU (Identical responsive slide to NESA) ── */}
+      {/* ── SIDE DRAWER MENU ── */}
       {mobileOpen && (
         <div
           style={{
@@ -189,8 +192,9 @@ export default function Navbar() {
             left: 0,
             right: 0,
             bottom: 0,
-            background: "rgba(15, 23, 42, 0.35)",
+            background: "rgba(15, 23, 42, 0.4)",
             backdropFilter: "blur(4px)",
+            WebkitBackdropFilter: "blur(4px)",
             zIndex: 999,
           }}
           onClick={() => setMobileOpen(false)}
@@ -249,21 +253,39 @@ export default function Navbar() {
                 href="/warranty/lookup"
                 onClick={() => setMobileOpen(false)}
                 style={{
-                  padding: "8px 12px",
+                  padding: "10px 12px",
                   fontSize: "13px",
                   color: "#334155",
                   textDecoration: "none",
                   display: "flex",
                   alignItems: "center",
                   gap: "8px",
+                  fontWeight: "600",
                 }}
               >
                 <span>🔍</span>
                 <span>Warranty Status Lookup</span>
               </Link>
+              <Link
+                href="/courses"
+                onClick={() => setMobileOpen(false)}
+                style={{
+                  padding: "10px 12px",
+                  fontSize: "13px",
+                  color: "#334155",
+                  textDecoration: "none",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  fontWeight: "600",
+                }}
+              >
+                <span>📦</span>
+                <span>Product Catalog & Courses</span>
+              </Link>
             </div>
 
-            {/* Bottom Drawer CTAs matching NESA structure */}
+            {/* Bottom Drawer CTAs */}
             <div style={{ marginTop: "20px", display: "flex", flexDirection: "column", gap: "8px" }}>
               <Link
                 href="/admin/login"
@@ -285,6 +307,28 @@ export default function Navbar() {
           </div>
         </div>
       )}
+
+      <style>{`
+        .nav-logo-wrapper {
+          position: relative;
+          height: 56px;
+          width: 260px;
+        }
+        @media (max-width: 640px) {
+          .nav-logo-wrapper {
+            height: 48px;
+            width: 190px;
+            max-width: 48vw;
+          }
+        }
+        @media (max-width: 380px) {
+          .nav-logo-wrapper {
+            height: 40px;
+            width: 150px;
+            max-width: 42vw;
+          }
+        }
+      `}</style>
     </>
   );
 }
