@@ -158,8 +158,8 @@ export default function AdminCoursesPage() {
             color: "#ffffff",
             padding: "14px 24px",
             borderRadius: "10px",
-            boxShadow: "0 10px 25px rgba(0,0,0,0.15)",
-            zIndex: 9999,
+            boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
+            zIndex: 99999,
             fontWeight: "700",
             fontSize: "14px",
             display: "flex",
@@ -344,7 +344,7 @@ export default function AdminCoursesPage() {
         </div>
       </div>
 
-      {/* Add / Edit Modal */}
+      {/* Add / Edit Modal with Solid White High-Contrast Styling */}
       {showModal && (
         <div
           style={{
@@ -353,112 +353,201 @@ export default function AdminCoursesPage() {
             left: 0,
             right: 0,
             bottom: 0,
-            background: "rgba(0,0,0,0.5)",
-            zIndex: 2000,
+            background: "rgba(15, 23, 42, 0.75)",
+            backdropFilter: "blur(6px)",
+            WebkitBackdropFilter: "blur(6px)",
+            zIndex: 9999,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             padding: "20px",
           }}
+          onClick={() => setShowModal(false)}
         >
-          <div className="card-nesa" style={{ maxWidth: "560px", width: "100%", padding: "32px", maxHeight: "90vh", overflowY: "auto" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
-              <h2 style={{ fontSize: "20px", fontWeight: "900", color: "#0f172a" }}>
-                {editingSlug ? "Edit Product / Course Item" : "Add New Product / Course Item"}
-              </h2>
+          <div
+            style={{
+              maxWidth: "580px",
+              width: "100%",
+              background: "#ffffff",
+              borderRadius: "16px",
+              padding: "32px",
+              maxHeight: "90vh",
+              overflowY: "auto",
+              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.45)",
+              border: "1px solid #e2e8f0",
+              position: "relative",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px", borderBottom: "1px solid #f1f5f9", paddingBottom: "16px" }}>
+              <div>
+                <h2 style={{ fontSize: "20px", fontWeight: "900", color: "#0f172a" }}>
+                  {editingSlug ? "Edit Product / Course Item" : "Add New Product / Course Item"}
+                </h2>
+                <p style={{ fontSize: "12px", color: "#64748b", marginTop: "2px" }}>
+                  Save changes directly to MongoDB Atlas database
+                </p>
+              </div>
               <button
                 onClick={() => setShowModal(false)}
-                style={{ background: "none", border: "none", fontSize: "20px", cursor: "pointer", color: "#64748b" }}
+                style={{
+                  background: "#f1f5f9",
+                  border: "none",
+                  borderRadius: "8px",
+                  width: "32px",
+                  height: "32px",
+                  fontSize: "16px",
+                  cursor: "pointer",
+                  color: "#64748b",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
               >
                 ✕
               </button>
             </div>
 
-            <form onSubmit={handleSave} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            <form onSubmit={handleSave} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
               <div>
-                <label style={{ fontSize: "12px", fontWeight: "700", color: "#475569", display: "block", marginBottom: "4px" }}>
+                <label style={{ fontSize: "13px", fontWeight: "700", color: "#1e293b", display: "block", marginBottom: "6px" }}>
                   Item / Course Title *
                 </label>
                 <input
                   required
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  placeholder="e.g. LX-TIM Pro 17.6 W/mK (4g)"
-                  style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #cbd5e1", fontSize: "14px" }}
+                  placeholder="e.g. Thermal Lexum X-128 Xtreme Gaming Liquid Metal"
+                  style={{
+                    width: "100%",
+                    padding: "12px 14px",
+                    borderRadius: "8px",
+                    border: "1.5px solid #cbd5e1",
+                    fontSize: "14px",
+                    background: "#ffffff",
+                    color: "#0f172a",
+                    outline: "none",
+                  }}
                 />
               </div>
 
               <div>
-                <label style={{ fontSize: "12px", fontWeight: "700", color: "#475569", display: "block", marginBottom: "4px" }}>
-                  URL Slug (optional, generated automatically if blank)
+                <label style={{ fontSize: "13px", fontWeight: "700", color: "#1e293b", display: "block", marginBottom: "6px" }}>
+                  URL Slug (unique identifier)
                 </label>
                 <input
                   value={form.slug}
                   onChange={(e) => setForm({ ...form, slug: e.target.value })}
                   placeholder="e.g. lx-tim-pro-4g"
-                  style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #cbd5e1", fontSize: "14px" }}
+                  style={{
+                    width: "100%",
+                    padding: "12px 14px",
+                    borderRadius: "8px",
+                    border: "1.5px solid #cbd5e1",
+                    fontSize: "14px",
+                    background: "#ffffff",
+                    color: "#0f172a",
+                    outline: "none",
+                  }}
                 />
               </div>
 
-              <div className="responsive-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+              <div className="responsive-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
                 <div>
-                  <label style={{ fontSize: "12px", fontWeight: "700", color: "#475569", display: "block", marginBottom: "4px" }}>
+                  <label style={{ fontSize: "13px", fontWeight: "700", color: "#1e293b", display: "block", marginBottom: "6px" }}>
                     Badge Tag
                   </label>
                   <input
                     value={form.badge}
                     onChange={(e) => setForm({ ...form, badge: e.target.value })}
                     placeholder="BEST SELLER"
-                    style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #cbd5e1", fontSize: "14px" }}
+                    style={{
+                      width: "100%",
+                      padding: "12px 14px",
+                      borderRadius: "8px",
+                      border: "1.5px solid #cbd5e1",
+                      fontSize: "14px",
+                      background: "#ffffff",
+                      color: "#0f172a",
+                      outline: "none",
+                    }}
                   />
                 </div>
                 <div>
-                  <label style={{ fontSize: "12px", fontWeight: "700", color: "#475569", display: "block", marginBottom: "4px" }}>
-                    Price (INR) *
+                  <label style={{ fontSize: "13px", fontWeight: "700", color: "#1e293b", display: "block", marginBottom: "6px" }}>
+                    Price *
                   </label>
                   <input
                     required
                     value={form.price}
                     onChange={(e) => setForm({ ...form, price: e.target.value })}
                     placeholder="₹499"
-                    style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #cbd5e1", fontSize: "14px" }}
+                    style={{
+                      width: "100%",
+                      padding: "12px 14px",
+                      borderRadius: "8px",
+                      border: "1.5px solid #cbd5e1",
+                      fontSize: "14px",
+                      background: "#ffffff",
+                      color: "#0f172a",
+                      outline: "none",
+                    }}
                   />
                 </div>
               </div>
 
               <div>
-                <label style={{ fontSize: "12px", fontWeight: "700", color: "#475569", display: "block", marginBottom: "4px" }}>
-                  Units Sold / Students Enrolled
+                <label style={{ fontSize: "13px", fontWeight: "700", color: "#1e293b", display: "block", marginBottom: "6px" }}>
+                  Units Sold / Shipped
                 </label>
                 <input
                   type="number"
                   value={form.students}
                   onChange={(e) => setForm({ ...form, students: Number(e.target.value) || 0 })}
-                  placeholder="100"
-                  style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #cbd5e1", fontSize: "14px" }}
+                  placeholder="1000"
+                  style={{
+                    width: "100%",
+                    padding: "12px 14px",
+                    borderRadius: "8px",
+                    border: "1.5px solid #cbd5e1",
+                    fontSize: "14px",
+                    background: "#ffffff",
+                    color: "#0f172a",
+                    outline: "none",
+                  }}
                 />
               </div>
 
               <div>
-                <label style={{ fontSize: "12px", fontWeight: "700", color: "#475569", display: "block", marginBottom: "4px" }}>
+                <label style={{ fontSize: "13px", fontWeight: "700", color: "#1e293b", display: "block", marginBottom: "6px" }}>
                   Description *
                 </label>
                 <textarea
-                  rows={3}
+                  rows={4}
                   required
                   value={form.desc}
                   onChange={(e) => setForm({ ...form, desc: e.target.value })}
-                  placeholder="Product specifications, thermal conductivity ratings, or course highlights..."
-                  style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #cbd5e1", fontSize: "14px" }}
+                  placeholder="Product specifications, conductivity details, or highlights..."
+                  style={{
+                    width: "100%",
+                    padding: "12px 14px",
+                    borderRadius: "8px",
+                    border: "1.5px solid #cbd5e1",
+                    fontSize: "14px",
+                    background: "#ffffff",
+                    color: "#0f172a",
+                    outline: "none",
+                    resize: "vertical",
+                  }}
                 />
               </div>
 
-              <div style={{ display: "flex", gap: "12px", justifyContent: "flex-end", marginTop: "12px" }}>
+              <div style={{ display: "flex", gap: "12px", justifyContent: "flex-end", marginTop: "16px", borderTop: "1px solid #f1f5f9", paddingTop: "16px" }}>
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
                   className="btn-secondary"
-                  style={{ padding: "10px 20px" }}
+                  style={{ padding: "12px 24px", fontSize: "14px" }}
                 >
                   Cancel
                 </button>
@@ -466,7 +555,7 @@ export default function AdminCoursesPage() {
                   type="submit"
                   className="btn-primary"
                   disabled={saving}
-                  style={{ padding: "10px 24px" }}
+                  style={{ padding: "12px 28px", fontSize: "14px" }}
                 >
                   {saving ? "Saving to MongoDB..." : "Save to Database 💾"}
                 </button>

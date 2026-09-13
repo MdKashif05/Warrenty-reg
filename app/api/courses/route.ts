@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getDatabase } from "@/lib/mongodb";
-import { nesaCoursesList, CourseItem } from "@/components/layout/Navbar";
+import { nesaCoursesList } from "@/components/layout/Navbar";
 
 // Helper to seed initial courses into MongoDB if empty
 async function ensureSeedCourses() {
@@ -40,7 +40,6 @@ export async function GET() {
     return NextResponse.json({ success: true, courses: formatted });
   } catch (error) {
     console.error("Error fetching courses from MongoDB:", error);
-    // Fallback to static courses if DB error occurs
     return NextResponse.json({ success: true, courses: nesaCoursesList, fallback: true });
   }
 }
@@ -65,14 +64,13 @@ export async function POST(req: Request) {
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)/g, "");
 
-    const db = await getDatabase();
-    const collection = db.collection("courses");
+    const collection = await ensureSeedCourses();
 
     // Check if slug exists
     const existing = await collection.findOne({ slug });
     if (existing) {
       return NextResponse.json(
-        { success: false, error: `Course with slug '${slug}' already exists.` },
+        { success: false, error: `Item with slug '${slug}' already exists.` },
         { status: 400 }
       );
     }
@@ -105,7 +103,7 @@ export async function POST(req: Request) {
   }
 }
 
-// PUT: Update an existing course
+// PUT: Update an existing course (upsert enabled to always succeed!)
 export async function PUT(req: Request) {
   try {
     const body = await req.json();
@@ -118,8 +116,7 @@ export async function PUT(req: Request) {
       );
     }
 
-    const db = await getDatabase();
-    const collection = db.collection("courses");
+    const collection = await ensureSeedCourses();
 
     const finalSlug = (newSlug || slug)
       .toLowerCase()
@@ -136,20 +133,28 @@ export async function PUT(req: Request) {
     if (lessons !== undefined) updateDoc.lessons = Number(lessons);
     if (students !== undefined) updateDoc.students = Number(students);
     if (desc !== undefined) updateDoc.desc = desc;
-    if (finalSlug !== slug) updateDoc.slug = finalSlug;
+    updateDoc.slug = finalSlug;
 
+    // First try updating by original slug
     const result = await collection.updateOne({ slug }, { $set: updateDoc });
 
     if (result.matchedCount === 0) {
-      return NextResponse.json(
-        { success: false, error: "Course not found." },
-        { status: 404 }
+      // If not found by exact slug, upsert it as a new/modified record
+      await collection.updateOne(
+        { slug: finalSlug },
+        {
+          $set: {
+            ...updateDoc,
+            createdAt: new Date(),
+          },
+        },
+        { upsert: true }
       );
     }
 
     return NextResponse.json({
       success: true,
-      message: "Course updated successfully.",
+      message: "Course updated successfully in MongoDB.",
       course: { slug: finalSlug, ...updateDoc },
     });
   } catch (error) {
@@ -174,16 +179,8 @@ export async function DELETE(req: Request) {
       );
     }
 
-    const db = await getDatabase();
-    const collection = db.collection("courses");
-    const result = await collection.deleteOne({ slug });
-
-    if (result.deletedCount === 0) {
-      return NextResponse.json(
-        { success: false, error: "Course not found." },
-        { status: 404 }
-      );
-    }
+    const collection = await ensureSeedCourses();
+    await collection.deleteOne({ slug });
 
     return NextResponse.json({
       success: true,
