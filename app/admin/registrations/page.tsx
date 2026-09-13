@@ -17,7 +17,7 @@ export default function AdminRegistrationsPage() {
   const [search, setSearch] = useState("");
   const [showAddModal, setShowAddModal] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [notification, setNotification] = useState<string | null>(null);
+  const [notification, setNotification] = useState<{ message: string; type: "success" | "error" } | null>(null);
 
   const [form, setForm] = useState({
     name: "",
@@ -44,8 +44,8 @@ export default function AdminRegistrationsPage() {
     fetchRegistrations();
   }, []);
 
-  const showToast = (msg: string) => {
-    setNotification(msg);
+  const showToast = (message: string, type: "success" | "error" = "success") => {
+    setNotification({ message, type });
     setTimeout(() => setNotification(null), 3500);
   };
 
@@ -99,9 +99,12 @@ export default function AdminRegistrationsPage() {
         setShowAddModal(false);
         setForm({ name: "", email: "", phone: "", course: "LX-TIM Pro (Thermal Paste)" });
         await fetchRegistrations();
+      } else {
+        showToast(data.error || "Failed to add registration", "error");
       }
     } catch (err) {
       console.error(err);
+      showToast("Failed to connect to database.", "error");
     } finally {
       setSaving(false);
     }
@@ -124,17 +127,20 @@ export default function AdminRegistrationsPage() {
             position: "fixed",
             top: "24px",
             right: "24px",
-            background: "#16a34a",
-            color: "#fff",
-            padding: "12px 20px",
-            borderRadius: "8px",
-            boxShadow: "0 10px 25px rgba(0,0,0,0.15)",
-            zIndex: 9999,
+            background: notification.type === "success" ? "#16a34a" : "#dc2626",
+            color: "#ffffff",
+            padding: "14px 24px",
+            borderRadius: "10px",
+            boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
+            zIndex: 99999,
             fontWeight: "700",
             fontSize: "14px",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
           }}
         >
-          {notification}
+          {notification.message}
         </div>
       )}
 
@@ -309,7 +315,7 @@ export default function AdminRegistrationsPage() {
         </div>
       </div>
 
-      {/* Add Modal */}
+      {/* Add Modal with Solid White Card Background & Strong Backdrop */}
       {showAddModal && (
         <div
           style={{
@@ -318,20 +324,54 @@ export default function AdminRegistrationsPage() {
             left: 0,
             right: 0,
             bottom: 0,
-            background: "rgba(0,0,0,0.5)",
-            zIndex: 2000,
+            background: "rgba(15, 23, 42, 0.75)",
+            backdropFilter: "blur(6px)",
+            WebkitBackdropFilter: "blur(6px)",
+            zIndex: 9999,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             padding: "20px",
           }}
+          onClick={() => setShowAddModal(false)}
         >
-          <div className="card-nesa" style={{ maxWidth: "500px", width: "100%", padding: "32px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
-              <h2 style={{ fontSize: "20px", fontWeight: "900", color: "#0f172a" }}>New Registration</h2>
+          <div
+            style={{
+              maxWidth: "520px",
+              width: "100%",
+              background: "#ffffff",
+              borderRadius: "16px",
+              padding: "32px",
+              maxHeight: "90vh",
+              overflowY: "auto",
+              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.45)",
+              border: "1px solid #e2e8f0",
+              position: "relative",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px", borderBottom: "1px solid #f1f5f9", paddingBottom: "14px" }}>
+              <div>
+                <h2 style={{ fontSize: "20px", fontWeight: "900", color: "#0f172a" }}>New Registration</h2>
+                <p style={{ fontSize: "12px", color: "#64748b", marginTop: "2px" }}>
+                  Record a student batch enrollment in MongoDB
+                </p>
+              </div>
               <button
                 onClick={() => setShowAddModal(false)}
-                style={{ background: "none", border: "none", fontSize: "20px", cursor: "pointer", color: "#64748b" }}
+                style={{
+                  background: "#f1f5f9",
+                  border: "none",
+                  borderRadius: "8px",
+                  width: "32px",
+                  height: "32px",
+                  fontSize: "16px",
+                  cursor: "pointer",
+                  color: "#64748b",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
               >
                 ✕
               </button>
@@ -339,7 +379,7 @@ export default function AdminRegistrationsPage() {
 
             <form onSubmit={handleAddSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
               <div>
-                <label style={{ fontSize: "12px", fontWeight: "700", color: "#475569", display: "block", marginBottom: "4px" }}>
+                <label style={{ fontSize: "13px", fontWeight: "700", color: "#1e293b", display: "block", marginBottom: "6px" }}>
                   Student / Customer Name *
                 </label>
                 <input
@@ -347,12 +387,21 @@ export default function AdminRegistrationsPage() {
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                   placeholder="e.g. Ramesh Kumar"
-                  style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #cbd5e1", fontSize: "14px" }}
+                  style={{
+                    width: "100%",
+                    padding: "12px 14px",
+                    borderRadius: "8px",
+                    border: "1.5px solid #cbd5e1",
+                    fontSize: "14px",
+                    background: "#ffffff",
+                    color: "#0f172a",
+                    outline: "none",
+                  }}
                 />
               </div>
 
               <div>
-                <label style={{ fontSize: "12px", fontWeight: "700", color: "#475569", display: "block", marginBottom: "4px" }}>
+                <label style={{ fontSize: "13px", fontWeight: "700", color: "#1e293b", display: "block", marginBottom: "6px" }}>
                   Email Address *
                 </label>
                 <input
@@ -361,24 +410,42 @@ export default function AdminRegistrationsPage() {
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                   placeholder="ramesh@example.com"
-                  style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #cbd5e1", fontSize: "14px" }}
+                  style={{
+                    width: "100%",
+                    padding: "12px 14px",
+                    borderRadius: "8px",
+                    border: "1.5px solid #cbd5e1",
+                    fontSize: "14px",
+                    background: "#ffffff",
+                    color: "#0f172a",
+                    outline: "none",
+                  }}
                 />
               </div>
 
               <div>
-                <label style={{ fontSize: "12px", fontWeight: "700", color: "#475569", display: "block", marginBottom: "4px" }}>
+                <label style={{ fontSize: "13px", fontWeight: "700", color: "#1e293b", display: "block", marginBottom: "6px" }}>
                   Phone Number
                 </label>
                 <input
                   value={form.phone}
                   onChange={(e) => setForm({ ...form, phone: e.target.value })}
                   placeholder="+91 98765 43210"
-                  style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #cbd5e1", fontSize: "14px" }}
+                  style={{
+                    width: "100%",
+                    padding: "12px 14px",
+                    borderRadius: "8px",
+                    border: "1.5px solid #cbd5e1",
+                    fontSize: "14px",
+                    background: "#ffffff",
+                    color: "#0f172a",
+                    outline: "none",
+                  }}
                 />
               </div>
 
               <div>
-                <label style={{ fontSize: "12px", fontWeight: "700", color: "#475569", display: "block", marginBottom: "4px" }}>
+                <label style={{ fontSize: "13px", fontWeight: "700", color: "#1e293b", display: "block", marginBottom: "6px" }}>
                   Course / Product Enrolled *
                 </label>
                 <input
@@ -386,15 +453,34 @@ export default function AdminRegistrationsPage() {
                   value={form.course}
                   onChange={(e) => setForm({ ...form, course: e.target.value })}
                   placeholder="LX-TIM Pro (Thermal Paste)"
-                  style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #cbd5e1", fontSize: "14px" }}
+                  style={{
+                    width: "100%",
+                    padding: "12px 14px",
+                    borderRadius: "8px",
+                    border: "1.5px solid #cbd5e1",
+                    fontSize: "14px",
+                    background: "#ffffff",
+                    color: "#0f172a",
+                    outline: "none",
+                  }}
                 />
               </div>
 
-              <div style={{ display: "flex", gap: "12px", justifyContent: "flex-end", marginTop: "12px" }}>
-                <button type="button" onClick={() => setShowAddModal(false)} className="btn-secondary" style={{ padding: "10px 20px" }}>
+              <div style={{ display: "flex", gap: "12px", justifyContent: "flex-end", marginTop: "12px", borderTop: "1px solid #f1f5f9", paddingTop: "16px" }}>
+                <button
+                  type="button"
+                  onClick={() => setShowAddModal(false)}
+                  className="btn-secondary"
+                  style={{ padding: "10px 20px" }}
+                >
                   Cancel
                 </button>
-                <button type="submit" className="btn-primary" disabled={saving} style={{ padding: "10px 24px" }}>
+                <button
+                  type="submit"
+                  className="btn-primary"
+                  disabled={saving}
+                  style={{ padding: "10px 24px" }}
+                >
                   {saving ? "Saving..." : "Save to MongoDB 💾"}
                 </button>
               </div>
