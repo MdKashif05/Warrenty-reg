@@ -19,6 +19,7 @@ interface Analytics {
     activeWarranties: number;
     totalClaims: number;
     openClaims: number;
+    totalProducts?: number;
   };
   charts: {
     ordersByMonth: { month: string; count: number; revenue: number }[];
@@ -29,32 +30,32 @@ interface Analytics {
 
 const fallbackAnalytics: Analytics = {
   overview: {
-    totalOrders: 1420,
-    ordersThisMonth: 128,
+    totalOrders: 30800,
+    ordersThisMonth: 6776,
     totalRevenue: 184500000,
-    revenueThisMonth: 34200000,
-    totalCustomers: 3250,
-    customersThisMonth: 148,
-    totalWarranties: 3250,
-    pendingWarranties: 4,
-    activeWarranties: 3246,
-    totalClaims: 12,
+    revenueThisMonth: 40590000,
+    totalCustomers: 5,
+    customersThisMonth: 3,
+    totalWarranties: 5,
+    pendingWarranties: 2,
+    activeWarranties: 3,
+    totalClaims: 3,
     openClaims: 2,
+    totalProducts: 5,
   },
   charts: {
     ordersByMonth: [
-      { month: "2026-04-01", count: 180, revenue: 18500000 },
-      { month: "2026-05-01", count: 240, revenue: 24200000 },
-      { month: "2026-06-01", count: 320, revenue: 31000000 },
-      { month: "2026-07-01", count: 290, revenue: 29500000 },
-      { month: "2026-08-01", count: 420, revenue: 41200000 },
-      { month: "2026-09-01", count: 480, revenue: 48900000 },
+      { month: "2026-04-01", count: 3080, revenue: 18450000 },
+      { month: "2026-05-01", count: 4004, revenue: 23985000 },
+      { month: "2026-06-01", count: 4928, revenue: 29520000 },
+      { month: "2026-07-01", count: 5544, revenue: 33210000 },
+      { month: "2026-08-01", count: 6468, revenue: 38745000 },
+      { month: "2026-09-01", count: 6776, revenue: 40590000 },
     ],
     warrantyByPlatform: [
-      { purchasePlatform: "OWN_WEBSITE", _count: { id: 1840 } },
-      { purchasePlatform: "AMAZON", _count: { id: 980 } },
-      { purchasePlatform: "FLIPKART", _count: { id: 380 } },
-      { purchasePlatform: "OTHER", _count: { id: 50 } },
+      { purchasePlatform: "OWN_WEBSITE", _count: { id: 3 } },
+      { purchasePlatform: "AMAZON", _count: { id: 1 } },
+      { purchasePlatform: "FLIPKART", _count: { id: 1 } },
     ],
     topProducts: [
       { name: "LX-TIM Pro (Thermal Paste)", _sum: { price: 59880000 }, _count: { id: 12000 } },
@@ -108,12 +109,49 @@ export default function AdminAnalyticsPage() {
   const { overview, charts } = currentData;
 
   const metrics = [
-    { label: "Total Gross Revenue", value: formatRevenue(overview.totalRevenue), sub: `${formatRevenue(overview.revenueThisMonth)} this month`, color: "#0284c7", icon: "💰" },
-    { label: "Total Units Dispatched", value: overview.totalOrders.toLocaleString(), sub: `+${overview.ordersThisMonth} this month`, color: "#2563eb", icon: "📦" },
-    { label: "Active Customers", value: overview.totalCustomers.toLocaleString(), sub: `+${overview.customersThisMonth} new this month`, color: "#7c3aed", icon: "👥" },
-    { label: "Active Warranties", value: overview.activeWarranties.toLocaleString(), sub: `${overview.pendingWarranties} pending verification`, color: "#16a34a", icon: "🛡️" },
-    { label: "Service Claims", value: overview.totalClaims.toLocaleString(), sub: `${overview.openClaims} open claims in review`, color: "#b45309", icon: "🔧" },
-    { label: "Warranty Coverage", value: "99.8%", sub: "Authentic serial rate", color: "#0369a1", icon: "✅" },
+    {
+      label: "Gross Catalog Sales",
+      value: formatRevenue(overview.totalRevenue),
+      sub: `${formatRevenue(overview.revenueThisMonth)} this month`,
+      color: "#0284c7",
+      icon: "💰",
+    },
+    {
+      label: "Active Catalog Products",
+      value: `${overview.totalProducts || 5}`,
+      change: "Items in MongoDB",
+      sub: `${overview.totalOrders.toLocaleString()} total units`,
+      color: "#2563eb",
+      icon: "📦",
+    },
+    {
+      label: "Warranty Registrations",
+      value: `${overview.totalWarranties}`,
+      sub: `${overview.activeWarranties} verified active`,
+      color: "#16a34a",
+      icon: "🛡️",
+    },
+    {
+      label: "Customer Inquiries",
+      value: `${overview.totalClaims}`,
+      sub: `${overview.openClaims} pending response`,
+      color: "#d97706",
+      icon: "💬",
+    },
+    {
+      label: "Monthly Deliveries",
+      value: `${overview.ordersThisMonth.toLocaleString()}`,
+      sub: "Units dispatched this month",
+      color: "#7c3aed",
+      icon: "🚚",
+    },
+    {
+      label: "Warranty Verification",
+      value: "99.8%",
+      sub: "Authentic batch rate",
+      color: "#0369a1",
+      icon: "✅",
+    },
   ];
 
   // Format months for chart
@@ -170,7 +208,7 @@ export default function AdminAnalyticsPage() {
       </div>
 
       {/* Metric Cards */}
-      <div className="responsive-grid-4" style={{ marginBottom: "32px" }}>
+      <div className="responsive-grid-3" style={{ marginBottom: "32px" }}>
         {metrics.map((m) => (
           <div key={m.label} className="card-nesa" style={{ padding: "20px", background: "#ffffff" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
