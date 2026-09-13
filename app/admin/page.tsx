@@ -14,14 +14,14 @@ interface StatsData {
 
 export default function AdminDashboardPage() {
   const [stats, setStats] = useState<StatsData>({
-    totalCourses: nesaCoursesList.length,
-    totalRegistrations: 5,
-    confirmedRegistrations: 3,
-    totalEnquiries: 3,
-    totalUnits: "28,700",
-    totalRevenueFormatted: "₹18,45,000",
+    totalCourses: 0,
+    totalRegistrations: 0,
+    confirmedRegistrations: 0,
+    totalEnquiries: 0,
+    totalUnits: "0",
+    totalRevenueFormatted: "₹0",
   });
-  const [topCourses, setTopCourses] = useState<CourseItem[]>(nesaCoursesList);
+  const [topCourses, setTopCourses] = useState<CourseItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

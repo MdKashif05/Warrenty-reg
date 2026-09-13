@@ -7,31 +7,29 @@ export async function GET() {
 
     // Fetch counts across collections concurrently
     const [coursesCount, regCount, enqCount, confirmedRegCount] = await Promise.all([
-      db.collection("courses").countDocuments().catch(() => 5),
-      db.collection("registrations").countDocuments().catch(() => 5),
-      db.collection("enquiries").countDocuments().catch(() => 3),
-      db.collection("registrations").countDocuments({ status: "CONFIRMED" }).catch(() => 3),
+      db.collection("courses").countDocuments().catch(() => 0),
+      db.collection("registrations").countDocuments().catch(() => 0),
+      db.collection("enquiries").countDocuments().catch(() => 0),
+      db.collection("registrations").countDocuments({ status: "CONFIRMED" }).catch(() => 0),
     ]);
 
-    // Calculate approximate sales / revenue
+    // Calculate approximate sales / revenue from real items
     const courses = await db.collection("courses").find({}).toArray().catch(() => []);
     let totalUnits = 0;
     let totalRevenue = 0;
 
     courses.forEach((c) => {
-      const priceNum = parseInt((c.price || "0").replace(/[^0-9]/g, ""), 10) || 499;
-      const units = Number(c.students) || 500;
+      const priceNum = parseInt((c.price || "0").replace(/[^0-9]/g, ""), 10) || 0;
+      const units = Number(c.students) || 0;
       totalUnits += units;
       totalRevenue += priceNum * units;
     });
-
-    if (totalRevenue === 0) totalRevenue = 1845000;
 
     const topCourses = courses.slice(0, 5).map((c) => ({
       slug: c.slug,
       name: c.name,
       badge: c.badge || "POPULAR",
-      price: c.price || "₹499",
+      price: c.price || "₹0",
       students: c.students || 0,
       desc: c.desc || "",
     }));
@@ -39,10 +37,10 @@ export async function GET() {
     return NextResponse.json({
       success: true,
       stats: {
-        totalCourses: coursesCount || 5,
-        totalRegistrations: regCount || 5,
-        confirmedRegistrations: confirmedRegCount || 3,
-        totalEnquiries: enqCount || 3,
+        totalCourses: coursesCount || 0,
+        totalRegistrations: regCount || 0,
+        confirmedRegistrations: confirmedRegCount || 0,
+        totalEnquiries: enqCount || 0,
         totalUnits: totalUnits.toLocaleString(),
         totalRevenueFormatted: new Intl.NumberFormat("en-IN", {
           style: "currency",
@@ -57,12 +55,12 @@ export async function GET() {
     return NextResponse.json({
       success: true,
       stats: {
-        totalCourses: 5,
-        totalRegistrations: 5,
-        confirmedRegistrations: 3,
-        totalEnquiries: 3,
-        totalUnits: "28,700",
-        totalRevenueFormatted: "₹18,45,000",
+        totalCourses: 0,
+        totalRegistrations: 0,
+        confirmedRegistrations: 0,
+        totalEnquiries: 0,
+        totalUnits: "0",
+        totalRevenueFormatted: "₹0",
       },
       topCourses: [],
       fallback: true,

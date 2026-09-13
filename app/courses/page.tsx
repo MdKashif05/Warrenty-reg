@@ -5,7 +5,7 @@ import Navbar, { nesaCoursesList, CourseItem } from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer";
 
 export default function CoursesPage() {
-  const [courses, setCourses] = useState<CourseItem[]>(nesaCoursesList);
+  const [courses, setCourses] = useState<CourseItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

@@ -1,31 +1,11 @@
 import { NextResponse } from "next/server";
 import { getDatabase } from "@/lib/mongodb";
-import { nesaCoursesList } from "@/components/layout/Navbar";
-
-// Helper to seed initial courses into MongoDB if collection is empty
-async function ensureSeedCourses() {
-  const db = await getDatabase();
-  const collection = db.collection("courses");
-  const count = await collection.countDocuments().catch(() => 0);
-  if (count === 0) {
-    try {
-      const defaultData = nesaCoursesList.map((item) => ({
-        ...item,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }));
-      await collection.insertMany(defaultData);
-    } catch (seedErr) {
-      console.warn("Notice: Initial courses seeding skipped:", seedErr);
-    }
-  }
-  return collection;
-}
 
 // GET: Fetch all courses
 export async function GET() {
   try {
-    const collection = await ensureSeedCourses();
+    const db = await getDatabase();
+    const collection = db.collection("courses");
     const courses = await collection
       .find({})
       .sort({ createdAt: -1 })
@@ -44,12 +24,7 @@ export async function GET() {
     return NextResponse.json({ success: true, courses: formatted });
   } catch (error: unknown) {
     console.error("Error fetching courses from MongoDB:", error);
-    return NextResponse.json({
-      success: true,
-      courses: nesaCoursesList,
-      fallback: true,
-      warning: error instanceof Error ? error.message : "Database fetch notice",
-    });
+    return NextResponse.json({ success: true, courses: [], fallback: true });
   }
 }
 
@@ -72,9 +47,9 @@ export async function POST(req: Request) {
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "") || `item-${Date.now()}`;
 
-    const collection = await ensureSeedCourses();
+    const db = await getDatabase();
+    const collection = db.collection("courses");
 
-    // Check if slug exists
     const existing = await collection.findOne({ slug });
     if (existing) {
       return NextResponse.json(
@@ -125,7 +100,8 @@ export async function PUT(req: Request) {
       );
     }
 
-    const collection = await ensureSeedCourses();
+    const db = await getDatabase();
+    const collection = db.collection("courses");
 
     const rawFinalSlug = newSlug || slug;
     const finalSlug = rawFinalSlug
@@ -145,7 +121,6 @@ export async function PUT(req: Request) {
     if (desc !== undefined) updateDoc.desc = desc.trim();
     updateDoc.slug = finalSlug;
 
-    // Update or Upsert directly
     const result = await collection.updateOne({ slug }, { $set: updateDoc });
 
     if (result.matchedCount === 0) {
@@ -184,12 +159,13 @@ export async function DELETE(req: Request) {
 
     if (!slug) {
       return NextResponse.json(
-        { success: false, error: "Slug is required to delete item." },
+        { success: false, error: "Course slug is required." },
         { status: 400 }
       );
     }
 
-    const collection = await ensureSeedCourses();
+    const db = await getDatabase();
+    const collection = db.collection("courses");
     await collection.deleteOne({ slug });
 
     return NextResponse.json({

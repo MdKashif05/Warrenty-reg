@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { CourseItem, nesaCoursesList } from "@/components/layout/Navbar";
 
 export default function AdminCoursesPage() {
-  const [courses, setCourses] = useState<CourseItem[]>(nesaCoursesList);
+  const [courses, setCourses] = useState<CourseItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [search, setSearch] = useState("");

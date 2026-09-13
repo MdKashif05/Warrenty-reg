@@ -1,33 +1,11 @@
 import { NextResponse } from "next/server";
 import { getDatabase } from "@/lib/mongodb";
 
-const sampleRegistrations = [
-  { id: "REG-1001", name: "Rahul Sharma", email: "rahul.sharma@example.com", phone: "+91 98765 43210", course: "LX-TIM Pro (Thermal Paste)", status: "CONFIRMED", date: "2026-08-27" },
-  { id: "REG-1002", name: "Priya Patel", email: "priya.patel@gmail.com", phone: "+91 91234 56789", course: "LX-LM Pro (Liquid Metal)", status: "CONFIRMED", date: "2026-08-26" },
-  { id: "REG-1003", name: "Anish Verma", email: "anish.verma@techcorp.in", phone: "+91 99887 76655", course: "LX-PAD Pro (Thermal Pads)", status: "PENDING", date: "2026-08-26" },
-  { id: "REG-1004", name: "Sunita Gupta", email: "sunita.gupta@yahoo.com", phone: "+91 98111 22334", course: "LX-PAD Standard (Thermal Pads)", status: "CONFIRMED", date: "2026-08-25" },
-  { id: "REG-1005", name: "Karan Johar", email: "karan.j@creative.io", phone: "+91 97777 88888", course: "LX-TIM Standard (Thermal Paste)", status: "PENDING", date: "2026-08-24" },
-];
-
-async function ensureSeedRegistrations() {
-  const db = await getDatabase();
-  const collection = db.collection("registrations");
-  const count = await collection.countDocuments();
-  if (count === 0) {
-    const data = sampleRegistrations.map((r) => ({
-      ...r,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }));
-    await collection.insertMany(data);
-  }
-  return collection;
-}
-
 // GET: Fetch all registrations
 export async function GET() {
   try {
-    const collection = await ensureSeedRegistrations();
+    const db = await getDatabase();
+    const collection = db.collection("registrations");
     const list = await collection.find({}).sort({ createdAt: -1 }).toArray();
 
     const formatted = list.map((r) => ({
@@ -37,13 +15,13 @@ export async function GET() {
       phone: r.phone,
       course: r.course,
       status: r.status || "PENDING",
-      date: r.date || (r.createdAt ? new Date(r.createdAt).toISOString().split("T")[0] : "2026-08-27"),
+      date: r.date || (r.createdAt ? new Date(r.createdAt).toISOString().split("T")[0] : new Date().toISOString().split("T")[0]),
     }));
 
     return NextResponse.json({ success: true, registrations: formatted });
   } catch (error) {
     console.error("Error fetching registrations:", error);
-    return NextResponse.json({ success: true, registrations: sampleRegistrations, fallback: true });
+    return NextResponse.json({ success: true, registrations: [], fallback: true });
   }
 }
 
@@ -69,10 +47,10 @@ export async function POST(req: Request) {
 
     const newReg = {
       id,
-      name,
-      email,
-      phone: phone || "",
-      course,
+      name: name.trim(),
+      email: email.trim(),
+      phone: (phone || "").trim(),
+      course: course.trim(),
       status: "PENDING",
       date: dateStr,
       createdAt: now,

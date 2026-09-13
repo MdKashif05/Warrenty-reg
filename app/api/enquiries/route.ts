@@ -1,31 +1,11 @@
 import { NextResponse } from "next/server";
 import { getDatabase } from "@/lib/mongodb";
 
-const sampleEnquiries = [
-  { id: "ENQ-501", name: "Rohan Kapoor", email: "rohan@gmail.com", phone: "+91 98123 45678", course: "LX-TIM Pro 17.6 W/mK", message: "Hi, what is the bulk price for 100 units for our PC building service?", status: "NEW", date: "2026-08-27" },
-  { id: "ENQ-502", name: "Megha Mehta", email: "megha.m@outlook.com", phone: "+91 97890 12345", course: "Liquid Metal Extreme", message: "What is the warranty and shelf life of the liquid metal compound?", status: "RESPONDED", date: "2026-08-26" },
-  { id: "ENQ-503", name: "Deepak Chawla", email: "deepak@chawla.com", phone: "+91 96543 21098", course: "Thermal Pad Matrix (12.8 W/mK)", message: "Can we get custom cut dimensions (100x100mm) for mining rigs?", status: "NEW", date: "2026-08-25" },
-];
-
-async function ensureSeedEnquiries() {
-  const db = await getDatabase();
-  const collection = db.collection("enquiries");
-  const count = await collection.countDocuments();
-  if (count === 0) {
-    const data = sampleEnquiries.map((e) => ({
-      ...e,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }));
-    await collection.insertMany(data);
-  }
-  return collection;
-}
-
 // GET: Fetch all enquiries
 export async function GET() {
   try {
-    const collection = await ensureSeedEnquiries();
+    const db = await getDatabase();
+    const collection = db.collection("enquiries");
     const list = await collection.find({}).sort({ createdAt: -1 }).toArray();
 
     const formatted = list.map((e) => ({
@@ -36,13 +16,13 @@ export async function GET() {
       course: e.course || e.subject || "General",
       message: e.message,
       status: e.status || "NEW",
-      date: e.date || (e.createdAt ? new Date(e.createdAt).toISOString().split("T")[0] : "2026-08-27"),
+      date: e.date || (e.createdAt ? new Date(e.createdAt).toISOString().split("T")[0] : new Date().toISOString().split("T")[0]),
     }));
 
     return NextResponse.json({ success: true, enquiries: formatted });
   } catch (error) {
     console.error("Error fetching enquiries:", error);
-    return NextResponse.json({ success: true, enquiries: sampleEnquiries, fallback: true });
+    return NextResponse.json({ success: true, enquiries: [], fallback: true });
   }
 }
 
@@ -68,11 +48,11 @@ export async function POST(req: Request) {
 
     const newEnquiry = {
       id,
-      name,
-      email,
-      phone: phone || "",
-      course: course || subject || "General Inquiry",
-      message,
+      name: name.trim(),
+      email: email.trim(),
+      phone: (phone || "").trim(),
+      course: (course || subject || "General Inquiry").trim(),
+      message: message.trim(),
       status: "NEW",
       date: dateStr,
       createdAt: now,
