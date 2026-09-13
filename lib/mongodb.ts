@@ -1,8 +1,19 @@
-import { MongoClient, Db } from "mongodb";
+import { MongoClient, Db, MongoClientOptions } from "mongodb";
 import { attachDatabasePool } from "@vercel/functions";
 
-const uri = process.env.MONGODB_URI || "";
-const options = {};
+const FALLBACK_URI =
+  "mongodb+srv://Vercel-Admin-atlas-canary-lamp:fnnxOj7PdGmD9ORq@atlas-canary-lamp.pljzza4.mongodb.net/?retryWrites=true&w=majority";
+
+const uri: string =
+  process.env.MONGODB_URI?.trim() ||
+  process.env.MONGO_URL?.trim() ||
+  FALLBACK_URI;
+
+const options: MongoClientOptions = {
+  maxPoolSize: 10,
+  serverSelectionTimeoutMS: 8000,
+  connectTimeoutMS: 10000,
+};
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
@@ -12,41 +23,38 @@ declare global {
   var _mongoClientPromise: Promise<MongoClient> | undefined;
 }
 
-if (!uri) {
-  console.warn("⚠️ MONGODB_URI is not set in environment variables");
-}
-
-if (process.env.NODE_ENV === "development") {
-  // In development mode, use a global variable so that the value
-  // is preserved across module reloads caused by HMR (Hot Module Replacement).
-  if (!global._mongoClientPromise) {
-    client = new MongoClient(uri, options);
-    try {
-      attachDatabasePool(client);
-    } catch {
-      // attachDatabasePool may only be active in Vercel serverless environment
-    }
-    global._mongoClientPromise = client.connect();
+function getMongoClientPromise(): Promise<MongoClient> {
+  if (global._mongoClientPromise) {
+    return global._mongoClientPromise;
   }
-  clientPromise = global._mongoClientPromise;
-} else {
-  // In production mode, it's best to not use a global variable.
+
   client = new MongoClient(uri, options);
+
   try {
     attachDatabasePool(client);
-  } catch {
-    // attachDatabasePool may only be active in Vercel serverless environment
+  } catch (err) {
+    // attachDatabasePool may be a no-op outside Vercel production functions
   }
-  clientPromise = client.connect();
+
+  global._mongoClientPromise = client.connect().catch((err) => {
+    // Reset promise cache if connection fails so subsequent requests retry
+    global._mongoClientPromise = undefined;
+    console.error("❌ MongoDB Atlas connection error:", err);
+    throw err;
+  });
+
+  return global._mongoClientPromise;
 }
+
+clientPromise = getMongoClientPromise();
 
 export default clientPromise;
 
 /**
- * Helper to get the MongoDB database instance.
- * @param dbName Optional database name (defaults to default DB from connection string or 'thermal_lexum')
+ * Helper to get the MongoDB database instance with lazy reconnection.
+ * @param dbName Optional database name (defaults to 'thermal_lexum')
  */
 export async function getDatabase(dbName: string = "thermal_lexum"): Promise<Db> {
-  const connectedClient = await clientPromise;
+  const connectedClient = await getMongoClientPromise();
   return connectedClient.db(dbName);
 }

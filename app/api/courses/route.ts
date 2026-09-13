@@ -2,18 +2,22 @@ import { NextResponse } from "next/server";
 import { getDatabase } from "@/lib/mongodb";
 import { nesaCoursesList } from "@/components/layout/Navbar";
 
-// Helper to seed initial courses into MongoDB if empty
+// Helper to seed initial courses into MongoDB if collection is empty
 async function ensureSeedCourses() {
   const db = await getDatabase();
   const collection = db.collection("courses");
-  const count = await collection.countDocuments();
+  const count = await collection.countDocuments().catch(() => 0);
   if (count === 0) {
-    const defaultData = nesaCoursesList.map((item) => ({
-      ...item,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }));
-    await collection.insertMany(defaultData);
+    try {
+      const defaultData = nesaCoursesList.map((item) => ({
+        ...item,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }));
+      await collection.insertMany(defaultData);
+    } catch (seedErr) {
+      console.warn("Notice: Initial courses seeding skipped:", seedErr);
+    }
   }
   return collection;
 }
@@ -38,9 +42,14 @@ export async function GET() {
     }));
 
     return NextResponse.json({ success: true, courses: formatted });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error fetching courses from MongoDB:", error);
-    return NextResponse.json({ success: true, courses: nesaCoursesList, fallback: true });
+    return NextResponse.json({
+      success: true,
+      courses: nesaCoursesList,
+      fallback: true,
+      warning: error instanceof Error ? error.message : "Database fetch notice",
+    });
   }
 }
 
@@ -52,17 +61,16 @@ export async function POST(req: Request) {
 
     if (!name || !price) {
       return NextResponse.json(
-        { success: false, error: "Course name and price are required." },
+        { success: false, error: "Item name and price are required." },
         { status: 400 }
       );
     }
 
-    const slug =
-      body.slug?.trim() ||
-      name
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/(^-|-$)/g, "");
+    const rawSlug = body.slug?.trim() || name;
+    const slug = rawSlug
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "") || `item-${Date.now()}`;
 
     const collection = await ensureSeedCourses();
 
@@ -70,19 +78,19 @@ export async function POST(req: Request) {
     const existing = await collection.findOne({ slug });
     if (existing) {
       return NextResponse.json(
-        { success: false, error: `Item with slug '${slug}' already exists.` },
+        { success: false, error: `Item with slug '${slug}' already exists. Please choose a different title or slug.` },
         { status: 400 }
       );
     }
 
     const newCourse = {
       slug,
-      name,
-      badge: badge || "POPULAR",
-      price,
+      name: name.trim(),
+      badge: (badge || "POPULAR").trim(),
+      price: price.trim(),
       lessons: Number(lessons) || 0,
       students: Number(students) || 0,
-      desc: desc || "",
+      desc: (desc || "").trim(),
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -91,19 +99,20 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       success: true,
-      message: "Course created successfully",
+      message: "Item created successfully in MongoDB Atlas! 🎉",
       course: newCourse,
     });
-  } catch (error) {
-    console.error("Error creating course:", error);
+  } catch (error: unknown) {
+    console.error("Error creating course in MongoDB:", error);
+    const msg = error instanceof Error ? error.message : "Failed to create item in MongoDB.";
     return NextResponse.json(
-      { success: false, error: "Failed to create course in MongoDB." },
+      { success: false, error: `Database Error: ${msg}` },
       { status: 500 }
     );
   }
 }
 
-// PUT: Update an existing course (upsert enabled to always succeed!)
+// PUT: Update an existing course
 export async function PUT(req: Request) {
   try {
     const body = await req.json();
@@ -111,35 +120,35 @@ export async function PUT(req: Request) {
 
     if (!slug) {
       return NextResponse.json(
-        { success: false, error: "Slug is required to update course." },
+        { success: false, error: "Slug is required to update item." },
         { status: 400 }
       );
     }
 
     const collection = await ensureSeedCourses();
 
-    const finalSlug = (newSlug || slug)
+    const rawFinalSlug = newSlug || slug;
+    const finalSlug = rawFinalSlug
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)/g, "");
+      .replace(/(^-|-$)/g, "") || slug;
 
     const updateDoc: Record<string, unknown> = {
       updatedAt: new Date(),
     };
 
-    if (name) updateDoc.name = name;
-    if (badge !== undefined) updateDoc.badge = badge;
-    if (price) updateDoc.price = price;
+    if (name) updateDoc.name = name.trim();
+    if (badge !== undefined) updateDoc.badge = badge.trim();
+    if (price) updateDoc.price = price.trim();
     if (lessons !== undefined) updateDoc.lessons = Number(lessons);
     if (students !== undefined) updateDoc.students = Number(students);
-    if (desc !== undefined) updateDoc.desc = desc;
+    if (desc !== undefined) updateDoc.desc = desc.trim();
     updateDoc.slug = finalSlug;
 
-    // First try updating by original slug
+    // Update or Upsert directly
     const result = await collection.updateOne({ slug }, { $set: updateDoc });
 
     if (result.matchedCount === 0) {
-      // If not found by exact slug, upsert it as a new/modified record
       await collection.updateOne(
         { slug: finalSlug },
         {
@@ -154,13 +163,14 @@ export async function PUT(req: Request) {
 
     return NextResponse.json({
       success: true,
-      message: "Course updated successfully in MongoDB.",
+      message: "Item updated successfully in MongoDB Atlas! 💾",
       course: { slug: finalSlug, ...updateDoc },
     });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error updating course:", error);
+    const msg = error instanceof Error ? error.message : "Failed to update item in MongoDB.";
     return NextResponse.json(
-      { success: false, error: "Failed to update course in MongoDB." },
+      { success: false, error: `Database Error: ${msg}` },
       { status: 500 }
     );
   }
@@ -174,7 +184,7 @@ export async function DELETE(req: Request) {
 
     if (!slug) {
       return NextResponse.json(
-        { success: false, error: "Course slug is required." },
+        { success: false, error: "Slug is required to delete item." },
         { status: 400 }
       );
     }
@@ -184,12 +194,13 @@ export async function DELETE(req: Request) {
 
     return NextResponse.json({
       success: true,
-      message: "Course deleted successfully.",
+      message: "Item deleted successfully from MongoDB! 🗑️",
     });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error deleting course:", error);
+    const msg = error instanceof Error ? error.message : "Failed to delete item from MongoDB.";
     return NextResponse.json(
-      { success: false, error: "Failed to delete course from MongoDB." },
+      { success: false, error: `Database Error: ${msg}` },
       { status: 500 }
     );
   }
