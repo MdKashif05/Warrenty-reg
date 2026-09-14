@@ -241,8 +241,101 @@ export default function AdminCoursesPage() {
         </button>
       </div>
 
-      {/* Table */}
-      <div className="card-nesa" style={{ overflow: "hidden", padding: 0 }}>
+      {/* Mobile Card List (Visible on phones & small screens) */}
+      <div className="block md:hidden" style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+        {loading ? (
+          <div className="card-nesa" style={{ textAlign: "center", padding: "40px", color: "#64748b" }}>
+            🔄 Loading items from MongoDB Atlas...
+          </div>
+        ) : filtered.length === 0 ? (
+          <div className="card-nesa" style={{ textAlign: "center", padding: "40px", color: "#64748b" }}>
+            No items found matching your search.
+          </div>
+        ) : (
+          filtered.map((course: CourseItem) => (
+            <div
+              key={course.slug}
+              className="card-nesa"
+              style={{
+                padding: "20px",
+                borderRadius: "12px",
+                border: "1px solid #e2e8f0",
+                background: "#ffffff",
+                boxShadow: "0 2px 10px rgba(0,0,0,0.03)",
+              }}
+            >
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "12px", gap: "8px" }}>
+                <span
+                  style={{
+                    background: "#f0fcff",
+                    color: "#0E4D92",
+                    padding: "3px 10px",
+                    borderRadius: "12px",
+                    fontSize: "11px",
+                    fontWeight: "800",
+                    border: "1px solid #cceeff",
+                  }}
+                >
+                  {course.badge}
+                </span>
+                <span style={{ fontSize: "18px", fontWeight: "900", color: "#0E4D92", fontFamily: "Outfit, sans-serif" }}>
+                  {course.price}
+                </span>
+              </div>
+
+              <h3 style={{ fontSize: "16px", fontWeight: "800", color: "#0f172a", marginBottom: "6px", lineHeight: "1.4" }}>
+                {course.name}
+              </h3>
+              <div style={{ fontSize: "11px", color: "#64748b", wordBreak: "break-all", marginBottom: "14px" }}>
+                /courses/{course.slug}
+              </div>
+
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", color: "#475569", background: "#f8fafc", padding: "10px 12px", borderRadius: "8px", marginBottom: "16px" }}>
+                <span>🛡️ 3 Years Warranty</span>
+                <span>📦 {course.students} Units</span>
+              </div>
+
+              <div style={{ display: "flex", gap: "10px" }}>
+                <button
+                  onClick={() => handleOpenEdit(course)}
+                  style={{
+                    flex: 1,
+                    padding: "10px",
+                    background: "#f1f5f9",
+                    color: "#0E4D92",
+                    border: "1px solid #cbd5e1",
+                    borderRadius: "8px",
+                    fontSize: "13px",
+                    fontWeight: "700",
+                    cursor: "pointer",
+                  }}
+                >
+                  Edit ✏️
+                </button>
+                <button
+                  onClick={() => handleDelete(course.slug)}
+                  style={{
+                    flex: 1,
+                    padding: "10px",
+                    background: "#fee2e2",
+                    color: "#b91c1c",
+                    border: "1px solid #fecaca",
+                    borderRadius: "8px",
+                    fontSize: "13px",
+                    fontWeight: "700",
+                    cursor: "pointer",
+                  }}
+                >
+                  Delete 🗑️
+                </button>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* Desktop Table (Visible on medium and large screens) */}
+      <div className="hidden md:block card-nesa" style={{ overflow: "hidden", padding: 0 }}>
         <div className="data-table-container">
           <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left", minWidth: "700px" }}>
             <thead>

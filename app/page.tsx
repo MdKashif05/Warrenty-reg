@@ -26,9 +26,23 @@ function ThermalParticle({ x, y, size, delay }: { x: number; y: number; size: nu
   );
 }
 
-const products = [
+interface HomeProduct {
+  id: string | number;
+  slug: string;
+  name: string;
+  category: string;
+  label: string;
+  desc: string;
+  specs: string[];
+  color: string;
+  price?: string;
+  badge?: string;
+}
+
+const defaultProducts: HomeProduct[] = [
   {
     id: 1,
+    slug: "lx-tim-series",
     name: "LX-TIM Series",
     category: "THERMAL PASTE",
     label: "THERMAL_PASTE",
@@ -38,6 +52,7 @@ const products = [
   },
   {
     id: 2,
+    slug: "lx-lm-series",
     name: "LX-LM Series",
     category: "LIQUID METAL",
     label: "LIQUID_METAL",
@@ -47,6 +62,7 @@ const products = [
   },
   {
     id: 3,
+    slug: "lx-pad-series",
     name: "LX-PAD Series",
     category: "THERMAL PADS",
     label: "THERMAL PADS",
@@ -60,12 +76,63 @@ const stats = [
   { value: "50K+", label: "Systems Cooled" },
   { value: "35+", label: "Global Distributors" },
   { value: "99.4%", label: "Satisfaction Rate" },
-  { value: "1 Year", label: "Warranty Backed" },
+  { value: "3 Years", label: "Warranty Backed" },
 ];
 
 export default function HomePage() {
   const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
+  const [productsList, setProductsList] = useState<HomeProduct[]>(defaultProducts);
+
+  useEffect(() => {
+    setMounted(true);
+    fetch("/api/courses")
+      .then((r) => r.json())
+      .then((data) => {
+        if (data && data.courses && Array.isArray(data.courses) && data.courses.length > 0) {
+          const mapped: HomeProduct[] = data.courses.map((item: any) => {
+            const text = `${item.name || ""} ${item.desc || ""}`.toLowerCase();
+            let cat = "THERMAL PASTE";
+            let color = "#0284c7";
+            if (text.includes("liquid metal") || text.includes("liquid") || text.includes("gallium")) {
+              cat = "LIQUID METAL";
+              color = "#2563eb";
+            } else if (text.includes("pad") || text.includes("pads")) {
+              cat = "THERMAL PADS";
+              color = "#0d9488";
+            }
+
+            const specsList: string[] = [];
+            const wmKMatch = text.match(/([0-9]+(?:\.[0-9]+)?)\s*w\/mk/i);
+            if (wmKMatch) {
+              specsList.push(`${wmKMatch[1]} W/mK Thermal Conductivity`);
+            } else {
+              specsList.push("Ultra-High Thermal Conductivity");
+            }
+            specsList.push("3 Years Official Replacement Warranty");
+            if (cat === "LIQUID METAL") {
+              specsList.push("Silver-Based Supreme Eutectic Formula");
+            } else {
+              specsList.push("Non-Electrically Conductive Matrix");
+            }
+
+            return {
+              id: item.slug || Math.random(),
+              slug: item.slug || "",
+              name: item.name || "Thermal Lexum Item",
+              category: cat,
+              label: cat.replace(/\s+/g, "_"),
+              desc: item.desc || "Ultra-high performance thermal solution engineered for extreme heat dissipation.",
+              specs: specsList,
+              color: color,
+              price: item.price?.startsWith("₹") ? item.price : `₹${item.price}`,
+              badge: item.badge || "POPULAR",
+            };
+          });
+          setProductsList(mapped);
+        }
+      })
+      .catch((err) => console.error("Error loading live products on homepage:", err));
+  }, []);
 
   return (
     <>
@@ -320,52 +387,84 @@ export default function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
-              {products.map((product) => (
+              {productsList.map((product) => (
                 <Link
                   key={product.id}
-                  href={`/products?category=${product.label}`}
+                  href={`/courses/${product.slug}`}
                   style={{ textDecoration: "none" }}
                 >
                   <div
                     className="brand-card"
                     style={{
-                      padding: "36px",
+                      padding: "32px",
                       cursor: "pointer",
                       position: "relative",
                       overflow: "hidden",
                       height: "100%",
                       display: "flex",
                       flexDirection: "column",
-                      justifyContent: "space-between"
+                      justifyContent: "space-between",
+                      background: "#ffffff",
+                      borderRadius: "16px",
+                      border: "1px solid #e2e8f0",
+                      boxShadow: "0 4px 20px rgba(0,0,0,0.03)",
                     }}
                   >
                     {/* Top Accent line */}
-                    <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: product.color }} />
+                    <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "4px", background: product.color }} />
 
                     <div>
-                      {/* Category badge */}
-                      <div
-                        style={{
-                          display: "inline-block",
-                          padding: "4px 12px",
-                          borderRadius: "20px",
-                          background: `rgba(${product.color === "#0284c7" ? "2,132,199" : product.color === "#2563eb" ? "37,99,235" : "13,148,136"},0.1)`,
-                          border: `1px solid rgba(${product.color === "#0284c7" ? "2,132,199" : product.color === "#2563eb" ? "37,99,235" : "13,148,136"},0.3)`,
-                          fontFamily: "JetBrains Mono, monospace",
-                          fontSize: "10px",
-                          letterSpacing: "2px",
-                          color: product.color,
-                          marginBottom: "20px",
-                          fontWeight: "700"
-                        }}
-                      >
-                        {product.category}
+                      {/* Top Badges and Price */}
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+                        <div
+                          style={{
+                            display: "inline-block",
+                            padding: "4px 10px",
+                            borderRadius: "20px",
+                            background: `rgba(${product.color === "#0284c7" ? "2,132,199" : product.color === "#2563eb" ? "37,99,235" : "13,148,136"},0.1)`,
+                            border: `1px solid rgba(${product.color === "#0284c7" ? "2,132,199" : product.color === "#2563eb" ? "37,99,235" : "13,148,136"},0.3)`,
+                            fontFamily: "JetBrains Mono, monospace",
+                            fontSize: "10px",
+                            letterSpacing: "1.5px",
+                            color: product.color,
+                            fontWeight: "700"
+                          }}
+                        >
+                          {product.category}
+                        </div>
+
+                        {product.price && (
+                          <div style={{ fontSize: "20px", fontWeight: "900", color: "#0E4D92", fontFamily: "Outfit, sans-serif" }}>
+                            {product.price}
+                          </div>
+                        )}
                       </div>
 
-                      <h3 style={{ fontSize: "26px", fontWeight: "800", color: "#0f172a", marginBottom: "14px" }}>
+                      {product.badge && (
+                        <div style={{ marginBottom: "10px" }}>
+                          <span
+                            style={{
+                              fontFamily: "JetBrains Mono, monospace",
+                              fontSize: "10px",
+                              letterSpacing: "1.5px",
+                              color: "#b45309",
+                              background: "#fef3c7",
+                              border: "1px solid #fcd34d",
+                              padding: "3px 8px",
+                              borderRadius: "6px",
+                              fontWeight: "800",
+                              textTransform: "uppercase",
+                            }}
+                          >
+                            ⭐ {product.badge}
+                          </span>
+                        </div>
+                      )}
+
+                      <h3 style={{ fontSize: "20px", fontWeight: "800", color: "#0f172a", marginBottom: "12px", lineHeight: "1.35" }}>
                         {product.name}
                       </h3>
-                      <p style={{ fontSize: "14px", color: "#475569", lineHeight: "1.7", marginBottom: "28px" }}>
+                      <p style={{ fontSize: "14px", color: "#475569", lineHeight: "1.65", marginBottom: "24px" }}>
                         {product.desc}
                       </p>
 
@@ -380,7 +479,7 @@ export default function HomePage() {
                     </div>
 
                     <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px", color: product.color, fontWeight: "700" }}>
-                      View Specifications
+                      View Specifications & Buy
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                         <path d="M5 12h14M12 5l7 7-7 7"/>
                       </svg>

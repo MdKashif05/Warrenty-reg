@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Link from "next/link";
@@ -139,8 +139,85 @@ const productDatabase: Record<string, {
 export default function ProductDetailPage() {
   const params = useParams();
   const slug = (params?.slug as string) || "lx-tim-pro";
-  const product = productDatabase[slug] || productDatabase["lx-tim-pro"];
+  const [product, setProduct] = useState<any>(() => {
+    return productDatabase[slug] || {
+      name: "Thermal Lexum Thermal Solution",
+      category: "THERMAL PASTE",
+      tagline: "High-Performance Cooling Interface",
+      description: "Engineered for maximum thermal dissipation across demanding computational workloads.",
+      highlights: [
+        "Ultra-low thermal resistance for instant heat transfer",
+        "Non-electrically conductive formula for component safety",
+        "Long-term stability without drying out",
+        "3 Years official manufacturer replacement warranty"
+      ],
+      specs: [
+        { label: "Category", value: "Thermal Interface Solution" },
+        { label: "Warranty", value: "3 Years Coverage" },
+        { label: "Quality Grade", value: "Enterprise High-Conductivity" }
+      ],
+      applications: ["High-end Gaming CPUs", "Gaming GPUs", "Laptops & Consoles", "Workstations"],
+      whatsIncluded: ["Thermal Lexum Syringe / Applicator", "Spreader Spatula", "Prep Cleaning Wipe", "Warranty Authentication Label"],
+      warrantyMonths: 36,
+      color: "#0284c7"
+    };
+  });
   const [selectedTab, setSelectedTab] = useState<"overview" | "specs" | "applications">("overview");
+
+  useEffect(() => {
+    fetch("/api/courses")
+      .then((r) => r.json())
+      .then((data) => {
+        if (data && data.courses && Array.isArray(data.courses)) {
+          const found = data.courses.find((c: any) => c.slug === slug || slug.includes(c.slug) || c.slug.includes(slug));
+          if (found) {
+            const text = `${found.name || ""} ${found.desc || ""}`.toLowerCase();
+            let cat = "THERMAL PASTE";
+            let color = "#0284c7";
+            if (text.includes("liquid metal") || text.includes("liquid") || text.includes("gallium")) {
+              cat = "LIQUID METAL";
+              color = "#2563eb";
+            } else if (text.includes("pad") || text.includes("pads")) {
+              cat = "THERMAL PADS";
+              color = "#0d9488";
+            }
+
+            const wmKMatch = (found.name + " " + found.desc).match(/([0-9]+(?:\.[0-9]+)?)\s*w\/mk/i);
+            const wmK = wmKMatch ? `${wmKMatch[1]} W/mK` : "Ultra-High";
+
+            const rawLines = (found.desc || "").split("\n").filter((l: string) => l.trim().length > 0);
+            const highlightsList = rawLines.length > 0
+              ? rawLines.map((l: string) => l.replace(/^[•\-\*]\s*/, ""))
+              : [
+                  `${wmK} Extreme Thermal Conductivity`,
+                  "Ultra-Smooth consistency for uniform spread",
+                  "No dry-out formula for 3+ years continuous performance",
+                  "3 Years Official Replacement Warranty"
+                ];
+
+            setProduct({
+              name: found.name,
+              category: cat,
+              tagline: found.badge ? `${found.badge} Grade Solution — ${found.price}` : `Extreme Performance — ${found.price}`,
+              description: found.desc || "Ultra-high performance thermal interface material engineered for extreme cooling efficiency.",
+              highlights: highlightsList,
+              specs: [
+                { label: "Thermal Conductivity", value: `${wmK} W/mK` },
+                { label: "Official Price", value: found.price?.startsWith("₹") ? found.price : `₹${found.price}` },
+                { label: "Warranty Coverage", value: "3 Years Official Warranty" },
+                { label: "Units Delivered", value: `${found.students || 100}+ Units` },
+                { label: "Product Category", value: cat },
+              ],
+              applications: ["Gaming PC CPUs & GPUs", "Laptops & Consoles", "Mining Rigs & Server Racks", "Overclocked Workstations"],
+              whatsIncluded: ["Thermal Lexum Syringe / Container", "Precision Spreader Spatula", "Cleaning Prep Wipes", "Authenticity Label"],
+              warrantyMonths: 36,
+              color: color,
+            });
+          }
+        }
+      })
+      .catch((err) => console.error("Error fetching product details by slug:", err));
+  }, [slug]);
 
   return (
     <>
@@ -154,21 +231,21 @@ export default function ProductDetailPage() {
               <span style={{ color: "#cbd5e1", fontSize: "14px" }}>/</span>
               <span style={{ color: product.color, fontSize: "14px", fontFamily: "JetBrains Mono, monospace", fontWeight: "700" }}>{product.category}</span>
             </div>
-            <h1 style={{ fontSize: "clamp(36px, 5vw, 64px)", fontWeight: "900", letterSpacing: "-2px", color: "#0f172a", marginBottom: "12px" }}>
+            <h1 style={{ fontSize: "clamp(32px, 4.5vw, 54px)", fontWeight: "900", letterSpacing: "-1.5px", color: "#0f172a", marginBottom: "12px", lineHeight: "1.2" }}>
               {product.name}
             </h1>
             <p style={{ fontSize: "18px", color: product.color, fontWeight: "700", marginBottom: "16px" }}>
               {product.tagline}
             </p>
-            <p style={{ fontSize: "16px", color: "#475569", maxWidth: "680px", lineHeight: "1.7" }}>
+            <p style={{ fontSize: "16px", color: "#475569", maxWidth: "720px", lineHeight: "1.7", whiteSpace: "pre-line" }}>
               {product.description}
             </p>
             <div style={{ display: "flex", gap: "16px", marginTop: "32px", flexWrap: "wrap" }}>
               <Link href="/warranty/register" className="btn-primary">
-                Register Warranty
+                Register 3-Year Warranty
               </Link>
               <Link href="/contact" className="btn-secondary">
-                Technical Inquiry
+                Technical Inquiry / Bulk B2B
               </Link>
             </div>
           </div>
@@ -213,7 +290,7 @@ export default function ProductDetailPage() {
                     Engineering Highlights
                   </h2>
                   <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "16px" }}>
-                    {product.highlights.map((h, i) => (
+                    {product.highlights?.map((h: string, i: number) => (
                       <li key={i} style={{ display: "flex", gap: "12px", alignItems: "flex-start", fontSize: "15px", color: "#475569", lineHeight: "1.6" }}>
                         <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: product.color, marginTop: "8px", flexShrink: 0 }} />
                         <span>{h}</span>
@@ -227,7 +304,7 @@ export default function ProductDetailPage() {
                     What&apos;s Included in Box
                   </h2>
                   <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "14px", marginBottom: "32px" }}>
-                    {product.whatsIncluded.map((item, i) => (
+                    {product.whatsIncluded?.map((item: string, i: number) => (
                       <li key={i} style={{ display: "flex", gap: "12px", alignItems: "center", fontSize: "15px", color: "#0f172a", fontWeight: "600" }}>
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={product.color} strokeWidth="2.5">
                           <polyline points="20 6 9 17 4 12"/>
@@ -240,7 +317,7 @@ export default function ProductDetailPage() {
                   <div style={{ padding: "18px", background: "rgba(2,132,199,0.06)", border: "1px solid rgba(2,132,199,0.2)", borderRadius: "10px" }}>
                     <div style={{ fontSize: "12px", color: "#0284c7", fontWeight: "700", marginBottom: "4px" }}>WARRANTY COVERAGE</div>
                     <div style={{ fontSize: "14px", color: "#475569" }}>
-                      This product comes with {product.warrantyMonths} Months limited manufacturer warranty upon online registration.
+                      This product comes with {product.warrantyMonths || 36} Months limited manufacturer warranty upon online registration.
                     </div>
                   </div>
                 </div>
@@ -253,7 +330,7 @@ export default function ProductDetailPage() {
                   Technical Parameters & Datasheet
                 </h2>
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  {product.specs.map((spec, i) => (
+                  {product.specs?.map((spec: { label: string; value: string }, i: number) => (
                     <div
                       key={spec.label}
                       style={{
@@ -278,7 +355,7 @@ export default function ProductDetailPage() {
                   Recommended Use Cases
                 </h2>
                 <div className="responsive-form-grid-2" style={{ gap: "16px" }}>
-                  {product.applications.map((app, i) => (
+                  {product.applications?.map((app: string, i: number) => (
                     <div key={i} style={{ padding: "16px 20px", background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: "10px", color: "#0f172a", fontSize: "15px", fontWeight: "600" }}>
                       ⚡ {app}
                     </div>
